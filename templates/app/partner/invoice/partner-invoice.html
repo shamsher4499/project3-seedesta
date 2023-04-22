@@ -1,0 +1,271 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+   </head>
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+            <section class="create-invoice-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="create-invoice-form">
+                        <div class="create-invoice-head">
+                          <h2>Invoice</h2>
+                          
+                        </div>
+                        <div class="heading_dash_rt">
+                            
+                            <button class="btn" data-bs-toggle="modal" onclick="fetch_invoice()" data-bs-target="#exampleModal">Create Invoice</button>
+                        </div>
+                        {% for j in vendor_invoice %}
+                        <div class="create-invoice-list only_invoice">
+                            <ul>
+                                <li>
+                                    <div class="lt_followers_bx">
+                                        <figcaption>
+                                            <h6>Order ID: <span>{{j.order_id}}</span></h6>
+                                            <h6>Transaction ID: <span>{{j.transaction_id}}</span></h6>
+                                            <span class="od_times">{{j.created}}</span>
+                                            <div class="d-flex">
+                                                <h6>Status : <span class="payment_done">{{j.status}}</span></h6>
+                                            </div>
+                                        </figcaption>
+                                    </div>
+                                    <div class="ry_followers_bx">
+                                        <input type='hidden' name="ids" id="invoice_id_{{j.id}}" value="{{j.id}}">
+                                        <button class="btn right-arrow" type="submit" onclick="fetch_invoice_details({{j.id}})" ><i class="ri-arrow-right-s-line"></i></button>
+                                        <h3 class="od_ammount">${{j.amount}}</h3>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="goal-amount">Goal Amount</label>
+                    {% comment %} <form method="POST" enctype="multipart/form-data" >
+                        {% csrf_token %} {% endcomment %}
+                        <h6>Goal ID</h6>
+                        <form method="POST" enctype="multipart/form-data"   action="{% url 'vendor_order_detail' %}">
+                            {% csrf_token %}
+                        
+                        {% for i in create_vendor_invoice %}
+                        
+                        <div class="create-invoice-list only_invoice">
+                        <ul>
+                            
+                            <li>
+                                
+                                <div class="lt_followers_bx">
+                                    <figcaption>
+                                        <h6>Order ID: <span id="order_id">{{i.order_id}}</span></h6>
+                                        {% comment %} <h6>Transaction ID: <span id="transaction_id">12346585EDL4</span></h6> {% endcomment %}
+                                        <span class="od_times" id="date">{{i.created}}</span>
+                                        <div class="d-flex">
+                                            <h6>Status : <span class="payment_done" id="status">{{i.status}}</span></h6>
+                                        </div>
+                                    </figcaption>
+                                </div>
+                                <div class="ry_followers_bx">
+                                    <input type='hidden'name="id" value="{{i.id}}">
+                                    <button class="btn right-arrow" type="submit" data-bs-toggle="modal" data-bs-target="#staticInvoice"><i class="ri-arrow-right-s-line"></i></button>
+                                    <h3 class="od_ammount" id="amount">${{i.amount}}</h3>
+                                </div>
+                                
+                            </li>
+                            
+                        </ul>
+                    </div>
+                        {% endfor %}
+                </form>
+                </div>
+            </div>
+            {% comment %} <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <form method="POST">
+                {% csrf_token %}
+                <input type='hidden'name="user_goal_slug" value="" >
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            </div> {% endcomment %}
+        </div>
+        </div>
+    </div>
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+
+        <!-- ----------footer section----------- -->
+
+        <!-- Modal -->
+        <div class="modal  membersback_mx" id="staticInvoice" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Invoice History</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-fill"></i></button>
+              </div>
+             
+              <div class="modal-body modal_invoice">
+                  <ul>
+                      <li ><h6 >Order Id</h6><span id="gg" ></span></li>
+                      <li><h6>Transaction Id</h6><span id="trans" ></span></li>
+                      <li><h6>Total Amount</h6><span id="total" >$</span></li>
+                      <li><h6>Invoice Number</h6><span id="inv_number" ></span></li>
+                      {% comment %} <li><h6>Invoice Status </h6><span>Confirmed</span></li> {% endcomment %}
+                      <li><h6>Invoice Date </h6><span id="inv_date" ></span></li>
+                      {% comment %} <li><h6>Paid on </h6><span>8 Apr, 2022</span></li> {% endcomment %}
+                  </ul>
+                  {% comment %} <a href="javascript:;">
+                    <svg class="icon icon-tabler icon-tabler-download" width="25" height="25" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1C6836" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2" />
+                      <polyline points="7 11 12 16 17 11" />
+                      <line x1="12" y1="4" x2="12" y2="16" />
+                    </svg>
+                    </svg>
+                    Download PDF
+                  </a> {% endcomment %}
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <script>
+        function  fetch_invoice_details(id){
+        $('#staticInvoice').show()
+        let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+         
+        let invoice_id  = $('#invoice_id_' + id).val()
+        $.ajax({
+            type: "POST",
+            url: "/invoice-list/",
+            headers: { 'X-CSRFToken': csrftoken },
+            data:{
+                invoice_id:invoice_id
+            },
+            
+            success: function(res) {
+                console.log(res.invoice_id)
+                $('#gg').html(res.invoice_id)
+                $('#trans').html(res.transaction_id)
+                $('#total').html(res.total)
+                $('#inv_number').html(res.inv_number)
+                $('#inv_date').html(res.inv_date)
+
+
+              toastr.success("All Completed Order successfully fetched.")
+          
+
+            },error:function(res){
+                toastr.success("All Completed Order successfully fetched.");
+
+            } 
+        
+          });
+        
+        }
+      </script>
+
+    <script>
+        function  fetch_invoice(){
+          let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+          $.ajax({
+              type: "POST",
+              url: "{% url 'vendor_order_detail' %}",
+              headers: { 'X-CSRFToken': csrftoken }, 
+              
+              success: function(res) {
+                toastr.success("All Completed Order successfully fetched.")
+            
+
+              },error:function(res){
+                  toastr.success("All Completed Order successfully fetched.");
+  
+              } 
+          
+            });
+  
+        }
+      </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+    {% endblock %}
+</html>

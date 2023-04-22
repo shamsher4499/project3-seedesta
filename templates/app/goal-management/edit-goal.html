@@ -1,0 +1,227 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+    {% block body %}
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+   </head>
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+            <section class="donate-detail-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="donate-form-in ct_goals">
+                        <h3>Edit Goal</h3>
+                        <form class="row" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                                <label>Goal name</label>
+                                <input type="text" class="form-control" name="goal_name" value="{{goal.goal_name}}" placeholder="Lorem">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label>Select Priority</label>
+                                <div class="form-group mb-3">
+                                     <select disabled class="form-select" name="goal_priority" aria-label="Default select example"> 
+                                        <option disabled selected="">Select Priority</option>
+                                        <option {% if goal.goal_priority == 'PRIVATE'%}selected{% endif %} value="PRIVATE" >Private</option>
+                                        <option {% if goal.goal_priority == 'PUBLIC'%}selected{% endif %} value="PUBLIC">Public</option>
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label>Select Goal Type</label>
+                                <div class="form-group mb-3">
+                                     <select disabled class="form-select" name="goal_type" aria-label="Default select example"> 
+                                        <option disabled selected="">Select Goal Type</option>
+                                        <option {% if goal.goal_type == 'INDIVIDUAL'%}selected{% endif %} value="INDIVIDUAL" >INDIVIDUAL</option>
+                                        <option {% if goal.goal_type == 'GROUP'%}selected{% endif %} value="GROUP">GROUP</option>
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label>Start date</label>
+                                <div class="input_static_icon"> 
+                                    <input disabled type="date" class="form-control" name="start_date" value="{{goal.start_date|date:'Y-m-d'}}" placeholder="Enter date">
+                                    <i class="ri-calendar-line"></i>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label>Total amount</label>
+                                <input disabled type="text" class="form-control" name="goal_amount" value="{{goal.goal_amount}}"placeholder="$50">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label>Goal description</label>
+                                <textarea type="text" class="form-control h-25" name="goal_desc" placeholder="">{{goal.goal_desc}}</textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn" style="margin-left: 200px;margin-top: 20px;" >Next</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+
+        <!-- Modal -->
+        {% comment %} <div class="modal fade membersback_mx" id="staticaddMember" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Add Member</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-fill"></i></button>
+              </div>
+              <div class="modal-body staticad_member">
+                    <ul class="longEnough mCustomScrollbar" data-mcs-theme="dark">
+                        <li>
+                            <div class="form-check form-check-inline member_ck_box">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                              <label class="form-check-label" for="inlineCheckbox1">
+                                    <figure><img src="images/member-1.png"></figure>
+                                    <h5>Anna Reid</h5>
+                              </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-check-inline member_ck_box">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                              <label class="form-check-label" for="inlineCheckbox2">
+                                    <figure><img src="images/member-2.png"></figure>
+                                    <h5>Alison Morrison</h5>
+                              </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-check-inline member_ck_box">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                              <label class="form-check-label" for="inlineCheckbox3">
+                                    <figure><img src="images/member-3.png"></figure>
+                                    <h5>Joshua Hughes</h5>
+                              </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-check-inline member_ck_box">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                              <label class="form-check-label" for="inlineCheckbox4">
+                                    <figure><img src="images/member-4.png"></figure>
+                                    <h5>Stewart Walker</h5>
+                              </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-check-inline member_ck_box">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                              <label class="form-check-label" for="inlineCheckbox5">
+                                    <figure><img src="images/member-2.png"></figure>
+                                    <h5>Anna Reid</h5>
+                              </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-check-inline member_ck_box">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                              <label class="form-check-label" for="inlineCheckbox6">
+                                    <figure><img src="images/member-1.png"></figure>
+                                    <h5>Alison Morrison</h5>
+                              </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-check-inline member_ck_box">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                              <label class="form-check-label" for="inlineCheckbox7">
+                                    <figure><img src="images/member-3.png"></figure>
+                                    <h5>Anna Morrison</h5>
+                              </label>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="form-check form-check-inline member_ck_box">
+                              <input class="form-check-input" type="checkbox" id="inlineCheckbox8" value="option8">
+                              <label class="form-check-label" for="inlineCheckbox8">
+                                    <figure><img src="images/member-4.png"></figure>
+                                    <h5>Morrison Roy</h5>
+                              </label>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="staticad_member_foot">
+                        <button type="button" class="btn">Add</button>
+                        <a class="skip_ck" href="javascript:;">Skip</a>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div> {% endcomment %}
+        <!-- Modal -->
+
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+    {% endblock %}
+</html>

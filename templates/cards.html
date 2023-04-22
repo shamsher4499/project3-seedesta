@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == 'success'%}
+    <div class="alert alert-success">
+        {{message}}
+    </div>
+    {% elif message.tags == 'error' %}
+    <div class="alert alert-danger">
+        {{message}}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+<div class="row mb-3">
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="/admin/pendingUsers/"><div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">Pending Vendors</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{pending}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-info"></i>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <!-- Earnings (Annual) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="/admin/vendors/"><div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">TOTAL VENDORS</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{vendor}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-info"></i>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <!-- New User Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="/admin/tables/"><div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">Total Users</div>
+                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{user}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-info"></i>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card h-100">
+            <a href="/admin/goal/"><div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-uppercase mb-1">Total Goals</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{goal_count}}</div>
+                    </div>
+                    <div class="col-auto">
+                        <!-- <i class="fas fa-comments fa-2x text-warning"></i> -->
+                        <i class="fa fa-trophy fa-2x text-warning" aria-hidden="true"></i>
+
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    {% include 'charts.html' %}
+</div>
+<script>
+    setTimeout(() => {
+        $('.alert').fadeOut('fast');
+    }, 2000);
+</script>
+{% endblock %}

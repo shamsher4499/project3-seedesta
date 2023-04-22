@@ -1,0 +1,58 @@
+{% load static %}
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="seedesta-footer">
+                    <a class="footer-logo" href="{% url 'home' %}">
+                        <img src="{% static 'frontend/images/logo-white.svg' %}">
+                    </a>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                        alteration in some form, by injected humour, or randomised </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="footer-content">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="{% url 'about_us' %}">About us</a></li>
+                        <li><a href="{% url 'contact_us' %}">Contact Us</a></li>
+                        <li><a href="{% url 'help' %}">Help</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="footer-content">
+                    <h3>Important links</h3>
+                    <ul>
+                        <li><a href="{% url 'terms_condition' %}">Terms & Conditions</a></li>
+                        <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="footer-content">
+                    <h3>Connect with us</h3>
+                    <ul class="footer-social">
+                        {% for i in social %}
+                        <li>
+                            <a href="{{i.link}}"><img src="{{i.icon.url}}" ></a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="copyright-text">
+            <p>© Copyright <span id="year1"></span> | Seedesta | All Rights Reserved</p>
+        </div>
+    </div>
+</footer>
+<script>
+    const d = new Date();
+    let year = d.getFullYear();
+    document.getElementById("year1").innerHTML = year;
+</script>

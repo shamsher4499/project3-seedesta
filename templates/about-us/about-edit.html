@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% block body %}
+<style>
+    #upload-icon {
+        position: relative;
+        overflow: hidden;
+    }
+
+    #upload-social {
+        position: absolute;
+        font-size: 50px;
+        opacity: 0;
+        right: 0;
+        top: 0;
+    }
+</style>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        <!-- Sidebar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                {% include 'navbar.html' %}
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">About us</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'about' %}">About Us</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit About</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">About Us</h6>
+                                </div>
+                                <div class="container-xl px-4 mt-4">
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row">
+                                        <div class="col-xl-4">
+                                            <!-- Profile picture card-->
+                                            <div class="card mb-4 mb-xl-0">
+                                                <div class="card-header">Image1</div>
+                                                <div class="card-body text-center">
+                                                    <!-- Profile picture image-->
+                                                    {% if about.image1 %}
+                                                    <img class="img-account-profile rounded-circle mb-2"
+                                                        src="{{about.image1.url}}" alt="{{about.title}}"
+                                                        style="width: 100px;">
+                                                    {% else %}
+                                                    <p>not found</p>
+                                                    {% endif %}
+                                                    <!-- Profile picture help block-->
+                                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger
+                                                        than 5 MB</div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="card mb-4 mb-xl-0">
+                                                <div class="card-header">Image2</div>
+                                                <div class="card-body text-center">
+                                                    <!-- Profile picture image-->
+                                                    {% if about.image2 %}
+                                                    <img class="img-account-profile rounded-circle mb-2" src="{{about.image2.url}}" alt="{{about.title}}"
+                                                        style="width: 100px;">
+                                                    {% else %}
+                                                    <p>not found</p>
+                                                    {% endif %}
+                                                    <!-- Profile picture help block-->
+                                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger
+                                                        than 5 MB</div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="card mb-4 mb-xl-0">
+                                                <div class="card-header">Image3</div>
+                                                <div class="card-body text-center">
+                                                    <!-- Profile picture image-->
+                                                    {% if about.image3 %}
+                                                    <img class="img-account-profile rounded-circle mb-2" src="{{about.image3.url}}" alt="{{about.title}}"
+                                                        style="width: 100px;">
+                                                    {% else %}
+                                                    <p>not found</p>
+                                                    {% endif %}
+                                                    <!-- Profile picture help block-->
+                                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger
+                                                        than 5 MB</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-8">
+                                            <!-- Account details card-->
+                                            <div class="card mb-4">
+                                                <!-- <div class="card-header">About Us</div> -->
+                                                <form method="POST" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                <div class="card-body">
+                                                        <div class="row gx-3 mb-3">
+                                                            <!-- Form Group (first name)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputFirstName">
+                                                                    Title</label>
+                                                                <input class="form-control" id="inputFirstName"
+                                                                    type="text" name="title" placeholder="Enter Title"
+                                                                    value="{{about.title}}" maxlength="100">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputLastName">Image1</label>
+                                                                <input type="file" class="form-control"
+                                                                    accept="image/png, image/gif, image/jpeg"
+                                                                    name="image1" value="{{about.image1}}">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputLastName">Image2</label>
+                                                                <input type="file" class="form-control" accept="image/png, image/gif, image/jpeg" name="image2"
+                                                                    value="{{about.image2}}">
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputLastName">Image 3</label>
+                                                                <input type="file" class="form-control" accept="image/png, image/gif, image/jpeg" name="image3"
+                                                                    value="{{about.image3}}">
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            <!-- </div> -->
+                                            <div class="card mb-4">
+                                                <div class="card-body">
+                                                        <div class="row gx-3 mb-3">
+                                                            <div class="col-md-12">
+                                                                <label class="small mb-1" for="inputLastName">Desc1</label>
+                                                                <textarea value="" name="desc1">{{about.desc1|safe}}</textarea>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="small mb-1" for="inputLastName">Desc2</label>
+                                                                <textarea value="" name="desc2">{{about.desc2|safe}}</textarea>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="small mb-1" for="inputLastName">Desc3</label>                       
+                                                                <textarea value="" name="desc3">{{about.desc3|safe}}</textarea>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label class="small mb-1" for="inputLastName">Desc4</label>
+                                                                <textarea value="" name="desc4">{{about.desc4|safe}}</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Form Row        -->
+                                                        <!-- Form Group (email address)-->
+
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Row-->
+
+                    <!-- Modal Logout -->
+
+
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+        <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+        <script>
+            CKEDITOR.replace('desc1');
+            CKEDITOR.replace('desc2');
+            CKEDITOR.replace('desc3');
+            CKEDITOR.replace('desc4');
+        </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/ruang-admin.min.js' %}"></script>
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+</body>
+{% endblock %}
+
+</html>

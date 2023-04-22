@@ -1,0 +1,119 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+        <section class="goal-detail-sec">
+            <div class="container">
+                <div class="goal-about-sec">
+                    <div class="heading_dash_rt">
+                        <h3></h3>
+                        <form method="POST" action="{% url 'create_goal' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="product_id" value="{{products.name}}">
+                            <button class="btn" type="submit">Create Goal As Product</button>
+                        </form>
+                    </div>
+                    <div class="slider-arrow owl-carousel partner-prod owl-theme">
+                        <div class="item"><figure><img src="images/goal-detail-img4.png"></figure></div>
+                        <div class="item"><figure><img src="images/goal-detail-img.png"></figure></div>
+                        <div class="item"><figure><img src="images/goal-detail-img1.png"></figure></div>
+                    </div>
+                    <div class="owl-item active" style="width: 886px;"><div class="item"><figure><img src="{{product_images.image.url}}"></figure></div></div>
+                    
+                    <div class="post-heart-info">
+                        <a ><h4>{{products.name}}</h4></a>
+                        {% comment %} <div class="post-btn-lst">
+                            <a class="post-btn" href="javascript:;">
+                                <svg class="icon icon-tabler icon-tabler-pencil" width="26" height="26" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                  <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
+                                  <line x1="13.5" y1="6.5" x2="17.5" y2="10.5"></line>
+                                </svg>
+                            </a>
+                            <a class="post-btn" href="javascript:;">
+                                <svg class="icon icon-tabler icon-tabler-trash" width="26" height="26" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <line x1="4" y1="7" x2="20" y2="7" />
+                                  <line x1="10" y1="11" x2="10" y2="17" />
+                                  <line x1="14" y1="11" x2="14" y2="17" />
+                                  <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                  <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                </svg>
+                            </a>
+                        </div> {% endcomment %}
+                    </div>
+
+                    <p>{{products.desc}}</p>
+
+                    <div class="return-detail-dec">
+                        <h5>Returnable</h5>
+                        <ul>
+                            <li>
+                                <h6>Return Period: {{products.return_period}} Days</h6>
+                                <h6>Return Time: {{products.return_time_from}} {{products.return_time_to}}</h6>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </div>
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    <script type="text/javascript">
+        $('.partner-prod').owlCarousel({
+            loop:true,
+            margin:0,
+            nav:true,
+            dots:false,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:1
+                }
+            }
+        })
+    </script>
+    </body>
+{% endblock %}
+</html>

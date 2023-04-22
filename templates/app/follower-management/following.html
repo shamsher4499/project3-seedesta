@@ -1,0 +1,127 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+   </head>
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+        
+            <section class="select-goals-sec">
+                <div class="container">
+                    <div class="row inner-dash-bord">
+                        <div class="col-md-3">
+                            {% include 'app/base/sidebar.html' %}
+                        </div>
+                        <div class="col-md-9">
+                            <div class="dashboard-right-body">
+                                <div class="heading_dash_rt">
+                                    <h3>Following Users</h3>
+                                </div>
+                                <div class="dash-in-space">
+                                    <div class="followers">
+                                        <ul class="nav nav-pills equal_tabing" id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="pills-followers-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-followers" type="button" role="tab" aria-controls="pills-followers"
+                                                    aria-selected="true">Following</button>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-followers" role="tabpanel"
+                                                aria-labelledby="pills-followers-tab">
+                                                <div class="followers-cont-lists">
+                                                    <ul>
+                                                        <li>
+                                                            {% if following_user %}
+                                                            {% for i in following_user %}
+                                                            <li>    
+                                                                <div class="lt_followers_bx">
+                                                                    <figure><img src="{{i.follow_user.profile_pic.url}}" class="mCS_img_loaded"></figure>
+                                                                    <figcaption>
+                                                                        <h4>{{i.follow_user.first_name}} {{i.follow_user.last_name}}</h4>
+                                                                        <p>{{i.follow_user.user_category}}</p>
+                                                                    </figcaption>
+                                                                </div>
+                                                                <form id="request-user" method="POST">
+                                                                    {% csrf_token %}
+                                                                    <div class="ry_followers_bx">
+                                                                        <input type="hidden" name="user_id" value="{{i.id}}">
+                                                                        <button type="submit" class="btn remove-btn" value="user_id">Unfollow</button>
+                                                                    </div>
+                                                                </form>
+                                                            </li>    
+                                                            {% endfor %}
+                                                            {% else %}
+                                                            <p>Not Found</p>
+                                                            {% endif %}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+    {% endblock %}
+</html>

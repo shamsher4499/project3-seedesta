@@ -1,0 +1,185 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+   </head>
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+        <section class="goal-detail-sec">
+            <div class="container">
+                <div class="goal-about-sec">
+                    <div class="slider-arrow owl-carousel detail-goals owl-theme">
+                        <div class="item"><figure><img src="{% static 'frontend/images/group-4.png' %}"></figure></div>
+                        <div class="item"><figure><img src="images/goal-detail-img.png"></figure></div>
+                        <div class="item"><figure><img src="images/goal-detail-img1.png"></figure></div>
+                    </div>
+                    <div class="check-heart-info">
+                        <a href="javascript:;"><h4>{{group_goal_detail.goal_name}}</h4></a>
+                        <ul class="members-name-dec">
+                            <li class="first-mem"><a href="javascript:;"><img src="{% static 'frontend/images/users-list.svg' %}">{{member_count}} Members</a></li>
+                            <li class="second-mem">{{group_goal_detail.goap_type}}</li>
+                        </ul>
+                        <a class="check-heart" href="{% url 'users_favourute_goal' group_goal_detail.slug %}">
+                            {% if fav_goal.user_id == request.user.id and fav_goal.favourite == 1 %}
+                                <i class="ri-heart-fill"></i>{% else %}<i class="ri-heart-line"></i>{% endif %}
+                            {% comment %} <i class="ri-heart-line"></i></a> {% endcomment %}
+                    </div>
+
+                    <p>{{group_goal_detail.goal_desc}}</p>
+
+                    <p></p>
+
+                    <p></p>
+
+                    <div class="goal-detail-dec">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>
+                                        <h6>Total Amount</h6>
+                                        <span>${{group_goal_detail.goal_amount.normalize}}</span>
+                                    </li>
+                                    {% comment %} <li>
+                                        <h6>Total Covered Amount </h6>
+                                        <span>$40</span>
+                                    </li> {% endcomment %}
+                                    <li>
+                                        <h6>Started Date</h6>
+                                        <span>{{group_goal_detail.start_date}}</span>
+                                    </li>
+                                    <li>
+                                        <h6>Payment Plan </h6>
+                                        <span>{{group_goal_detail.payment_plan.plan_name}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>{% if sub_goal %}
+                                    <li>
+                                        <h6>Sub Goal Name</h6>
+                                        <span>{{sub_goal.sub_goal_name}}</span>
+                                    </li>
+                                    <li>
+                                        <h6>Sub Goal Price</h6>
+                                        <span>${{sub_goal.sub_goal_amount|floatformat}}</span>
+                                    </li>
+                                    <li>
+                                        <h6>Sub Goal Start Date</h6>
+                                        <span>{{sub_goal.sub_start_date}}</span>
+                                    </li>
+                                    {% else %}
+                                    {% endif %}
+                                    {% if donation_amount > 0 %}
+                                    <li>
+                                        <h6>Donation Amount</h6>
+                                        <span>$ {{donation_amount}}</span>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="goal-detail-btn">
+                        {% comment %} {% if goal_id==group_goal_detail.id and members_id==group_goal_detail.user_id %} {% endcomment %}
+                        {% if check_member %}
+                        <a class="btn btn-liner" href="{% url 'members_deatils' group_goal_detail.slug  %}">Job Board</a>
+                      {% endif %}
+                        {% comment %} {% else %}
+                        {% endif %} {% endcomment %}
+                        {% if currntdate < created_date %}
+                        {% if not check_member %}
+                        <a class="btn btn-liner" href="{% url 'sent_request' group_goal_detail.slug %}">Send Request</a>
+                        {% endif %}
+                        {% endif %}
+
+                        
+                        <form method="POST" action="{% url 'goal_donate' %}" >
+                            {% csrf_token %}
+                            <input type='hidden'name="user_goal_slug" value="{{group_goal_detail.slug}}">
+                            <button class="btn">Donate</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    <script type="text/javascript">
+        $('.detail-goals').owlCarousel({
+            loop:true,
+            margin:0,
+            nav:true,
+            dots:false,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:1
+                }
+            }
+        })
+    </script>
+    </body>
+{% endblock %}
+</html>

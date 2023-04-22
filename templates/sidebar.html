@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% load static %}
+{% block body %}
+
+<!-- Sidebar -->
+<body id="page-top">
+    <div id="wrapper">
+<ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'dashboard' %}">
+        <div class="sidebar-brand-icon">
+            <img src="{% static 'img/logo/logo2.png' %}" style="filter: brightness(200%);">
+        </div>
+        <div class="sidebar-brand-text mx-3">Seedesta</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item active">
+        <a class="nav-link collapsed" href="{% url 'dashboard' %}">
+            <i class="fa fa-university" aria-hidden="true"></i>
+            <span>Dashboard</span></a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Management System
+    </div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap" aria-expanded="true"
+            aria-controls="collapseBootstrap">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            <span>User Management</span>
+        </a>
+        <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">User Management</h6>
+                <a class="collapse-item" href="{% url 'tables' %}">Customers</a>
+                <a class="collapse-item" href="{% url 'vendors' %}">Vendors</a>
+                <a class="collapse-item" href="{% url 'pending' %}">Pending Vendors</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseForm" aria-expanded="true"
+            aria-controls="collapseForm">
+            <i class="fa fa-trophy" aria-hidden="true"></i>
+            <span>Goal</span>
+        </a>
+        <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Goal</h6>
+                <a class="collapse-item" href="{% url 'goal' %}">Goal</a>
+                <a class="collapse-item" href="{% url 'goal_questions' %}">Goal Questions</a>
+            </div>
+        </div>
+    </li>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Website Settings
+    </div>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsGlobal" aria-expanded="true"
+                aria-controls="collapsGlobal">
+                <i class="fa fa-wrench" aria-hidden="true"></i>
+                <span>Global Settings</span>
+            </a>
+            <div id="collapsGlobal" class="collapse" aria-labelledby="headingGlobal" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Global Settings</h6>
+                    <a class="collapse-item" href="{% url 'social' %}">Social Accounts</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsEmail" aria-expanded="true"
+                aria-controls="collapsEmail">
+                <i class="fa fa-id-card" aria-hidden="true"></i>
+                <span>Email Management</span>
+            </a>
+            <div id="collapsEmail" class="collapse" aria-labelledby="headingEmail" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Email Templates</h6>
+                    <a class="collapse-item" href="{% url 'email' %}">Email Template</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsBlog" aria-expanded="true"
+                aria-controls="collapsBlog">
+                <i class="fa fa-camera-retro" aria-hidden="true"></i>
+                <span>Post Management</span>
+            </a>
+            <div id="collapsBlog" class="collapse" aria-labelledby="headingBlog" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Post Management</h6>
+                    <a class="collapse-item" href="{% url 'post' %}">Post Management</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsTestimonial" aria-expanded="true"
+                aria-controls="collapsTestimonial">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <span>Testimonial</span>
+            </a>
+            <div id="collapsTestimonial" class="collapse" aria-labelledby="headingTestimonial" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Testimonial Management</h6>
+                    <a class="collapse-item" href="{% url 'testimonial' %}">Testimonial</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsContact" aria-expanded="true"
+                aria-controls="collapsContact">
+                <i class="fa fa-bullhorn" aria-hidden="true"></i>
+                <span>Contact Us</span>
+            </a>
+            <div id="collapsContact" class="collapse" aria-labelledby="headingContact" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">ContactUs Management</h6>
+                    <a class="collapse-item" href="{% url 'contact' %}">Pending</a>
+                    <a class="collapse-item" href="{% url 'resolved_contact' %}">Resolved</a>
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsPayment" aria-expanded="true"
+                aria-controls="collapsPayment">
+                <!-- <i class="fa fa-money" aria-hidden="true"></i> -->
+                <!-- <i class="ri-money-dollar-circle-line"></i> -->
+                <i class="ri-money-dollar-box-fill"></i>
+                <span>Vendor Payment</span>
+            </a>
+            <div id="collapsPayment" class="collapse" aria-labelledby="headingPayment" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Vendor Payment Management</h6>
+                    <a class="collapse-item" href="{% url 'vendor_subscription' %}">Subscription Plan</a>
+                    <a class="collapse-item" href="{% url 'vendor_active_subscription' %}">Vendor Subscription</a>
+                    <a class="collapse-item" href="{% url 'vendor_payment_sattlement' %}">Vendor settlement</a>
+                    <!-- <a class="collapse-item" href="{% url 'commission' %}">Commission</a> -->
+                </div>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsCustomerPayment" aria-expanded="true"
+                aria-controls="collapsCustomerPayment">
+                <!-- <i class="fa fa-money" aria-hidden="true"></i> -->
+                <!-- <i class="ri-money-dollar-circle-line"></i> -->
+                <i class="ri-money-dollar-box-fill"></i>
+                <span>Customer Payment</span>
+            </a>
+            <div id="collapsCustomerPayment" class="collapse" aria-labelledby="headingCustomerPayment" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Customer Payment Management</h6>
+                    <a class="collapse-item" href="{% url 'active_goals' %}">Active Goals</a>
+                    <a class="collapse-item" href="{% url 'completed_goals' %}">Completed Goals</a>
+                    <a class="collapse-item" href="{% url 'vendor_payment_sattlement' %}">Goal settlement</a>
+                    <a class="collapse-item" href="{% url 'commission' %}">Commission</a>
+                </div>
+            </div>
+        </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsCMS" aria-expanded="true"
+                        aria-controls="collapsCMS">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <span>CMS Management</span>
+                    </a>
+                    <div id="collapsCMS" class="collapse" aria-labelledby="headingCMS" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">CMS Management</h6>
+                            <a class="collapse-item" href="{% url 'about' %}">About Us</a>
+                            <a class="collapse-item" href="{% url 'get_in_touch' %}">Get In Touch</a>
+                            <a class="collapse-item" href="{% url 'admin_privacy_policy' %}">Privacy Policy</a>
+                            <a class="collapse-item" href="{% url 'admin_terms_condition' %}">Terms & Conditions</a>
+                        </div>
+                    </div>
+                </li>
+
+        <hr class="sidebar-divider">
+        <div class="sidebar-heading">
+            Mobile Settings
+        </div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsSlider" aria-expanded="true"
+            aria-controls="collapsSlider">
+            <i class="fa fa-industry" aria-hidden="true"></i>
+            <span>App Slider Management</span>
+        </a>
+        <div id="collapsSlider" class="collapse" aria-labelledby="headingSlider" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Slider Templates</h6>
+                <a class="collapse-item" href="{% url 'slider' %}">Slider Templates</a>
+            </div>
+        </div>
+        
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsAboutUs" aria-expanded="true"
+            aria-controls="collapsAboutUs">
+            <i class="fa fa-info-circle" aria-hidden="true"></i>
+            <span>App About Management</span>
+        </a>
+        <div id="collapsAboutUs" class="collapse" aria-labelledby="headingAboutUs" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">About Us</h6>
+                <a class="collapse-item" href="{% url 'about_us_app' %}">About Us</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsAppTestimonial" aria-expanded="true"
+            aria-controls="collapsAppTestimonial">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            <span>Manage Testimonial</span>
+        </a>
+        <div id="collapsAppTestimonial" class="collapse" aria-labelledby="headingAppTestimonial" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Testimonial Management</h6>
+                <a class="collapse-item" href="{% url 'app_testimonial' %}">Testimonial</a>
+            </div>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsAppTicket"
+            aria-expanded="true" aria-controls="collapsAppTicket">
+            <i class="fa fa-rocket" aria-hidden="true"></i>
+            <span>Manage Ticket</span>
+        </a>
+        <div id="collapsAppTicket" class="collapse" aria-labelledby="headingAppTicket"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Ticket Management</h6>
+                <a class="collapse-item" href="{% url 'questions' %}">Questions</a>
+                <a class="collapse-item" href="{% url 'tickets' %}">View Tickets</a>
+                <a class="collapse-item" href="{% url 'resolved_tickets' %}">Resolved Tickets</a>
+            </div>
+        </div>
+    </li>
+</ul>
+    </div>
+</body>
+{% endblock %}

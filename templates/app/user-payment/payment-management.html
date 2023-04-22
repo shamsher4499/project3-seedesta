@@ -1,0 +1,160 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+    {% block body %}
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+   </head>
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+        
+            <section class="select-goals-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="row inner-dash-bord">
+                        
+                        <div class="col-md-3">
+                            {% include 'app/base/sidebar.html' %}
+                           
+                        </div>
+                        <div class="col-md-9">
+                            <div class="dashboard-right-body">
+                                <div class="heading_dash_rt">
+                                    <h3>Payment Management</h3>
+                                    <a class="btn" href="{% url 'user_payment_card' %}">Add New Card</a>
+                                </div>
+                                <div class="dash-in-space">
+                                    <div class="payment-cont-lists">
+                                        <div class="row">
+                                            {% if user_cards %}
+                                                {% for user_card in user_cards %}
+                                                    <div class="col-sm-6">
+                                                        <div class="pay-ment-bx">
+                                                            <div class="pay-ment-ft">
+                                                                <figure><img src="{% if user_card.brand == 'Visa' %}{% static 'frontend/images/visa-icon.svg' %}{% elif user_card.brand == 'Discover' %}{% static 'frontend/images/discover.svg' %}{% elif  user_card.brand == 'American Express' %}{% static 'frontend/images/amex.svg' %}{% elif user_card.brand == 'MasterCard' %}{% static 'frontend/images/mastercard-3.svg' %}{% else %}not available{% endif %}"></figure>
+                                                                <figcaption>
+                                                                    
+                                                                    <h5>XXXX XXXX XXXX {{ user_card.last4 }}</h5>
+                                                                    {% if user_card.name %}<h6>{{ user_card.name }}</h6>{% endif %}
+                                                                </figcaption>
+                                                            </div>
+                                                            <span class="hr_liner"></span>
+                                                            <div class="pay-ment-sd">
+                                                                <form id="request-user" method="POST">
+                                                                    {% csrf_token %}
+                                                                    <div class="d-flex">
+                                                                        <input type="hidden" name="user_id" value="{{user_card.id}}">
+                                                                        <a class="btn btn-liner" href="javascript:;">Edit</a>
+                                                                        <a class="btn" href="{% url 'card_delete' user_card.id %}">Delete</a>
+                                                                    </div>
+                                                                </form>
+                                                                {% for i in user_payment %}
+                                                                    {% if i.default_payment == 1 and i.card_id == user_card.id %}
+                                                                    <span class="default-value">Default</span>
+                                                                    {% elif  i.default_payment == 0 and i.card_id == user_card.id  %}
+                                                                    <a class="default-value" href="{% url 'card_set_default' user_card.id %}">Set Default</a>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            {% else %}
+                                            <p>No card add yet.</p>
+                                            {% endif %}
+                                            {% comment %} <div class="col-sm-6">
+                                                <div class="pay-ment-bx">
+                                                    <div class="pay-ment-ft">
+                                                        <figure><img src="images/visa-icon.svg"></figure>
+                                                        <figcaption>
+                                                            <h5>XXXX XXXX XXXX 1253</h5>
+                                                            <h6>Lissa Watson</h6>
+                                                        </figcaption>
+                                                    </div>
+                                                    <span class="hr_liner"></span>
+                                                    <div class="pay-ment-sd">
+                                                        <div class="d-flex">
+                                                            <a class="btn btn-liner" href="javascript:;">Edit</a>
+                                                            <a class="btn" href="javascript:;">Delete</a>
+                                                        </div>
+                                                        <span class="default-value set">Set as default</span>
+                                                    </div>
+                                                </div>
+                                            </div> {% endcomment %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+    {% endblock %}
+</html>

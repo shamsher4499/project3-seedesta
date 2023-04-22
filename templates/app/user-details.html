@@ -1,0 +1,178 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <body>
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+            <section class="member-detail-sec">
+                <div class="container">
+                    <div class="heading-member">
+                        <figure><img src="{% if user.profile_pic %}{{user.profile_pic.url}}{% else %}{% static 'frontend/images/member-5.png' %}{% endif %}"></figure>
+                        <figcaption>
+                            <div class="figcap-left">
+                                <h3>{{user.first_name}} {{user.last_name}}</h3>
+                                <span class="new-member">{{user.user_category}}</span>
+                                <div class="member-reviews">
+                                    
+                                    <ul>
+                                        <!-- {{ request.user.avg_rating }} -->
+                                        {% if user.avg_rating >= 0 %}
+                                        {% endif %}
+                                        <li class="{% if user.avg_rating > 0 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                                        <li class="{% if user.avg_rating > 1 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                                        <li class="{% if user.avg_rating > 2 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                                        <li class="{% if user.avg_rating >= 4 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                                        <li class="{% if user.avg_rating >= 5 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                                    </ul>
+                                    
+                                    <span class="how-staring"><font>{{user.avg_rating}}</font> 
+                                        {% comment %} <a href="javascript:;">({{user_count}} Reviews)</a></span> {% endcomment %}
+                                </div>
+                                <ul class="mem_goal_user">
+                                    {% if goal_group > 0 %}
+                                    <li><a href="{% url 'user_group_goal' user.slug%}"><img src="{% static 'frontend/images/users-list.svg' %}"> {{goal_group}} Groups</a></li>
+                                    {% else %}
+                                    <li><a href="#"><img src="{% static 'frontend/images/users-list.svg' %}"> {{goal_group}} Groups</a></li>
+                                    {% endif %}
+                                    {% if goal_user > 0 %}
+                                    <li><a href="{% url 'user_goal' user.slug %}"><img src="{% static 'frontend/images/goals-icon.svg' %}"> {{goal_user}} Goals</a></li>
+                                    {% else %}
+                                    <li><a href="#"><img src="{% static 'frontend/images/goals-icon.svg' %}"> {{goal_user}} Goals</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="figcap-right">
+                                <a class="btn" href="{% url 'user_follow' user.slug %}"><i class="ri-user-unfollow-line"></i>{% if follow_user.user_email_id == request.user.id and follow_user.req_status == 1 %} Requested{% elif follow_user.user_email_id == request.user.id and follow_user.follow == 1 %}Unfollow{% else %} Follow{% endif %}</a>
+                                <!-- <a class="btn black-btn" href="javascript:;"><i class="ri-chat-3-line"></i> Message</a> -->
+                                <a class="btn green-btn" href="{% url 'user_favourite' user.slug %}">{% if fav_user.user_id == request.user.id and fav_user.favourite == 1 %}<i class="ri-heart-fill"></i>{% else %}<i class="ri-heart-line"></i>{% endif %}</a>
+                            </div>
+                        </figcaption>
+                    </div>
+                    <div class="detail-member-text">
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using ‘Content here It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                    </div>
+                    <div class="detail-member-box">
+                        <div class="dt_member_head">
+                            <h3>Posts</h3>                        
+                        </div>
+                        <div class="row">
+                            {% if post_user %}
+                            {% for i in post_user %}
+                            <div class="col-md-4">
+                                <div class="detail-member-cont">
+                                    <div class="play-member-sec">
+                                        {% if i.image %}
+                                        <a href="{% url 'user_post_detail' i.slug %}"><figure><img src="{{i.image.url}}"></figure></a>
+                                        {% elif i.video %}
+                                        <a href="javascript;;">
+                                            <figure><source src="{{i.video}}" type="video/ogg"></figure>
+                                        </a>
+                                        <a class="play-btn" href="javascript:;"><i class="ri-play-fill"></i></a>
+                                        {% elif i.youtube_id %}
+                                        <a href="javascript;;">
+                                            <figure>
+                                                <iframe width="420" height="315" src="https://www.youtube.com/embed/{{i.youtube_id}}">
+                                                </iframe>
+                                            </figure>
+                                        </a>
+                                        <!-- <a class="play-btn" href="javascript:;"><i class="ri-play-fill"></i></a> -->
+                                        {% endif %}
+                                    </div>
+                                    <figcaption>
+                                        
+                                        <div class="d-flex justify-content-between">
+                                            {% for key,value in post_count.items %}
+                                            {% if i.id == key  %}
+                                            <div class="like_diss">
+                                                <ul>
+                                                    <li>
+                                                        <a href="{% url 'postuserLike' i.slug %}">{% if like_posts.post_like == True %}
+                                                        <i style="color:green" class="ri-thumb-up-line"></i>{% else %}
+                                                        <i class="ri-thumb-up-line"></i>
+                                                        {% endif %}
+                                                        </a>{{posts_like}}
+                                                    </li> 
+
+                                                    <li>
+                                                    <a href="{% url 'postuserDislike' i.slug %}">
+                                                    {% if like_posts.post_dislike == True %}
+                                                    <i style="color:green" class="ri-thumb-down-line"></i>
+                                                    {% else %}
+                                                    <i class="ri-thumb-down-line"></i>
+                                                    {% endif%}
+                                                </a>{{posts_dislike}}
+                                            </li>
+                                                </ul>
+                                            </div>
+                                            {% endif %}
+                                            {% endfor %}
+                                            <div class="views_user">
+                                                <ul>
+                                                    <li><a href="javascript:;"><i class="ri-eye-line"></i>{{view_count}} Views</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <a href="{% url 'user_post_detail' i.slug %}"><p>{{i.title}}</p></a>
+                                        <span class="day_ago">{{i.created}}</span>
+                                    </figcaption>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            No post found
+                            {% endif %}
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <script>
+        function ddd(){
+            let rating = $('.ss').val()
+            alert(rating)
+        }
+    </script>
+    <!-- -----side menu------ -->
+    </body>
+    {% endblock %}
+</html>

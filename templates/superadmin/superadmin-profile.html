@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        <!-- Sidebar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                {% include 'navbar.html' %}
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Profile</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                            <!-- <li class="breadcrumb-item"><a href="{% url 'vendors' %}">Profile</a></li> -->
+                            <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 mb-4"> 
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                {% if messages %}
+                                
+                                {% for message in messages %}
+                                {% if message.tags == 'success'%}
+                                <div class="alert alert-success">
+                                    {{message}}
+                                </div>
+                                {% elif message.tags == 'error' %}
+                                <div class="alert alert-danger">
+                                    {{message}}
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                                {% endif %}
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                                </div>
+                                <div class="container-xl px-4 mt-4">
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row">
+                                        <div class="col-xl-6">
+                                            <!-- Account details card-->
+                                            <div class="card mb-4">
+                                                <div class="card-header">Account Details</div>
+                                                <div class="card-body">
+                                                    <form method="POST" id="adminProfile">
+                                                        {% csrf_token %}
+                                                        <div class="row gx-3 mb-3">
+                                                            <!-- Form Group (first name)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputFirstName">First
+                                                                    name</label>
+                                                                <input class="form-control" id="inputFirstName"
+                                                                    type="text" name="first_name"
+                                                                    placeholder="Enter your first name"
+                                                                    value="{{admin.first_name}}">
+                                                            </div>
+                                                            <!-- Form Group (last name)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputLastName">Last
+                                                                    name</label>
+                                                                <input class="form-control" id="inputLastName"
+                                                                    type="text" name="last_name"
+                                                                    placeholder="Enter your last name"
+                                                                    value="{{admin.last_name}}">
+                                                            </div>
+                                                        </div>
+                                                        <!-- Form Row        -->
+                                                        <div class="row gx-3 mb-3">
+                                                            <!-- Form Group (organization name)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1"
+                                                                    for="inputOrgName">Email</label>
+                                                                <input class="form-control" id="inputOrgName"
+                                                                    type="text" name="email"
+                                                                    placeholder="Enter your organization name"
+                                                                    value="{{admin.email}}" readonly>
+                                                            </div>
+                                                            <!-- Form Group (location)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1"
+                                                                    for="inputLocation">Mobile</label>
+                                                                <input class="form-control" id="inputLocation"
+                                                                    type="text" name="mobile"
+                                                                    placeholder="Enter your Mobile"
+                                                                    value="{{admin.mobile}}" minlength="10" maxlength="12"  onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                                            </div>
+                                                            <!-- <div class="col-md-6">
+                                                                <label class="small mb-1"
+                                                                    for="inputEmailAddress2">Created At</label>
+                                                                <input class="form-control"  id="inputEmailAddress2"
+                                                                    value="{{admin.created}}" readonly>
+                                                            </div> -->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputEmailAddress1">Last Login</label>
+                                                                <input class="form-control" id="inputEmailAddress1" value="{{admin.last_login}}" readonly>
+                                                            </div>
+                                                           
+                                                        </div>
+                                                        <!-- Form Group (email address)-->
+
+                                                        <div class="form-group">
+                                                            <button type="submit" name="form1" onclick="return confirm('Are you sure you want to update profile.')" class="btn btn-primary">Save
+                                                                Changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <!-- Account details card-->
+                                            <div class="card mb-4">
+                                                <div class="card-header">Change Password</div>
+                                                <div class="card-body">
+                                                    <form method="POST" id="changePassword">
+                                                        {% csrf_token %}
+                                                        <div class="row gx-3 mb-3">
+                                                        </div>
+                                                        <div class="row gx-3 mb-3">
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputOrgName">Current Password</label>
+                                                                <input class="form-control" id="inputOrgName" type="password" name="current_password"
+                                                                    placeholder="Enter your Current Password" value="*********" onfocus="this.value=''" >
+                                                            </div>
+                                                            <!-- Form Group (location)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputLocation">New Password</label>
+                                                                <input class="form-control" id="inputLocation" type="password" name="new_password"
+                                                                    placeholder="Enter your New Password" value="" onfocus="this.value=''">
+                                                            </div>                                       
+                                                        </div>
+                                                        <!-- Form Group (email address)-->
+                                        
+                                                        <div class="form-group">
+                                                            <button type="submit" name="form2" class="btn btn-primary" onclick="return confirm('Are you sure you want to change password')">Change Password</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--Row-->
+
+                    <!-- Modal Logout -->
+
+
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+<script>
+    setTimeout(() => {
+        $('.alert').fadeOut('fast');
+    }, 2000);
+
+</script>
+    <script src="{% static 'js/myfunction.js' %}"></script>
+
+
+</body>
+
+</html>

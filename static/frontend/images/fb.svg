@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 45 45">
+  <g id="fb" transform="translate(-366.5 599)">
+    <g id="Group_26593" data-name="Group 26593" transform="translate(365.5 -599.164)">
+      <g id="Group_67626" data-name="Group 67626">
+        <rect id="Rectangle_15" data-name="Rectangle 15" width="45" height="45" rx="22.5" transform="translate(1 0.165)" fill="#4070bc"/>
+        <path id="Icon_zocial-facebook" data-name="Icon zocial-facebook" d="M13.257,11.527v-4.1h3.306V5.366a5.394,5.394,0,0,1,1.448-3.8A4.607,4.607,0,0,1,21.521,0h3.284V4.1H21.521a.723.723,0,0,0-.579.354,1.438,1.438,0,0,0-.258.869v2.1h4.121v4.1H20.684v9.939H16.563V11.527Z" transform="translate(4.743 12.165)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

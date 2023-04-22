@@ -1,0 +1,147 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+{% block body %}
+<section class="home-carousel">
+    <div class="container">
+        {% if messages %}
+
+        {% for message in messages %}
+        {% if message.tags == 'success'%}
+        <div class="alert alert-success">
+            {{message}}
+        </div>
+        {% elif message.tags == 'error' %}
+        <div class="alert alert-danger">
+            {{message}}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+        <div class="owl-carousel home-banners owl-theme">
+            {% for i in slide %}
+                <div class="item">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="home-item-text">
+                                <h1>{{i.title}}</h1>
+                                <p>{{i.desc|safe}}</p>
+                                <a class="btn" href="{% if request.user.is_authenticated %}{% url 'profile' %}{% else %}{% url 'signin' %}{% endif %}">Get Started</a>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                            <div class="home-item-text">
+                                <figure><img src="{{i.image.url}}"></figure>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}    
+        </div>
+    </div>
+</section>
+
+<section class="hm-about-sec">
+    <div class="container">
+        <div class="main-heading">
+            <span class="green-text"><a href="{% url 'about_us' %}">About us</a></span>
+            <h2>{{about.title}}</h2>
+        </div>
+
+        <div class="hm-about-img">
+            <p>{{about.desc4}}</p>
+            <div class="hm-about-in">
+                <figure><img src="{{about.image1.url}}"></figure>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if latest_goal %}
+{% if request.user.is_authenticated and request.user.user_type == 'VENDOR' %}
+{% elif request.user.is_authenticated and request.user.user_type == 'USER' %}
+<section class="latest-goals-sec">
+    <div class="container">
+        <div class="main-heading">
+            <h2>Latest Goals</h2>
+            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
+                in some form, by injected humour.</p>
+        </div>
+        <div class="goals-slides-lists">
+            <div class="slider-arrow owl-carousel goals-slides owl-theme">
+                {% for i in latest_goal %}
+                
+                <a href="goal-details/{{i.slug}}/"><div class="item">
+                    <div class="goals-item-text">
+                        <figure><img src="{% static 'frontend/images/latest-1.png' %}"></figure>
+                        <h6>{{i.goal_name}}</h6>
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+            <div class="text-center"><a class="btn" href="{% url 'group_goal_list' %}">View All</a></div>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="latest-goals-sec">
+    <div class="container">
+        <div class="main-heading">
+            <h2>Latest Goals</h2>
+            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
+                in some form, by injected humour.</p>
+        </div>
+        <div class="goals-slides-lists">
+            <div class="slider-arrow owl-carousel goals-slides owl-theme">
+                {% for i in latest_goal %}
+                
+                <a href="goal-details/{{i.slug}}/"><div class="item">
+                    <div class="goals-item-text">
+                        <figure><img src="{% static 'frontend/images/latest-1.png' %}"></figure>
+                        <h6>{{i.goal_name}}</h6>
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+            <div class="text-center"><a class="btn" href="{% url 'group_goal_list' %}">View All</a></div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endif %}
+<section class="testimonials-sec" id="testimonial">
+    <div class="container">
+        <div class="testimonials-flex">
+            <div class="main-heading">
+                <span class="green-text">Testimonials</span>
+                <h2>There are many variations of passages of Lorem Ipsum</h2>
+                <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                    alteration in some form, by injected humour, or randomised </p>
+            </div>
+            <div class="testimonials-slides-lists">
+                <div class="slider-arrow owl-carousel testimonials owl-theme">
+                    {% for i in testimonial %}
+                    <div class="item">
+                        <div class="testi-item-text">
+                            <figure><img src="{{i.image.url}}"></figure>
+                            <figcaption>
+                                <span><img src="{% static 'frontend/images/equal.svg' %}"></span>
+                                <h5>{{i.name}}</h5>
+                                <h6>Manager</h6>
+                                <p>{{i.desc|safe}}</p>
+                            </figcaption>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    setTimeout(() => {
+        $('.alert').fadeOut('fast');
+    }, 2000);
+</script>
+{% endblock %}

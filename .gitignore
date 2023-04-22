@@ -1,0 +1,9 @@
+.env
+server.conf
+test.py
+.git
+superadmin/__pycache__
+superadmin/migrations
+api-fast.py
+webfonts
+.vscode

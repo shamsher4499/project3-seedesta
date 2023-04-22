@@ -1,0 +1,160 @@
+{% load static %}
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="{% static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet" />
+       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="{% static 'css/fontawesome-all.min.css' %}" rel="stylesheet"/>
+      <link rel="stylesheet" href="{% static 'frontend/css/owl.carousel.min.css' %}" rel="stylesheet"/>
+      <link rel="stylesheet" href="{% static 'frontend/fonts/remixicon.css' %}" rel="stylesheet"/>
+      <link rel="stylesheet" href="{% static 'frontend/css/fontawesome-all.css' %}" rel="stylesheet"/>
+      <link rel="stylesheet" href="{% static 'frontend/css/fontawesome.css' %}" rel="stylesheet"/>
+      <link rel="stylesheet" href="{% static 'frontend/css/style.css' %}" rel="stylesheet"/>
+      <link rel="stylesheet" href="{% static 'frontend/css/responsive.css' %}" rel="stylesheet"/>
+   </head>
+   <body>
+
+<div class="login-form-container">
+    <div class="login-form-inner"> 
+        <div class="login-two-pane">
+            <div class="login-left">
+                <div class="login-left-in">
+                    <div class="login-head">
+                        <h4>Sign Up</h4>
+                        <p>Please enter the details below</p>
+                    </div>
+                    <div class="login-form">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                            <select class="form-control" id="choices" name="user_type">
+                                <option value="">--Select--</option>
+                                {% for i in roll %}
+                                <option value="{{i.0}}" {% if i.0 == registerUser.roll %}selected {% endif %}>{{i.1}}</option>
+                                {% endfor %}
+                            </select>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6"> 
+                                    <div class="form-group mb-3">
+                                      <input type="text" class="form-control"  name="first_name" placeholder="First name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6"> 
+                                    <div class="form-group mb-3">
+                                      <input type="text" class="form-control"  name="last_name" placeholder="Last name">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control"  name="email" placeholder="Email ID">
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="text" class="form-control" name="mobile" placeholder="Mobile number">
+                            </div>
+                            <div class="form-group mb-3">
+                                <input type="password" class="form-control" name="password" placeholder="Password">
+                            </div>
+                            <!-- <div class="form-group mb-3">
+                                <input type="password" class="form-control"  placeholder="Confirm password">
+                            </div> -->
+                            <div class="form-check mb-3">
+                              <input class="form-check-input" type="checkbox" value="" id="remember-me">
+                              <label class="form-check-label" for="remember-me">
+                                I accept <a href="javascript:;">Terms & Condition</a>  
+                              </label>
+                            </div>
+                            <a href="/admin/verify/{{user.slug}}/"><button type="submit" class="btn btn-primary btn-block">Sign Up</button></a>
+                            <div class="not-account">
+                                <p>Already have an account? <a href="{% url 'login-user' %}">Login</a></p>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="login-right-in"> 
+                    <a href="javascript:;"><img src="{% static 'frontend/images/logo-2.svg' %}"></a>
+                    <h2>Welcome to Seedesta</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{% static 'frontend/js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'frontend/js/popper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'frontend/js/owl.carousel.min.js' %}"></script>
+<script src="https://code.highcharts.com/highcharts.js' %}"></script>
+<script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+   $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+</script>
+
+<!-- -----side menu------ -->
+    <script>
+       $('#menu-button').click(function(e) {
+           e.stopPropagation();
+           $('#hide-menu').toggleClass('show-menu');
+       });
+       $('#hide-menu').click(function(e) {
+           e.stopPropagation();
+       });
+       $('body,html,.closebtn').click(function(e) {
+           $('#hide-menu').removeClass('show-menu');
+       });
+    </script>
+<!-- -----side menu------ -->
+
+<script type="text/javascript">
+  $('.home-banners').owlCarousel({
+      loop:true,
+      margin:0,
+      nav:false,
+      dots:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:1
+          },
+          1000:{
+              items:1
+          }
+      }
+  })
+  </script>
+
+<script type="text/javascript">
+  $('.people-say').owlCarousel({
+      loop:true,
+      margin:30,
+      nav:true,
+      dots:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:2
+          },
+          1000:{
+              items:3
+          }
+      }
+  })
+  </script>
+
+</body>
+</html>

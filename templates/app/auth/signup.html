@@ -1,0 +1,363 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+    {% block body %}
+    <title>{% block title %} Sign Up{% endblock %}</title>
+   <body>
+    <div class="wraper-main">
+{% include 'app/base/navbar.html' %}
+<style>
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #297538;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #297538;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #297538;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
+<div class="login-form-container">
+    <div class="login-form-inner"> 
+        <div class="login-two-pane">
+            <div class="login-left">
+                <div class="login-left-in">
+                    <div class="login-head">
+                        <h4>Sign Up</h4>
+                        <p>Please enter the details below</p>
+                        {% if messages %}
+                        
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="login-form">
+                        <span>User</span> 
+                        <label class="switch">
+                         <input type="checkbox" id="toggle1" onchange="showForm()" value="1">
+                            <span class="slider round"></span>
+                        </label>
+                        <!-- <label class="switch">
+                            <input type="checkbox" id="toggle2">
+                            <span class="slider round"></span>
+                        </label> -->
+                        <span>Vendor</span>
+                        <br>
+                        <br>
+                        <div id="vendor1">
+                            <form method="POST" id="vendorForm" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <!-- <div class="col-md-6">  -->
+                                    <!-- </div> -->
+                                    <!-- <div class="col-md-6">  -->
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="company_name" name="company_name"
+                                            placeholder="Enter Company Name">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="company_regisration_number" name="company_regisration_number"
+                                            placeholder="Enter Registration Number">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="company_username" name="company_username"
+                                            placeholder="Enter Company Username">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="file" class="form-control" id="company_document" name="company_document" aria-describedby="emailHelp"
+                                            accept="image/png, image/gif, image/jpeg, application/pdf, application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, .xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                            placeholder="Upload Company document">
+                                    </div>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" name="email" placeholder="Email ID">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" name="mobile" placeholder="Mobile number" minlength="10" maxlength="12"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="password" class="form-control" name="password" placeholder="Password">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input hidden type="text" class="form-control" id="slug" name="slug" placeholder="slug">
+                                </div>
+                                <!-- <div class="form-group mb-3">
+                                                            <input type="password" class="form-control"  placeholder="Confirm password">
+                                                        </div> -->
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" value="1" name="agree" id="remember-me">
+                                    <label class="form-check-label" for="remember-me">
+                                        I accept <a href="javascript:;">Terms & Condition</a>
+                                    </label>
+                                </div>
+                               <button type="button" onclick="vendorSignUP_data()" class="btn btn-primary btn-block">Sign Up</button>
+                                <div class="not-account">
+                                    <p>Already have an account? <a href="{% url 'signin' %}">Login</a></p>
+                                </div>
+                            </form>
+                        </div>
+                        <!---------------------------------user form-------------------->
+                        <div id="user1">
+                            <form method="POST" id="userForm">
+                                {% csrf_token %}
+                                <div class="row">
+                                 
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
+                                    </div>
+                          
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name">
+                                    </div>
+                              
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email ID">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Mobile number" minlength="10" maxlength="12"  onkeypress="return event.charCode >= 48 && event.charCode <= 57" required>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                                </div>
+            
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" value="1" name="agree" id="remember-me">
+                                    <label class="form-check-label" for="remember-me">
+                                        I accept <a href="javascript:;">Terms & Condition</a>
+                                    </label>
+                                </div>
+                                <button type="button" class="btn btn-primary btn-block" onclick="userSignUP_data()">Sign Up</button>
+                                <div class="not-account">
+                                    <p>Already have an account? <a href="{% url 'signin' %}">Login</a></p>
+                                </div>
+                            </form>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="login-right-in"> 
+                    <a href="javascript:;"><img src="{% static 'frontend/images/logo-2.svg' %}"></a>
+                    <h2>Welcome to Seedesta</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'app/base/footer.html' %}
+</div>
+<script type="text/javascript" src="{% static 'frontend/js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'frontend/js/popper.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'frontend/js/owl.carousel.min.js' %}"></script>
+<script src="https://code.highcharts.com/highcharts.js' %}"></script>
+<script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+   $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+</script>
+<script>
+    $(document).ready(()=>{
+           $("#vendor1").hide();
+               $("#user1").show();
+    })
+
+    function showForm() {
+       let btn=$('input[type="checkbox"]:checked').val();
+        if(btn!=1){
+             $("#vendor1").hide();
+            $("#user1").show();
+        }else{
+               $("#vendor1").show();
+            $("#user1").hide();
+        }
+    }
+     
+
+        // $("#toggle2").click(function () {
+        //     $("#user1").hide();
+        //     $("#vendor1").show();
+        // });
+</script>
+<script>
+    function vendorSignUP_data() {
+        let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        $.ajax({
+            type: "POST",
+            url: "/signup-vendor/ajax/",
+            headers: { 'X-CSRFToken': csrftoken },
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: new FormData(document.getElementById("vendorForm")),
+            success: function (res) {
+                console.log(res)
+                toastr.success(res.message);
+                window.location.href = "/verify/" + res.slug
+            },
+            error: function (res) {
+                toastr.error(res.responseJSON.message);
+            }
+        });
+    };
+</script>
+<!-- -----side menu------ -->
+    <script>
+       $('#menu-button').click(function(e) {
+           e.stopPropagation();
+           $('#hide-menu').toggleClass('show-menu');
+       });
+       $('#hide-menu').click(function(e) {
+           e.stopPropagation();
+       });
+       $('body,html,.closebtn').click(function(e) {
+           $('#hide-menu').removeClass('show-menu');
+       });
+
+       function userSignUP_data() {
+            let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            $.ajax({
+                type: "POST",
+                url: "/signup-user/ajax/",
+                headers: { 'X-CSRFToken': csrftoken },
+                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
+                data: new FormData(document.getElementById("userForm")),
+                success: function (res) {
+                    console.log(res)
+                    toastr.success(res.message);
+                    window.location.href = "/verify/" + res.slug
+                },
+                error: function (res) {
+                    toastr.error(res.responseJSON.message);
+                }
+            });
+        };
+    </script>
+<!-- -----side menu------ -->
+<script>
+    $('#menu-button').click(function (e) {
+        e.stopPropagation();
+        $('#hide-menu').toggleClass('show-menu');
+    });
+    $('#hide-menu').click(function (e) {
+        e.stopPropagation();
+    });
+    $('body,html,.closebtn').click(function (e) {
+        $('#hide-menu').removeClass('show-menu');
+    });
+    </script>
+    <script>
+        setTimeout(() => {
+            $('.alert').fadeOut('fast');
+        }, 2000);
+    </script>
+<!-- -----side menu------ -->
+
+<script type="text/javascript">
+  $('.home-banners').owlCarousel({
+      loop:true,
+      margin:0,
+      nav:false,
+      dots:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:1
+          },
+          1000:{
+              items:1
+          }
+      }
+  })
+  </script>
+
+<script type="text/javascript">
+  $('.people-say').owlCarousel({
+      loop:true,
+      margin:30,
+      nav:true,
+      dots:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:2
+          },
+          1000:{
+              items:3
+          }
+      }
+  })
+  </script>
+
+</body>
+{% endblock %}
+</html>

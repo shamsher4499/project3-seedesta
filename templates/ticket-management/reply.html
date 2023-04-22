@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% block body %}
+<style>
+    #title {
+        margin-left: -5px;
+    }
+
+    #title1 {
+        margin-left: -9px;
+    }
+
+    #email-body {
+        margin-left: 3px;
+    }
+    
+    #loader {
+       top: 0%;
+        position: absolute;
+        background: #a1abf45e;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        <!-- Sidebar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                {% include 'navbar.html' %}
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Email Templates</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'tickets' %}">Pending</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Reply</li>
+                        </ol>
+                    </div>
+
+                    <div class="page-heading">
+                        <section class="section">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card">
+                                        {% if messages %}
+
+                                        {% for message in messages %}
+                                        {% if message.tags == 'success'%}
+                                        <div class="alert alert-success">
+                                            {{message}}
+                                        </div>
+                                        {% elif message.tags == 'error' %}
+                                        <div class="alert alert-danger">
+                                            {{message}}
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+                                        <form method="POST" id="myForm" class="card-body">
+                                            {% csrf_token %}
+                                            <div class="col-12">
+                                                <div class="form-group has-icon-left">
+                                                    <label for="email-id-icon" id="title">Question <sup
+                                                            style="color: red;">&#9733;</sup></label>
+                                                    <div class="position-relative" id="title1">
+                                                        <input type="text" class="form-control"
+                                                            placeholder="Email Subject" id="title" value="{{data.question}}" name="question"
+                                                            maxlength="100" readonly>
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-envelope"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group has-icon-left">
+                                                    <label for="email-id-icon" id="title">Email <sup style="color: red;">&#9733;</sup></label>
+                                                    <div class="position-relative" id="title1">
+                                                        <input type="text" class="form-control" placeholder="Email Subject" id="title" value="{{data.user}}"
+                                                            name="name" maxlength="100" readonly>
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-envelope"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group has-icon-left">
+                                                    <label for="email-id-icon" id="title">Ticket Number <sup style="color: red;">&#9733;</sup></label>
+                                                    <div class="position-relative" id="title1">
+                                                        <input type="text" class="form-control" placeholder="Email Subject" id="title" value="{{data.ticket_num}}"
+                                                            name="message" maxlength="100" readonly>
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-envelope"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group has-icon-left">
+                                                    <label for="email-id-icon" id="title">Description <sup style="color: red;">&#9733;</sup></label>
+                                                    <div class="position-relative" id="title1">
+                                                        <input type="text" class="form-control" placeholder="Email Subject" id="title" value="{{data.desc}}"
+                                                            name="email" maxlength="100" readonly>
+                                                        <div class="form-control-icon">
+                                                            <i class="bi bi-envelope"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <label for="email-id-icon" id="email-body">Answer <sup
+                                                    style="color: red;">&#9733;</sup></label>
+                                            <textarea id="editor" name="answer"></textarea>
+                                            <div class="col-12 d-flex justify-content-end mt-3">
+                                                <button type="button" class="btn btn-primary me-1 mb-1"
+                                                    id="create-template">Submit</button>
+                                                <!-- <button type="reset"
+                                                    class="btn btn-light-secondary me-1 mb-1">Reset</button> -->
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <!--Row-->
+
+                    <!-- Modal Logout -->
+
+
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('editor');
+    </script>
+    <script>
+        setTimeout(() => {
+            $('.alert').fadeOut('fast');
+        }, 2000);
+    </script>
+    <script>
+        function email_data() {
+            let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            $.ajax({
+                type: "POST",
+                url: "/admin/add-email/ajax/",
+                headers: { 'X-CSRFToken': csrftoken },
+                dataType: 'json',
+                contentType: false,
+                cache: false,
+                processData: false,
+                data: new FormData(document.getElementById("myForm")),
+                success: function (res) {
+                    console.log(res)
+                    toastr.success(res.message);
+                    window.location.href = "/admin/email-template/"
+                },
+                error: function (res) {
+                    toastr.error(res.responseJSON.message);
+                }
+            });
+        };
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/ruang-admin.min.js' %}"></script>
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script>
+        $('#create-template').on('click', function() {
+            $(`<div id="loader"><div class="spinner-grow text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+            </div></div>`).appendTo('body')
+            $('#myForm').submit()
+        })
+    </script>
+    {% endblock %}

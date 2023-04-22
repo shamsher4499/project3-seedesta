@@ -1,0 +1,262 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+    {% block body %}
+
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+      <script src="https://js.stripe.com/v3/"></script>
+   </head>
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+        
+            <section class="select-goals-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    <div class="row inner-dash-bord">
+                        <div class="col-md-3">
+                            {% include 'app/base/sidebar.html' %}
+                        </div>
+                        <div class="col-md-9">
+                            <div class="dashboard-right-body">
+                                <div class="my-profile-partner">
+                                    <div class="heading_dash_rt">
+                                        <h3>Subscription Plan</h3>
+                                    </div>
+                                    <div class="dash-in-space">
+
+                                        <div class="plan-tab-content">
+                                                <div class="row">
+                                                    {% for i in subscription_plan %}
+                                                    <div class="col-sm-4">
+                                                        {% if i.plan_type == 'Free Trail1' %}
+                                                        <div class="payment_plan_box month_bg mt-5">
+
+                                                              <h4>{{i.plan_type}}</h4>
+                                                              <ul>
+                                                                  <li>{{i.description}}</li>
+                                                                  {% comment %} <li>Simply dummy text of the printing.</li>
+                                                                  <li>It is a long established fact.</li>
+                                                                  <li>Lorem Ipsum is simply dummy.</li>
+                                                                  <li>Simply dummy text of the printing.</li>
+                                                                  <li>It is a long established fact</li> {% endcomment %}
+                                                              </ul>
+                                                              
+                                                              <button class="select-btn btn " data-href="{% url 'vendor_subscription_stripe' i.plan_type %}" class="btn btn-border active" title="">Select</button>
+                                                            
+                                                        </div>
+
+                                                        {% else %}
+                                                        <div class="payment_plan_box yearly_bg">    
+                                                            <h4>{{i.plan_type}}</h4>
+                                                                <ul>
+                                                                  <li>{{i.description}}</li>
+                                                                  {% comment %} <li>Simply dummy text of the printing.</li>
+                                                                  <li>It is a long established fact.</li>
+                                                                  <li>Lorem Ipsum is simply dummy.</li>
+                                                                  <li>Simply dummy text of the printing.</li>
+                                                                  <li>It is a long established fact</li> {% endcomment %}
+                                                                </ul>
+
+                                                                {% if vendor_data.vendor_id == request.user.id and vendor_data.plan_id == i.id %}
+                                                             
+                                                                    <div class="lt_followers_bx ">
+                                                                        {% comment %} {% if product_count1 <= vendor_data.plan.product_count %} {% endcomment %}
+
+                                                                            <button class="select-btn btn me-2" data-href="#" class="btn btn-border active" title="">Subscribed</button>
+                                                                     
+
+                                                                            <input type="hidden" name="re_accept" value="{{vendor_data.vendor_id}}">
+                                                                            <button style="min-width: 88px;" class="btn reject-btn me-2" onclick="delete_req({{vendor_data.vendor_id}})" class="btn btn-border active" title="">Cancel</button>
+                                                                        {% comment %} {% else %}
+                                                                        <button class="select-btn btn" data-href="{% url 'vendor_subscription_stripe' i.plan_type %}" class="btn btn-border active" title="">Select</button>
+                                                                        {% endif %}         {% endcomment %}
+                                                                    </div>
+                                                               
+                                                                {% else %}
+                                                                <button class="select-btn btn" data-href="{% url 'vendor_subscription_stripe' i.plan_type %}" class="btn btn-border active" title="">Select</button>
+                                                                {% endif %}
+                                                        </div>
+                                                        {% endif %}
+                                                    </div>
+                                                    {% endfor %}
+                                                    {% comment %} <div class="col-sm-4">
+                                                        <div class="payment_plan_box yearly_bg">
+                                                              <h4>Premium Subscription</h4>
+                                                              <ul>
+                                                                  <li>Lorem Ipsum is simply dummy.</li>
+                                                                  <li>Simply dummy text of the printing.</li>
+                                                                  <li>It is a long established fact.</li>
+                                                                  <li>Lorem Ipsum is simply dummy.</li>
+                                                                  <li>Simply dummy text of the printing.</li>
+                                                                  <li>It is a long established fact</li>
+                                                              </ul>
+                                                              <a href="javascript:;" class="btn btn-border" title="">Select</a>
+                                                        </div>
+                                                    </div> {% endcomment %}
+                                                </div>
+                                                {% comment %} <div class="text-left">
+                                                    <h6>(No Plan Selected)</h6>
+                                                    <button class="btn" type="button">Proceed to Pay</button>
+                                                </div> {% endcomment %}
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <script>
+        const DOMAIN = window.location.origin;
+        const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    
+        // Handle any errors from Checkout
+        const handleResult = function (result) {
+            if (result.error) {
+                const displayError = document.getElementById("error-message");
+                displayError.textContent = result.error.message;
+            } 
+        };
+    
+        // Create a Checkout Session with the selected plan ID
+        const createCheckoutSession = function(url) {
+            return fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken":  '{{csrf_token}}',
+                },
+                body: JSON.stringify({
+                    domain: DOMAIN
+                })
+            }).then(function(result) {
+                return result.json();
+            });
+        };
+        
+        // Setup event handler to create a Checkout Session when button is clicked
+        document.querySelectorAll(".select-btn").forEach(function(element) {
+            element.addEventListener("click", function (evt) {
+                createCheckoutSession(element.getAttribute('data-href')).then(function(data) {
+                    // Call Stripe.js method to redirect to the new Checkout page
+                    stripe.redirectToCheckout({sessionId: data.sessionId}).then(handleResult);
+                });
+            })
+        });
+    </script>
+
+    <script>
+        function  delete_req(vendor_id)
+        {
+          let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+          $.ajax({
+              type: "POST",
+              url: "{% url 'delete_subscription' %}",
+              headers: { 'X-CSRFToken': csrftoken }, 
+              data: 
+              {
+                vendor_id:vendor_id,
+                
+              },
+              
+              success: function(res) {
+                toastr.success(res.message)
+                window.location.href = "/vendor-subscription-plan/"
+
+              },error:function(res){
+                  toastr.success(res.message);
+  
+              } 
+          
+            });
+  
+        }
+      </script>
+
+
+      <script>
+        function myFunction() {
+            alert()
+            $.ajax({
+                type: "POST",
+                
+                headers: { 'X-CSRFToken': csrftoken }, 
+                data:
+            error:function(res){
+                toastr.success(res.message);
+
+        }
+        </script>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+    {% endblock  %}
+</html>

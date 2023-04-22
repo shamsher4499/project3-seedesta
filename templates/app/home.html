@@ -1,0 +1,144 @@
+{% extends 'app/base/base.html' %}
+
+{% load static %}
+<html>
+{% block body %}
+
+<body>
+        <form method="POST">
+                {% csrf_token %}
+        </form>
+        <div class="wraper-main">
+                <!----------------start Navbar------------------------>
+                {% include 'app/base/navbar.html' %}
+                <!-----------------end Navbar--------------------------->
+
+                <!-----------------start body---------------------->
+
+                {% include 'app/base/body.html' %}
+
+                <!------------------end body------------------------>
+
+
+                <!--------------------footer section----------- -->
+                {% include 'app/base/footer.html' %}
+                <!--------------------footer section----------- -->
+
+                <!-- -----java script------ -->
+                <script type="text/javascript" src="{% static 'frontend/js/jquery-3.3.1.min.js' %}"></script>
+                <script type="text/javascript" src="{% static 'frontend/js/popper.min.js' %}"></script>
+                <script type="text/javascript" src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
+                <script type="text/javascript" src="{% static 'frontend/js/owl.carousel.min.js' %}"></script>
+                <script src="https://code.highcharts.com/highcharts.js"></script>
+                <script type="text/javascript"
+                        src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+                <script>
+                        $(window).scroll(function () { var body = $('body'), scroll = $(window).scrollTop(); if (scroll >= 5) { body.addClass('fixed'); } else { body.removeClass('fixed'); } });
+                </script>
+
+                <!-- -----side menu------ -->
+                <script>
+                        $('#menu-button').click(function (e) {
+                                e.stopPropagation();
+                                $('#hide-menu').toggleClass('show-menu');
+                        });
+                        $('#hide-menu').click(function (e) {
+                                e.stopPropagation();
+                        });
+                        $('body,html,.closebtn').click(function (e) {
+                                $('#hide-menu').removeClass('show-menu');
+                        });
+                </script>
+                <!-- -----side menu------ -->
+
+                <script type="text/javascript">
+                        $('.home-banners').owlCarousel({
+                                loop: true,
+                                margin: 0,
+                                nav: false,
+                                dots: true,
+                                responsive: {
+                                        0: {
+                                                items: 1
+                                        },
+                                        600: {
+                                                items: 1
+                                        },
+                                        1000: {
+                                                items: 1
+                                        }
+                                }
+                        })
+                </script>
+
+                <script type="text/javascript">
+                        $('.goals-slides').owlCarousel({
+                                loop: true,
+                                margin: 5,
+                                nav: true,
+                                dots: false,
+                                responsive: {
+                                        0: {
+                                                items: 1
+                                        },
+                                        600: {
+                                                items: 2
+                                        },
+                                        1000: {
+                                                items: 3
+                                        }
+                                }
+                        })
+                </script>
+
+                <script type="text/javascript">
+                        $('.testimonials').owlCarousel({
+                                loop: true,
+                                margin: 5,
+                                nav: true,
+                                dots: false,
+                                responsive: {
+                                        0: {
+                                                items: 1
+                                        },
+                                        575: {
+                                                items: 1
+                                        },
+                                        576: {
+                                                items: 2
+                                        },
+                                        1200: {
+                                                items: 2
+                                        }
+                                }
+                        })
+                </script>
+                <script>
+                        {% if request.user.is_authenticated %}
+                           const setUser =  localStorage.getItem('userType') ?? ''
+                           localStorage.removeItem("userType");
+                           let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+                           if(setUser) {
+                               $.ajax({
+                                       type: "POST",
+                                       url: "{% url 'select_user' %}",
+                                       headers: { 'X-CSRFToken': csrftoken }, 
+                                       data:
+                                       {
+                                        
+                                           setuser:setUser
+                                       },
+                                   success:function(res){
+                                       console.log(res)
+                                   
+                                   }, error:function(res){
+                                       toastr.error(res.responseJSON.message);
+                                   }
+                               });
+                           }
+                       {% endif %} 
+                    </script>
+</body>
+{% endblock %}
+
+</html>

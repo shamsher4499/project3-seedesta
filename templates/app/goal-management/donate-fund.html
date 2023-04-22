@@ -1,0 +1,143 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+    <script src="https://js.stripe.com/v3/"></script>
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+      
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+            <section class="donate-detail-sec">
+                <div class="container">
+                    <div class="donate-form-in">
+                        <h3>{{id}}</h3>
+                        {% comment %} <form class="row" method="POST" enctype="multipart/form-data">
+                           {% csrf_token %} {% endcomment %}
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label>Enter the amount</label>
+                                    <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" class="form-control" name="amount" placeholder="Enter amount">
+                                </div>
+                            </div>
+                            {% comment %} <div class="col-md-12">
+                                <h4>Card Details</h4>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter card holder name">
+                                </div>
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter card number">
+                                </div>
+                            </div>
+                            <div class="col-md-12"> <h6>Expiry date</h6></div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                     <select class="form-select" aria-label="Default select example">
+                                        <option selected="">Month</option>
+                                        <option value="1">Month 1</option>
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
+                                     <select class="form-select" aria-label="Default select example">
+                                        <option selected="">Year</option>
+                                        <option value="1">Year 1</option>
+                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <input type="text" class="form-control" placeholder="CVV">
+                                </div>
+                            </div> {% endcomment %}
+                            <div class="col-md-12 text-center"><button type="button" id="donate-btn" class="btn">Pay</button></div>
+                        {% comment %} </form> {% endcomment %}
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        <footer>
+            {% include 'app/base/footer.html' %}
+        </footer>
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script>
+        const DOMAIN = window.location.origin;
+        const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+    
+        // Handle any errors from Checkout
+        const handleResult = function (result) {
+            if (result.error) {
+                const displayError = document.getElementById("error-message");
+                displayError.textContent = result.error.message;
+            } 
+        };
+    
+        // Create a Checkout Session with the selected plan ID
+        const createCheckoutSession = function() {
+            return fetch("{% url 'goal_donate_stripe' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken":  '{{csrf_token}}',
+                },
+                body: JSON.stringify({
+                    donate_amount: $('[name=amount]').val(),
+                    user_goal_slug: "{{ user_goal_slug }}",
+                    domain: DOMAIN
+                })
+            }).then(function(result) {
+                return result.json();
+            });
+        };
+        
+        // Setup event handler to create a Checkout Session when button is clicked
+        document.getElementById("donate-btn").addEventListener("click", function (evt) {
+            console.log("donteee")
+            createCheckoutSession().then(function(data) {
+                // Call Stripe.js method to redirect to the new Checkout page
+                stripe.redirectToCheckout({sessionId: data.sessionId}).then(handleResult);
+            });
+        });
+    </script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+  {% endblock %}
+
+</html>

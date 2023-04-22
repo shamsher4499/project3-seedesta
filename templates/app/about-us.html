@@ -1,0 +1,75 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+{% block body %}
+<html>
+
+   <body>
+   
+
+    <div class="wraper-inner-main">
+        {% include 'app/base/navbar.html' %}
+
+        <section class="head-inner-bx">
+            <div class="container-fluid">
+              <div class="head-inner-text"><h2>About us</h2></div>
+            </div>
+        </section>
+
+        <section class="inner-space-main inner-ab-sec">
+            <div class="container">
+                <div class="main-heading">
+                    <h2>{{about.title}}</h2>
+                </div>
+
+                <div class="hm-about-img">
+                    <p>{{about.desc1}}</p>
+                    <div class="hm-about-in">
+                        <figure><img src="{{about.image1.url}}"></figure>
+                    </div>
+                    <p>{{about.desc2}}</p>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <figure><img src="{{about.image2.url}}"></figure>
+                    </div>
+                    <div class="col-md-6">
+                        <figure><img src="{{about.image3.url}}"></figure>
+                    </div>
+                </div>
+                <p>{{about.desc3}}</p>
+                <p>{{about.desc4}}</p>
+            </div>
+            </div>
+        </section>
+
+        {% include 'app/base/footer.html' %}
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="{% static 'frontend/js/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/js/owl.carousel.min.js' %}"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+</html>
+{% endblock %}

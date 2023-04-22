@@ -1,0 +1,403 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css" rel="stylesheet"/>
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+
+   </head>
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+            <section class="group-detail-sec">
+                <div class="container">
+                    <div class="group-about-sec">
+                        <div class="members-head-log">
+                            <div class="members-head-in">
+                                {% if owner_name.profile_pic %}
+                                <figure><img src="{{owner_name.profile_pic.url}}"></figure>
+
+                                {% else %}
+                                <figure><img src=""></figure>
+                                {% endif %}
+                                <figcaption>
+                                    <h2>{{owner_name.first_name}}</h2>
+                                    <h6>{{group_goal}} Members</h6>
+                                </figcaption>
+                            </div>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#group-membersBackdrop"><img src="{% static 'frontend/images/users-list-wt.svg' %}"> Members</button>
+                        </div>
+                       
+                        <div class="members-chat-lists">
+                            <ul class="members-chat-in">
+                                {% for j in comm %}
+                                <li>
+                                    <h5>{{j.user.first_name}}</h5>
+                                    <article>
+                                        <p class="card-text" >{{j.comment}}</p>
+                                        <span class="ext-timer">{{j.created}}</span>
+                                    </article>
+                                    
+                                </li>
+                                {% endfor %}
+                               
+                            </ul>
+                            {% comment %} <form class="type-msg-bx"> {% endcomment %}
+                            <form method="POST" action="{% url 'user_comment' group_goal_detail.slug%}" enctype="multipart/form-data">
+                                {% csrf_token %}    
+                                <div class="form-group">
+                                     <input type="text" name="comment" class="form-control" placeholder="Write your Comment…..">
+                                     <button type="Submit" class="btn send-icon-ck" style="margin-left: 764px;margin-top: 20px;"><i class="ri-send-plane-fill"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade membersback_mx" id="group-membersBackdrop" aria-hidden="true" aria-labelledby="group-membersBackdropLabel" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="group-membersBackdropLabel">Group Members</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-fill"></i></button>
+              </div>
+              <div class="modal-body group-members-chat-list">
+                    <ul class="longEnough mCustomScrollbar" data-mcs-theme="dark">
+                        {% for i in goal_group%} 
+                        <li>
+                            <article>
+                                <figure><img src="{{i.members.profile_pic.url}}"></figure>
+                                <h5>{{i.members.first_name}}</h5>
+                                
+                            </article>
+                            <form method="POST">
+                                {% csrf_token %}
+                            <button type="button" class="btn" onclick="rate_user({{i.members_id}},{{i.goal_id}})" >Rate User</button>
+                            </form>
+                            {% comment %} data-bs-target="#group-membersBackdrop2" data-bs-toggle="modal" data-bs-dismiss="modal" {% endcomment %}
+                        </li>
+                        {% endfor %}
+                          {% comment %} <li>
+                            <article>
+                                <figure><img src="images/member-2.png"></figure>
+                                <h5>Alison Morrison</h5>
+                            </article>
+                            <button type="button" class="btn" data-bs-target="#group-membersBackdrop2" data-bs-toggle="modal" data-bs-dismiss="modal">Rate User</button>
+                          </li>
+                          <li>
+                            <article>
+                                <figure><img src="images/member-3.png"></figure>
+                                <h5>Joshua Hughes</h5>
+                            </article>
+                            <button type="button" class="btn" data-bs-target="#group-membersBackdrop2" data-bs-toggle="modal" data-bs-dismiss="modal">Rate User</button>
+                          </li>
+                          <li>
+                            <article>
+                                <figure><img src="images/member-1.png"></figure>
+                                <h5>Stewart Walker</h5>
+                            </article>
+                            <button type="button" class="btn" data-bs-target="#group-membersBackdrop2" data-bs-toggle="modal" data-bs-dismiss="modal">Rate User</button>
+                          </li>
+                          <li>
+                            <article>
+                                <figure><img src="images/member-4.png"></figure>
+                                <div class="member-reviews-rat">
+                                    <h5>Anna Reid</h5>
+                                    <div class="member-reviews">
+                                        <ul>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li><i class="ri-star-fill"></i></li>
+                                        </ul>
+                                        <span class="how-staring"><font>4.5</font></span>
+                                    </div>
+                                </div>
+                            </article>
+                          </li>
+                          <li>
+                            <article>
+                                <figure><img src="images/member-1.png"></figure>
+                                <div class="member-reviews-rat">
+                                    <h5>Anna Reid</h5>
+                                    <div class="member-reviews">
+                                        <ul>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li><i class="ri-star-fill"></i></li>
+                                        </ul>
+                                        <span class="how-staring"><font>4.5</font></span>
+                                    </div>
+                                </div>
+                            </article>
+                          </li>
+                          <li>
+                            <article>
+                                <figure><img src="images/member-2.png"></figure>
+                                <h5>Alison Morrison</h5>
+                            </article>
+                            <button type="button" class="btn" data-bs-target="#group-membersBackdrop2" data-bs-toggle="modal" data-bs-dismiss="modal">Rate User</button>
+                          </li>
+                          <li>
+                            <article>
+                                <figure><img src="images/member-3.png"></figure>
+                                <div class="member-reviews-rat">
+                                    <h5>Anna Reid</h5>
+                                    <div class="member-reviews">
+                                        <ul>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li><i class="ri-star-fill"></i></li>
+                                        </ul>
+                                        <span class="how-staring"><font>4.5</font></span>
+                                    </div>
+                                </div>
+                            </article>
+                          </li>
+                          <li>
+                            <article>
+                                <figure><img src="images/member-1.png"></figure>
+                                <div class="member-reviews-rat">
+                                    <h5>Stewart Walker</h5>
+                                    <div class="member-reviews">
+                                        <ul>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li class="active"><i class="ri-star-fill"></i></li>
+                                            <li><i class="ri-star-fill"></i></li>
+                                        </ul>
+                                        <span class="how-staring"><font>4.5</font></span>
+                                    </div>
+                                </div>
+                            </article>
+                          </li> {% endcomment %}
+                    </ul>
+              </div>
+            </div>
+      </div>
+    </div>
+    <div class="modal fade" id="group-membersBackdrop2" aria-hidden="true" aria-labelledby="group-membersBackdropLabel2" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="group-membersBackdropLabel2">Rate This User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="ri-close-fill"></i></button>
+          </div>
+          <div class="modal-body group-members-chat-list">
+            <div class="rate-this-user">
+                  <figure id="image"><img  src=""></figure>
+                  <h5 id="name"></h5>
+                  <form method="post" action="{% url 'user_star_rating' %}">
+                    {% csrf_token %}  
+                  <ul>
+                        {% comment %} {% for i in goal_group %}
+                        {{i.members_id}} {% endcomment %}
+                        {% comment %} {% if  rating %}
+                            {% if rating==1 %}
+                            <li class="active"  onclick='sendrating(1)' ><i id="rating1" class="ri-star-fill"></i></li>    
+                            {% endif %} {% endcomment %}
+
+
+                        {% comment %} {% else %} {% endcomment %}
+                        {% comment %} {% if user_id > 0%}
+                        {% endif %}
+                        {{user_id}} {% endcomment %}
+                        <li class="active"  onclick='sendrating(1)' ><i id="rating1" class="ri-star-line"></i></li>
+                        <li class="active" onclick='sendrating(2)'><i id="rating2" class="ri-star-line"></i></li>
+                        <li class="active" onclick='sendrating(3)'><i id="rating3" class="ri-star-line"></i></li>
+                        <li class="active" onclick='sendrating(4)'><i id="rating4" class="ri-star-line"></i></li>
+                        <li class="active" onclick='sendrating(5)'><i id="rating5" class="ri-star-line"></i></li>
+                        
+
+                        {% comment %} {% endif %} {% endcomment %}
+                        
+                    </ul>
+                  </form>
+                    <div class="form-group">
+                        <textarea type="text" class="form-control" id="reviews" placeholder="Write a review"></textarea>
+                    </div>
+                    <input type="hidden" id="send_rating_input" value="">
+                    <input type="hidden" name="ddd" value="" id="members_id"> 
+                    <button type="button" onclick="submit_rating()" class="btn">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+    <script type="text/javascript" src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+
+
+    <!-- ----overflow-auto bar----- -->
+    <script type="text/javascript">
+        (function($){
+            $(window).on("load",function(){
+                $(".content").mCustomScrollbar();
+            });
+        })(jQuery);
+    </script>
+    <script>
+        function rate_user(id){
+
+            $("#group-membersBackdrop2").modal('toggle')
+            
+
+            let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+            $.ajax({
+                type: "POST",
+                url: "/user-rating/",
+                headers: { 'X-CSRFToken': csrftoken }, 
+                data: 
+                {
+                    user_id:id,
+                },
+                success: function(res) {
+                    $('#name').html(res.user_name)
+                    image_path = res.user_image
+                    var imgHtml = "<img src="+image_path+">";
+                    $('#image').html(imgHtml)
+                    $('#members_id').val(res.user_id)
+                
+                },error:function(res){
+                    toastr.success(res.message);
+                }
+            });
+        }
+    </script>
+    <script>
+       function sendrating(rating){ 
+        $('#rating1').addClass('ri-star-line').removeClass("ri-star-fill")
+        $('#rating2').addClass('ri-star-line').removeClass("ri-star-fill") 
+        $('#rating3').addClass('ri-star-line').removeClass("ri-star-fill")  
+        $('#rating4').addClass('ri-star-line').removeClass("ri-star-fill")
+        $('#rating5').addClass('ri-star-line').removeClass("ri-star-fill")  
+        if (rating==1){
+                $('#rating1').removeClass('ri-star-line').addClass("ri-star-fill")
+        }else if(rating==2){      
+                $('#rating1').removeClass('ri-star-line').addClass("ri-star-fill")
+                $('#rating2').removeClass('ri-star-line').addClass("ri-star-fill")                     
+        }else if(rating==3){
+            $('#rating1').removeClass('ri-star-line').addClass("ri-star-fill")
+            $('#rating2').removeClass('ri-star-line').addClass("ri-star-fill") 
+            $('#rating3').removeClass('ri-star-line').addClass("ri-star-fill")  
+        }else if(rating==4){
+            $('#rating1').removeClass('ri-star-line').addClass("ri-star-fill")
+            $('#rating2').removeClass('ri-star-line').addClass("ri-star-fill") 
+            $('#rating3').removeClass('ri-star-line').addClass("ri-star-fill")  
+            $('#rating4').removeClass('ri-star-line').addClass("ri-star-fill")  
+
+        }else{
+            $('#rating1').removeClass('ri-star-line').addClass("ri-star-fill")
+            $('#rating2').removeClass('ri-star-line').addClass("ri-star-fill") 
+            $('#rating3').removeClass('ri-star-line').addClass("ri-star-fill")  
+            $('#rating4').removeClass('ri-star-line').addClass("ri-star-fill")
+            $('#rating5').removeClass('ri-star-line').addClass("ri-star-fill")   
+   
+        }
+        $('#send_rating_input').val(rating)
+
+
+       }
+       function submit_rating(){
+        let get_rating = $('#send_rating_input').val()
+        let user_id = $('#members_id').val()
+        let review = $('#reviews').val()
+        let goal_id = $('#goal_id').val()
+        let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+
+        $.ajax({
+            type: "POST",
+            url: "/user-star-rating/",
+            headers: { 'X-CSRFToken': csrftoken }, 
+            data: 
+            {
+                get_rating:get_rating,
+                user_id:user_id,
+                review:review,
+                goal_id:goal_id
+            },
+            success: function(res) {
+                toastr.success(res.message);
+                $("#group-membersBackdrop2").modal('hide')
+                rating = res.user_id
+
+            },error:function(res){
+                toastr.success(res.message);
+            }
+        });
+       
+       
+    }
+      </script>
+     
+     
+    <!-- ----overflow-auto bar----- -->
+    </body>
+{% endblock %}    
+</html>

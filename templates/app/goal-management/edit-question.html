@@ -1,0 +1,196 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+<meta charset="utf-8">
+<title>:: seedesta ::</title>
+<!--responsive-meta-here-->
+<meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!--responsive-meta-end-->
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+<link href="css/fontawesome-all.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/responsive.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+
+            <section class="select-goals-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="row inner-dash-bord">
+                        <div class="col-md-3">
+                            {% comment %} {% include 'app/base/sidebar.html' %} {% endcomment %}
+                        </div>
+                        <div class="col-md-9">
+                            <div class="dashboard-right-body">
+                                <div class="heading_dash_rt">
+                                    <h4>Questons</h4>
+                                        <p></p>
+                                    </div>
+                                    <form class="row" method="POST">
+                                        {% csrf_token %}
+                                    <div class="question-form">
+                                        {% for i in goal_question %} 
+                                            <div class="form-group mb-3">
+                                                <p id="que1">{{i.questions}}</p>
+                                                <input type="hidden" value="{{i.questions}}" name="que{{forloop.counter}}Input" id="que{{forloop.counter}}_input">
+                                                <input type="text" class="form-control" name="answer{{forloop.counter}}" value="{{i.answer}}" placeholder="Enter answer">
+    
+                                            </div>
+                                            
+                                        {% endfor %}
+                                        
+                                        
+                                        <div id="newinput"></div>
+                                                    <button id="rowAdder" type="button"
+                                                        class="btn btn-dark">
+                                                        <span class="bi bi-plus-square-dotted">
+                                                        </span> ADD
+                                                    </button>
+                                                </div>
+
+                                    </div>
+                                    {% comment %} <div style="width:40%;">
+                                        <form>
+                                            <div class="">
+                                                <div class="col-lg-12">
+                                                    <div id="row">
+                                                        <div class="input-group m-3">
+                                                            <div class="input-group-prepend">
+                                                                <button class="btn btn-danger"
+                                                                    id="DeleteRow" type="button">
+                                                                    <i class="bi bi-trash"></i>
+                                                                    Delete
+                                                                </button>
+                                                            </div>
+                                                            <input type="text"
+                                                                class="form-control m-input">   
+                                                        </div>
+                                                    </div>
+                                                    <div id="newinput"></div>
+                                                    <button id="rowAdder" type="button"
+                                                        class="btn btn-dark">
+                                                        <span class="bi bi-plus-square-dotted">
+                                                        </span> ADD
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div> {% endcomment %}
+                                    <input type="hidden"  name="input_count_q" value={{goal_question_count}}  id="input_count">
+                                    <div>
+                               
+                                        <button type="submit" onclick="question()" class="btn btn-success" href="{% url 'goal_lists' %}" style="margin-left: 700px;margin-top: 0px;">Submit</button>
+                                    </div>
+                                </form>
+                                </div>
+                                
+                                    {% comment %} <form id="request-user" method="POST">
+                                        {% csrf_token %}
+                                    <div class="text-center">
+                                        <button type="submit" class="btn" href="{% url 'user_queston' %}" style="margin-left: 600px;margin-top: 20px;" >Next</button>
+
+                                    </div>    
+                                </form>     {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+
+    <!-- -----java script------ -->
+    
+   
+
+    <!-- -----side menu------ -->
+    
+
+{% endblock %}
+{% block script%}
+<script>
+    $('#menu-button').click(function (e) {
+        e.stopPropagation();
+        $('#hide-menu').toggleClass('show-menu');
+    });
+    $('#hide-menu').click(function (e) {
+        e.stopPropagation();
+    });
+    $('body,html,.closebtn').click(function (e) {
+        $('#hide-menu').removeClass('show-menu');
+    });
+</script>
+<!-- -----side menu------ -->
+</body>
+<script>
+function question(){
+    let que1 = $('#que1').html()
+    $('#que{{forloop.counter}}_input').val(que1)
+    
+}
+</script>
+
+<script>
+
+                            
+$("#rowAdder").click(function () {
+    quest_count = parseInt($( "#input_count" ).val())
+    if (quest_count == 0){
+        i = 1
+    }
+    else{
+        i = quest_count + 1 
+    }
+    newRowAdd =
+    `<div class="form-group mb-3">
+        <p id="que1"></p>
+        <input type="text"  name="que${i}Input" id="que${i}_input">
+        <input type="text" class="form-control" name="answer${i}" placeholder="Enter answer"></div>`
+
+    $('#newinput').append(newRowAdd);
+    document.getElementById("input_count").value = i 
+});
+{% comment %} 
+$("body").on("click", "#DeleteRow", function () {
+    $(this).parents("#que1").remove();
+}) {% endcomment %}
+</script>
+{% endblock script %}
+
+</html>
+

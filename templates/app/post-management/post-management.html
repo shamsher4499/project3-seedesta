@@ -1,0 +1,124 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+        
+            <section class="select-goals-sec">
+                <div class="container">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+
+                    <div class="row inner-dash-bord">
+                        <div class="col-md-3">
+                            {% include 'app/base/sidebar.html' %}
+                        </div>
+                        <div class="col-md-9">
+                            <div class="dashboard-right-body">
+                                <div class="heading_dash_rt">
+                                    <h3>Post Management</h3>
+                                    <a class="btn" href="{% url 'post_create' %}">Create Post</a>
+                                </div>
+                                <div class="dash-in-space">
+                                      <div class="favorite-cont-lists">
+                                            <div class="row form-group-lists">
+                                                {% if post %}
+                                                {% for i in post %}
+                                                <div class="col-sm-4">
+                                                    <div class="form-group-by goals_ct">
+                                                        {% if i.image %}
+                                                        <a href="{% url 'user_post_detail' i.slug %}">
+                                                            <figure><img src="{{i.image.url}}"></figure>
+                                                        </a>
+                                                        {% elif i.video %}
+                                                        <a>
+                                                            <figure>
+                                                                <source src="{{i.video}}" type="video/ogg">
+                                                            </figure>
+                                                        </a>
+                                                        <a class="play-btn" ><i class="ri-play-fill"></i></a>
+                                                        {% elif i.youtube_id %}
+                                                        <a>
+                                                            <figure>
+                                                                <iframe width="122%" height="90%" src="https://www.youtube.com/embed/{{i.youtube_id}}">
+                                                                </iframe>
+                                                            </figure>
+                                                        </a>
+                                                        {% endif %}
+                                                        <figcaption>
+                                                            <a>
+                                                                <h3>{{i.title}}</h3>
+                                                            </a>
+                                                            <p>{{i.desc}}</p>
+                                                        </figcaption>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+
+                                                {% else %}
+                                                <p>No user found.</p>
+
+                                                {% endif %}
+                                            </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+    {% endblock %}
+</html>

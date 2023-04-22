@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        <!-- Sidebar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                {% include 'navbar.html' %}
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Social Account</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'social' %}">Social</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Social Account</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Social Account</h6>
+                                </div>
+                                <div class="table-responsive">
+                                    <!-- <table class="table align-items-center table-flush">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Goal Name</th>
+                                                <th>Goal Desc</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td><a href="#">{{data.id}}</a></td>
+                                                <td>{{data.goal_name}}</td>
+                                                <td>{{data.goal_desc}}</td>
+                                                <td>
+                                                    <a href="#" class="btn btn-success btn-sm">
+                                                        <i class="fas fa-check"></i>
+                                                    </a>
+                                                    <a href="/admin/goal-view/{{i.id}}" class="btn btn-info btn-sm">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </a>
+
+                                                    <a href="#" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table> -->
+                                    <table class="table">
+                                        <br>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Sr No.</th>
+                                                <td>{{social.id}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Social Account Name</th>
+                                                <td>{{social.name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Logo</th>
+                                                <td>{{social.icon}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Link</th>
+                                                <td>{{social.link}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Created At</th>
+                                                <td>{{social.created}}</td>
+                                            </tr>
+
+                                        </thead>
+
+                                    </table>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Row-->
+
+                    <!-- Modal Logout -->
+
+
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+</body>
+
+</html>

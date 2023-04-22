@@ -1,0 +1,224 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html> 
+{% block body %}
+{% load socialaccount %}
+
+<body>
+    {% include 'app/base/navbar.html' %}
+    <div class="wraper-main">
+<div class="login-form-container">
+    <div class="login-form-inner"> 
+        <div class="login-two-pane">
+            <div class="login-left">
+                <div class="login-left-in">
+                    <div class="login-head">
+                        <h4>Login your account</h4>
+                        <p>Use your credentials to access your account.</p>
+                        {% if messages %}
+                        
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="login-form">
+                    <form method="POST" id="myForm">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Email ID">
+                        </div>
+                        <div class="form-group mb-3">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                        </div>
+                        <div class="d-flex fg-links">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="remember-me">
+                                <label class="form-check-label" for="remember-me">
+                                Remember me
+                                </label>
+                            </div>
+                            <a href="{% url 'forget-password1' %}" class="ms-auto">Forgot Password?</a>
+                        </div>
+                        <!-- <button class="btn btn-site w-100">Login</button> -->
+                        <button type="button" class="btn btn-site w-100" onclick="login_data()" >Login</button>
+                        <div class="divi-line">
+                            <span>Or Login with</span>
+                        </div>
+                        <div class="social-icon">
+                            {% comment %} {% for i in social %}
+                                
+                                <a href="{{i.link}}"><img src="{{i.icon.url}}" ></a>
+                                
+                            {% endfor %} {% endcomment %}
+                             {% comment %} <a href="{% provider_login_url 'google' %}"><img src="{% static 'frontend/images/fb.svg' %}"></a>  {% endcomment %}
+                            {% comment %} <a href="javascript:;"><img src="{% static 'frontend/images/tw.svg' %}"></a> {% endcomment %}
+                            <a href="{% provider_login_url 'google' %}"><img src="{% static 'frontend/images/google.svg' %}"></a>
+                           {% comment %} <a class="bg-twitter"  href="{% provider_login_url 'google' %}"><i class="ri-google-fill"></i><span>google</span></a>  {% endcomment %}
+                            
+                            {% comment %} <a href="javascript:;"><img src="{% static 'frontend/images/in.svg' %}"></a> {% endcomment %}
+                        </div>
+                        <div class="not-account">
+                            <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+                        </div>
+                    </form>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="login-right-in"> 
+                    <a href="javascript:;"><img src="{% static 'frontend/images/logo-2.svg' %}"></a>
+                    <h2>Welcome to Seedesta</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal select-type-modal" id="exampleselectuser" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"> 
+         <!--     <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> -->
+            <div class="modal-body">
+                        <div class="select-type-row">
+                            <a class="navbar-brand" href="index.php">
+                            <img src="">
+                            </a>
+                            <h3>Select User Type</h3>
+                            <form>
+                            <input type="radio" name="user_type" hidden />
+                            {% comment %} <input type="text" id="userType" name="userType"  /> {% endcomment %}
+                            <ul class="select-type-check">
+                              
+                               
+                                <li class="user_type">
+                                    <a data-user-type="USER">
+                                        <figure><img src="{% static 'frontend/images/userpic.png'%}"></figure>
+                                        <span>user</span>
+                                    </a>
+                                </li>
+                            </ul>
+                             <a href="" id="social-login-btn" class="btn">Next</a>
+                        </form>
+                        </div>
+            </div>
+        </div>
+    </div>
+</div>  
+
+
+{% include 'app/base/footer.html' %}
+</div>
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+   $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+</script>
+<script>
+    setTimeout(() => {
+        $('.alert').fadeOut('fast');
+    }, 2000);
+</script>
+<script>
+    function login_data() {
+        let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        $.ajax({
+            type: "POST",
+            url: "/login/ajax/",
+            headers: { 'X-CSRFToken': csrftoken },
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            data: new FormData(document.getElementById("myForm")),
+            success: function (res) {
+                console.log(res)
+                toastr.success(res.message);
+                window.location.href = '/'
+            },
+            error: function (res) {
+                toastr.error(res.responseJSON.message);
+            }
+        });
+    };
+</script>
+
+
+
+
+<!-- -----side menu------ -->
+    <script>
+       $('#menu-button').click(function(e) {
+           e.stopPropagation();
+           $('#hide-menu').toggleClass('show-menu');
+       });
+       $('#hide-menu').click(function(e) {
+           e.stopPropagation();
+       });
+       $('body,html,.closebtn').click(function(e) {
+           $('#hide-menu').removeClass('show-menu');
+       });
+    </script>
+<!-- -----side menu------ -->
+
+<script type="text/javascript">
+  $('.home-banners').owlCarousel({
+      loop:true,
+      margin:0,
+      nav:false,
+      dots:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:1
+          },
+          1000:{
+              items:1
+          }
+      }
+  })
+  </script>
+
+<script type="text/javascript">
+  $('.people-say').owlCarousel({
+      loop:true,
+      margin:30,
+      nav:true,
+      dots:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:2
+          },
+          1000:{
+              items:3
+          }
+      }
+  })
+  </script>
+
+</body>
+{% endblock %}
+</html>

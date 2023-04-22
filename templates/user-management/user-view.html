@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% block body %}
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        <!-- Sidebar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                {% include 'navbar.html' %}
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Customer Information</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'tables' %}">Customer</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Customer Information</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Customer Information</h6>
+                                </div>
+                                <div class="detail-info-content">
+                                    <ul>
+                                        <li><span>First Name</span> : {{user.first_name}}</li>
+                                        <li><span>Last Name</span> : {{user.last_name}}</li>
+                                        <li><span>Email</span> : {{user.email}}</li>
+                                        <li><span>Mobile</span> : {{user.mobile}}</li>
+                                    </ul>
+                                </div>
+
+                                <!-- <div class="table-responsive">
+                                    <table class="table">
+                                        <br>
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">First Name</th>
+                                                <td>{{user.first_name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Last Name</th>
+                                                <td>{{user.last_name}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Email</th>
+                                                <td>{{user.email}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Mobile</th>
+                                                <td>{{user.mobile}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col">Role</th>
+                                                <td>{{user.user_type}}</td>
+                                            </tr>
+                                        </thead>
+
+                                    </table>
+                                </div> -->
+                                <div class="card-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!--Row-->
+
+                    <!-- Modal Logout -->
+
+
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+        <script src="{% static 'js/ruang-admin.min.js' %}"></script>
+        <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+        <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+</body>
+{% endblock %}
+
+</html>

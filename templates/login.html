@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+  <!-- Login Content -->
+  {% block title %}| Login{% endblock %}
+  {% block body %}
+  <div class="container-login">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow-sm my-5">
+          <div class="card-body">
+            <div class="row justify-content-center">
+              <div class="col-lg-6">  
+                <div class="login-form ">
+                  <div class="text-center">
+                    <img src="{% static 'img/logo/logo2.png' %}" style="filter: brightness(200%);">
+                    <h1 class="h4 text-gray-900 mb-4"></h1>
+                  </div>
+                  {% if messages %}
+                  
+                  {% for message in messages %}
+                  {% if message.tags == 'success'%}
+                  <div class="alert alert-success">
+                    {{message}}
+                  </div>
+                  {% elif message.tags == 'error' %}
+                  <div class="alert alert-danger">
+                    {{message}}
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                  {% endif %}
+                  <form class="user" id="myForm" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                      <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp"
+                        placeholder="Enter Email Address" >
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control" name="password" id="password" placeholder="Password"
+                      >
+                    </div>
+                    <div class="form-group">
+                      <!-- <a href="index.html" class="btn btn-primary btn-block">Login</a> -->
+                      <button type="button" class="btn btn-primary btn-block" onclick="Adminlogin_data()">login</button>
+                    </div>
+                    </form>
+                    <hr>
+                    <div class="text-center">
+                      <a class="font-weight-bold small" href="{% url 'admin_forget_password' %}">Forget Password?</a>
+                    </div>
+                    <hr>
+                  <div class="text-center">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          
+        </div>
+        
+      </div>
+      
+    </div>
+  </div>
+<footer class="sticky-footer bg-white" style="margin-top: 350px;">
+  <div class="container my-auto">
+    <div class="copyright text-center my-auto">
+      <span>copyright &copy;
+        <script> document.write(new Date().getFullYear()); </script> - developed by
+        <b><a href="#" target="_blank">Seedesta</a></b>
+      </span>
+    </div>
+  </div>
+</footer>
+    
+  <script>
+    setTimeout(() => {
+      $('.alert').fadeOut('fast');
+    }, 2000);
+  </script>
+  <script>
+    function Adminlogin_data() {
+      let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      $.ajax({
+        type: "POST",
+        url: "/login/ajax/",
+        headers: { 'X-CSRFToken': csrftoken },
+        dataType: 'json',
+        contentType: false,
+        cache: false,
+        processData: false,
+        data: new FormData(document.getElementById("myForm")),
+        success: function (res) {
+          console.log(res)
+          toastr.success(res.message);
+          window.location.href = '/admin/dashboard/'
+        },
+        error: function (res) {
+          toastr.error(res.responseJSON.message);
+        }
+      });
+    };
+  </script>
+{% endblock %}

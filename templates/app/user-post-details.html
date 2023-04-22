@@ -1,0 +1,82 @@
+ {% extends 'app/base/base.html' %} 
+ {% load static %}
+ {% block body %}
+
+<html>
+  
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+        <section class="goal-detail-sec">
+            <div class="container">
+                <div class="goal-about-sec">
+                    <figure><img src="{{ post_detail.image.url}}"></figure>
+                    
+                    <div class="post-heart-info">
+                        <a href=""><h4>{{ post_detail.title}}</h4></a>
+                        <ul class="members-name-dec">
+                            {% comment %} <li class="first-mem"><a href="javascript:;"><img src="images/users-list.svg">20 Members</a></li> {% endcomment %}
+                            <li class="second-mem">{{delta.days}} days Ago</li>
+                        </ul>
+                        <div class="d-flex justify-content-between">
+                            <div class="like_diss">
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'postLike' post_detail.slug%}">{% if like_post.post_like == True %}
+                                            <i style="color:green" class="ri-thumb-up-line"></i>{% else %}<i  class="ri-thumb-up-line"></i>{% endif %}</a>{{post_like}}
+                                    </li>
+                                    <li><a href="{% url 'postDislike' post_detail.slug%}">{% if like_post.post_dislike == True %}<i style="color:green" class="ri-thumb-down-line"></i>{% else %}<i class="ri-thumb-down-line"></i>{% endif %}</a>{{post_dislike}}</li>
+                                </ul>
+                            </div>
+                            <div class="views_user">
+                                <ul>
+                                    <li>
+                                        <a>
+                                            <i class="ri-eye-line">
+                                            </i>{{post_count}}Views</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="post-btn-lst">
+                            <a  class="btn green-btn" href="{% url 'userFavourutePost' post_detail.slug %}">{% if fav_post.user_id == request.user.id and fav_post.favourite == 1 %}<i class="ri-heart-fill"></i>{% else %}<i class="ri-heart-line"></i>{% endif %}
+                             {% comment %} class="post-btn" href="javascript:;">
+                                <svg class="icon icon-tabler icon-tabler-heart" width="26" height="26" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                                </svg> {% endcomment %}
+                            </a>
+                        </div>
+                    </div>
+
+                    {% comment %} <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.,</p>
+
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+
+                    <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p> {% endcomment %}
+                </div>
+            </div>
+        </section>
+
+        </div>
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+
+        <!-- ----------footer section----------- -->
+
+    </div>
+
+    <!-- -----java script------ -->
+   
+    <!-- -----side menu------ -->
+    </body>
+</html>
+{% endblock body %}

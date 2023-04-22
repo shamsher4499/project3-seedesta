@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% block body %}
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        <!-- Sidebar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                {% include 'navbar.html' %}
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Goal Information</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'goal' %}">Goal</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Goal Information</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 mb-4">
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Goal Information</h6>
+                                </div>
+
+                                <div class="detail-info-content">
+                                    <ul>
+                                        <li><span>Created By</span> : {{data.user.first_name}} {{data.user.last_name}}</li>
+                                        <li><span>Goal Name</span> : {{data.goal_name}}</li>
+                                        <li><span>Goal As</span> : {{data.goal_as}}</li>
+                                        <li><span>Start Date</span> : {{data.start_date}}</li>
+                                        {% if data.group_name %}
+                                        <li><span>Group Name</span> : {{data.group_name}}</li>
+                                        <li><span>Group Description</span> : {{data.group_desc}}</li>
+                                        {% endif %}
+                                        {% if data.goal_as == 'PRODUCT' %}
+                                        <li><span>Product Category</span> : {{data.product.category}}</li>
+                                        <li><span>Product Name</span> : {{data.product.name}}</li>
+                                        <li><span>Product Price</span> : {{data.product.price}}</li>
+                                        <li><span>Product Description</span> : {{data.product.desc}}</li>
+                                        <li><span>Product Return Period</span> : {{data.product.return_period}} days</li>
+                                        <li><span>Product Return From</span> : {{data.product.return_time_from}}</li>
+                                        <li><span>Product Return To</span> : {{data.product.return_time_to}}</li>
+                                        {% else %}
+                                        {% endif %}
+                                        <li><span>Priority</span> : {{data.goal_priority}}</li>
+                                        <li><span>Payment Plan</span> : {{data.payment_plan.plan_name}}</li>
+                                        <li><span>Payment Plan Amount</span> :$ {{data.payment_plan.price}}</li>
+                                        <li><span>Goal Type</span> : {{data.goal_type}}</li>
+                                        <li><span>Payment Method</span> : {{data.payment_method}}</li>
+                                        <li><span>Goal Price</span> : $ {{data.goal_amount}}</li>
+                                        <li><span>Description</span> : {{data.goal_desc}}</li>
+                                        <li><span>Status</span> : {{data.status}}</li>
+                                        <li><span>Created Date</span> : {{data.created}}</li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </div>
+                        <!-----------------------------------------------------sub goals--------------------------------------------------------->
+                        {% if sub_goal %}
+                        <div class="col-lg-6 mb-4">
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Sub Goal Information</h6>
+                                </div>
+                        
+                                <div class="detail-info-content">
+                                    <ul>
+                                        {% for i in sub_goal %}
+                                        <li><span style="color: black; font-size: medium;">Sub Goal {{forloop.counter}}</span></li>
+                                        <li><span>Sub Goal Name </span> : {{i.sub_goal_name}}</li>
+                                        <li><span>Sub Goal Amount</span> : $ {{i.sub_goal_amount}}</li>
+                                        <li><span>Start Date</span> : {{i.sub_start_date}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <!----------------------------------------------------goal members------------------------------------->
+                        {% if goal_member %}
+                        <div class="col-lg-6 mb-4">
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Goal Members</h6>
+                                </div>
+                        
+                                <div class="detail-info-content">
+                                    <ul>
+                                        {% for i in goal_member %}
+                                        <li><span>Member {{forloop.counter}}</span> : {{i.members.first_name}} {{i.members.last_name}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <!--------------------------------------------------------------goal admin------------------------------------------------>
+                        {% if goal_admin %}
+                        <div class="col-lg-6 mb-4">
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Goal Admins</h6>
+                                </div>
+                        
+                                <div class="detail-info-content">
+                                    <ul>
+                                        {% for i in goal_admin %}
+                                        <li><span>Admin {{forloop.counter}}</span> : {{i.user.first_name}} {{i.user.last_name}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <!--Row-->
+
+                    <!-- Modal Logout -->
+
+
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/ruang-admin.min.js' %}"></script>
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+
+</body>
+{% endblock %}
+
+</html>

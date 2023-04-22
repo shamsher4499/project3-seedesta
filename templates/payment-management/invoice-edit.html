@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+{% block body %}
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        <!-- Sidebar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                {% include 'navbar.html' %}
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-fluid" id="container-wrapper">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Change Invoice Status</h1>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'vendor_payment_sattlement' %}">Invoices</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Invoice Information</li>
+                        </ol>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 mb-4">
+                            <!-- Simple Tables -->
+                            <div class="card">
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Invoice Information</h6>
+                                </div>
+                                <div class="container-xl px-4 mt-4">
+                                    <hr class="mt-0 mb-4">
+                                    <div class="row">
+                                        <div class="col-xl-8">
+                                            <!-- Account details card-->
+                                            <div class="card mb-4">
+                                                <div class="card-header">Account Details</div>
+                                                {% if messages %}
+                                                {% for message in messages %}
+                                                {% if message.tags == 'success'%}
+                                                <div class="alert alert-success">
+                                                    {{message}}
+                                                </div>
+                                                {% elif message.tags == 'error' %}
+                                                <div class="alert alert-danger">
+                                                    {{message}}
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% endif %}
+                                                <div class="card-body">
+                                                    <form method="POST" id="myForm">
+                                                        {% csrf_token %}
+                                                        <!-- Form Group (username)-->
+                                                        <!-- Form Row-->
+                                                        <div class="row gx-3 mb-3">
+                                                            <!-- Form Group (first name)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputFirstName">Goal Name</label>
+                                                                <input class="form-control" id="inputFirstName" type="text" name="first_name"
+                                                                    placeholder="Enter your first name" value="{{invoice.goal.goal_name}}" maxlength="20" readonly>
+                                                            </div>
+                                                            <!-- Form Group (last name)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputLastName">Product Name</label>
+                                                                <input class="form-control" id="inputLastName" type="text" name="last_name"
+                                                                    placeholder="Enter your last name" value="{{invoice.goal.product.name}}" maxlength="20" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Form Row        -->
+                                                        <div class="row gx-3 mb-3">
+                                                            <!-- Form Group (organization name)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputOrgName">Due Amount</label>
+                                                                <input class="form-control" id="inputOrgName" type="text" name="email"
+                                                                    placeholder="Enter your organization name" value="$ {{invoice.amount}}" readonly>
+                                                            </div>
+                                                            <!-- Form Group (location)-->
+                                                            <div class="col-md-6">
+                                                                <label class="small mb-1" for="inputMobile">Request Date</label>
+                                                                <input class="form-control"  type="text" name="mobile" placeholder="Enter your mobile"
+                                                                    value="{{invoice.created}}" readonly>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                        <label>Status</label>
+                                                        <select class="form-control" id="choices" name="status">
+                                                            <option value="PENDING" name="status" 
+                                                            {% if invoice.status == 'PENDING' %} selected {% endif %}>Pending
+                                                            </option>
+                                                            <option value="COMPLETED" name="status"
+                                                            {% if invoice.status == 'COMPLETED' %} selected {% endif %}>Completed
+                                                            </option>
+                                                        </select>
+                                                        </div>
+                                                        <br>
+                                                        <!-- Form Group (email address)-->
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-primary">Save
+                                                                Changes</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Row-->
+
+                    <!-- Modal Logout -->
+
+
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <script>
+        setTimeout(() => {
+            $('.alert').fadeOut('fast');
+        }, 2000);
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/ruang-admin.min.js' %}"></script>
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+
+</body>
+{% endblock %}
+
+</html>

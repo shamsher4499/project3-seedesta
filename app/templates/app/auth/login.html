@@ -1,0 +1,144 @@
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+       <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+   </head>
+   <body>
+
+<div class="login-form-container">
+    <div class="login-form-inner"> 
+        <div class="login-two-pane">
+            <div class="login-left">
+                <div class="login-left-in">
+                    <div class="login-head">
+                        <h4>Login your account</h4>
+                        <p>Use your credentials to access your account.</p>
+                    </div>
+                    <div class="login-form">
+                        <form>
+                            <div class="form-group mb-3">
+                              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email ID/Phone number ">
+                            </div>
+                            <div class="form-group mb-3">
+                              <input type="password" class="form-control" id="exampleFormControlInput1" placeholder="Password">
+                            </div>
+                            <div class="d-flex fg-links">
+                                <div class="form-check">
+                                  <input class="form-check-input" type="checkbox" value="" id="remember-me">
+                                  <label class="form-check-label" for="remember-me">
+                                    Remember me
+                                  </label>
+                                </div>
+                                <a href="#" class="ms-auto">Forgot Password?</a>
+                            </div>
+                            <button class="btn btn-site w-100">Login</button>
+                            <div class="divi-line">
+                                <span>Or Login with</span>
+                            </div>
+                            <div class="social-icon">
+                                <a href="javascript:;"><img src="images/fb.svg"></a>
+                                <a href="javascript:;"><img src="images/tw.svg"></a>
+                                <a href="javascript:;"><img src="images/google.svg"></a>
+                                <a href="javascript:;"><img src="images/in.svg"></a>
+                            </div>
+                            <div class="not-account">
+                                <p>Don't have an account? <a href="javascript:;">Sign up</a></p>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="login-right-in"> 
+                    <a href="javascript:;"><img src="images/logo-2.svg"></a>
+                    <h2>Welcome to Seedesta</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+   $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+</script>
+
+<!-- -----side menu------ -->
+    <script>
+       $('#menu-button').click(function(e) {
+           e.stopPropagation();
+           $('#hide-menu').toggleClass('show-menu');
+       });
+       $('#hide-menu').click(function(e) {
+           e.stopPropagation();
+       });
+       $('body,html,.closebtn').click(function(e) {
+           $('#hide-menu').removeClass('show-menu');
+       });
+    </script>
+<!-- -----side menu------ -->
+
+<script type="text/javascript">
+  $('.home-banners').owlCarousel({
+      loop:true,
+      margin:0,
+      nav:false,
+      dots:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:1
+          },
+          1000:{
+              items:1
+          }
+      }
+  })
+  </script>
+
+<script type="text/javascript">
+  $('.people-say').owlCarousel({
+      loop:true,
+      margin:30,
+      nav:true,
+      dots:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:2
+          },
+          1000:{
+              items:3
+          }
+      }
+  })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+{% block body %}
+
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
+        {% include 'sidebar.html' %}
+        <!-- Sidebar -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- TopBar -->
+                {% include 'navbar.html' %}
+                <!-- Topbar -->
+                <!-- Container Fluid-->
+                <div class="container-login">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card shadow-sm my-5">
+                                <div class="card-body p-0">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="login-form">
+                                                <div class="text-center">
+                                                    <h1 class="h4 text-gray-900 mb-4">Update Free Trail Subscription
+                                                    </h1>
+                                                    {% if messages %}
+                                                    {% for message in messages %}
+                                                    {% if message.tags == 'success'%}
+                                                    <div class="alert alert-success">
+                                                        {{message}}
+                                                    </div>
+                                                    {% elif message.tags == 'error' %}
+                                                    <div class="alert alert-danger">
+                                                        {{message}}
+                                                    </div>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </div>
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <div class="form-group row">
+                                                        <label for="inputFacebook" class="col-sm-2 col-form-label">Facebook</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" name="facebook" value="{{social_data.facebook}}" class="form-control" id="inputFacebook"
+                                                                placeholder="Facebook">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputInstagram" class="col-sm-2 col-form-label">Instagram</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" name="instagram" value="{{social_data.instagram}}" class="form-control"
+                                                                id="inputInstagram" placeholder="Instagram">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputYouTube" class="col-sm-2 col-form-label">YouTube</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" name="youtube" value="{{social_data.youtube}}" class="form-control" id="inputYouTube"
+                                                                placeholder="YouTube">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputLinkedin" class="col-sm-2 col-form-label">Linkedin</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" name="linkedin" value="{{social_data.linkedin}}" class="form-control" id="inputLinkedin"
+                                                                placeholder="Linkedin">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputTwitter" class="col-sm-2 col-form-label">Twitter</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" name="twitter" value="{{social_data.twitter}}" class="form-control" id="inputTwitter"
+                                                                placeholder="Twitter">
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-center">
+                                                        <div class="form-group">
+                                                            <button type="submit" class="btn btn-primary btn-sm" style="margin-right: 2px;">Save</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <hr>
+                                                <div class="text-center">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---Container Fluid-->
+            </div>
+            <!-- Footer -->
+            {% include 'footer.html' %}
+            <!-- Footer -->
+        </div>
+    </div>
+
+    <!-- Scroll to top -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace('desc');
+    </script>
+    <script>
+        $("#myForm").validate({
+            rules: {
+                validity: {
+                    required: true,
+                    digits: true
+                },
+                product_count: {
+                    required: true,
+                    digits: true
+                },
+                plan_name: {
+                    required: true,
+                },
+                days: {
+                    required: true,
+                },
+                desc: {
+                    required: true,
+                },
+                price: {
+                    required: true,
+                },
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    </script>
+    <script>
+        setTimeout(() => {
+            $('.alert').fadeOut('fast');
+        }, 2000);
+
+        const first_name = document.getElementById('first_name')
+        // const password = document.getElementById('password')
+        const form = document.getElementById('form')
+        // const errorElement = document.getElementById('error')
+
+        form.addEventListener('submit', (e) => {
+            let messages = []
+            if (first_name.value === '' || first_name.value == null) {
+                messages.push('')
+                alert(first_name.value)
+            }
+        })
+
+    </script>
+    <script>
+        function user_data() {
+            let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            let first_name = $('#first_name').val()
+            let last_name = $('#last_name').val()
+            let email = $('#email').val()
+            let mobile = $('#mobile').val()
+            let password = $('#password').val()
+            let user_type = 'USER'
+            $.ajax({
+                type: "POST",
+                url: "/admin/add-user/ajax/",
+                headers: { 'X-CSRFToken': csrftoken },
+                data: {
+                    user_type: user_type,
+                    first_name: first_name,
+                    last_name: last_name,
+                    email: email,
+                    mobile: mobile,
+                    password: password
+                },
+                success: function (res) {
+                    console.log(res)
+                    toastr.success(res.message);
+                    window.location.href = "/admin/tables/"
+                },
+                error: function (res) {
+                    toastr.error(res.responseJSON.message);
+                }
+            });
+        };
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/ruang-admin.min.js' %}"></script>
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'js/demo/chart-area-demo.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.js"></script>
+
+
+</body>
+{% endblock %}
+
+</html>

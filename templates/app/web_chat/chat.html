@@ -1,0 +1,298 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+{% block body %}
+<html>
+<body>
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+        <div class="inner-space-main p-0">
+            <section class="business-chat-sec">
+                <div class="container">
+                    <div class="business-chat">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="chat-list">
+                                    <div class="user-chat pe-0 ps-0">
+                                        <form class="form-inline">
+                                            <div class="search-icons">
+                                                <input class="form-control mr-sm-2" type="search" placeholder="Search"
+                                                    aria-label="Search">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <nav>
+                                        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                                          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Recent Chat</button>
+                                          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">People You Follow</button>
+                                        </div>
+                                      </nav>
+                                      <div class="tab-content" id="nav-tabContent">
+                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                            <div  class="chat-more longEnough" data-mcs-theme="dark">
+                                                {% for chat_user in chat_users %}
+                                                {% if forloop.counter == 1 %}
+                                                <input type="hidden" id="get-chat-room-first" value="{{chat_user.room}}" >
+                                                {% endif %}
+                                                {% if chat_user.user1_id == request.user.id%}
+                                                {% if forloop.counter == 1 %}
+                                                <input type="hidden" id="first-chat" value="{{chat_user.user2_id}}">
+                                                {% endif %}
+                                                <input type="hidden" data-room-chat-name="{{ chat_user.room }}">
+                                                <div data-follow-user="{{chat_user.user2_id}}"
+                                                {% if forloop.counter == 1 %} id="first-user-chat" {% endif %} class="user-chat">
+                                                    <figure>
+                                                        {% if chat_user.user2.profile_pic %}
+                                                        <img src="{{ chat_user.user2.profile_pic.url }}">
+                                                        {% else %}
+                                                        <img src="{% static 'frontend/images/member-5.png' %}">
+                                                        {% endif %}
+                                                    </figure>
+                                                    <figcaption>
+                                                        <h4>{{chat_user.user2.first_name}} {{chat_user.user2.last_name}}</h4>       
+                                                        <p>Lorem Ipsum is simply</p>
+                                                    </figcaption>
+                                                    <span class="user-chat-timer">11:20 AM</span>
+                                                </div>
+                                                {% else %}
+                                                {% if forloop.counter == 1 %}
+                                                <input type="hidden" id="first-chat" value="{{chat_user.user1_id}}">
+                                                {% endif %}
+                                                <input type="hidden" data-room-chat-name="{{ chat_user.room }}">
+                                                <div data-follow-user="{{chat_user.user1_id}}"
+                                                {% if forloop.counter == 1 %} id="first-user-chat" {% endif %} class="user-chat">
+                                                    <figure>
+                                                        {% if chat_user.user1.profile_pic %}
+                                                        <img src="{{ chat_user.user1.profile_pic.url }}">
+                                                        {% else %}
+                                                        <img src="{% static 'frontend/images/member-5.png' %}">
+                                                        {% endif %}
+                                                    </figure>
+                                                    <figcaption>
+                                                        <h4>{{chat_user.user1.first_name}} {{chat_user.user1.last_name}}</h4>       
+                                                        <p>Lorem Ipsum is simply</p>
+                                                    </figcaption>
+                                                    <span class="user-chat-timer">11:20 AM</span>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                            {% for user in following_user %}
+                                                <div data-follow-user="{{user.follow_user_id}}" class="user-chat">
+                                                    <figure>
+                                                        {% if user.follow_user.profile_pic %}
+                                                        <img src="{{ user.follow_user.profile_pic.url }}">
+                                                        {% else %}
+                                                        <img src="{% static 'frontend/images/member-5.png' %}">
+                                                        {% endif %}
+                                                    </figure>
+                                                    <figcaption>
+                                                        <h4>{{user.follow_user.first_name}} {{user.follow_user.last_name}}</h4>
+                                                        <p>Lorem Ipsum is simply</p>
+                                                    </figcaption>
+                                                    <span class="user-chat-timer">11:20 AM</span>
+                                                </div>
+                                                {% endfor %}
+                                        </div>
+                                      </div>
+                                    <!-- <div  class="chat-more longEnough mCustomScrollbar" data-mcs-theme="dark">
+                                        {% for chat_user in chat_users %}
+                                        {% if forloop.counter == 1 %}
+                                        <input type="hidden" id="get-chat-room-first" value="{{chat_user.room}}" >
+                                        {% endif %}
+                                        {% if chat_user.user1_id == request.user.id%}
+                                        {% if forloop.counter == 1 %}
+                                        <input type="hidden" id="first-chat" value="{{chat_user.user2_id}}">
+                                        {% endif %}
+                                        <input type="hidden" data-room-chat-name="{{ chat_user.room }}">
+                                        <div data-follow-user="{{chat_user.user2_id}}"
+                                        {% if forloop.counter == 1 %} id="first-user-chat" {% endif %} class="user-chat">
+                                            <figure>
+                                                {% if chat_user.user2.profile_pic %}
+                                                <img src="{{ chat_user.user2.profile_pic.url }}">
+                                                {% else %}
+                                                <img src="{% static 'frontend/images/member-5.png' %}">
+                                                {% endif %}
+                                            </figure>
+                                            <figcaption>
+                                                <h4>{{chat_user.user2.first_name}} {{chat_user.user2.last_name}}</h4>       
+                                                <p>Lorem Ipsum is simply</p>
+                                            </figcaption>
+                                            <span class="user-chat-timer">11:20 AM</span>
+                                        </div>
+                                        {% else %}
+                                        {% if forloop.counter == 1 %}
+                                        <input type="hidden" id="first-chat" value="{{chat_user.user1_id}}">
+                                        {% endif %}
+                                        <input type="hidden" data-room-chat-name="{{ chat_user.room }}">
+                                        <div data-follow-user="{{chat_user.user1_id}}"
+                                        {% if forloop.counter == 1 %} id="first-user-chat" {% endif %} class="user-chat">
+                                            <figure>
+                                                {% if chat_user.user1.profile_pic %}
+                                                <img src="{{ chat_user.user1.profile_pic.url }}">
+                                                {% else %}
+                                                <img src="{% static 'frontend/images/member-5.png' %}">
+                                                {% endif %}
+                                            </figure>
+                                            <figcaption>
+                                                <h4>{{chat_user.user1.first_name}} {{chat_user.user1.last_name}}</h4>       
+                                                <p>Lorem Ipsum is simply</p>
+                                            </figcaption>
+                                            <span class="user-chat-timer">11:20 AM</span>
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                        <div>
+                                            <hr>
+                                            <p style="text-align: center;" >People You Follow</p>
+                                        </div>
+                                        {% for user in following_user %}
+                                        <div data-follow-user="{{user.follow_user_id}}" class="user-chat">
+                                            <figure>
+                                                {% if user.follow_user.profile_pic %}
+                                                <img src="{{ user.follow_user.profile_pic.url }}">
+                                                {% else %}
+                                                <img src="{% static 'frontend/images/member-5.png' %}">
+                                                {% endif %}
+                                            </figure>
+                                            <figcaption>
+                                                <h4>{{user.follow_user.first_name}} {{user.follow_user.last_name}}</h4>
+                                                <p>Lorem Ipsum is simply</p>
+                                            </figcaption>
+                                            <span class="user-chat-timer">11:20 AM</span>
+                                        </div>
+                                        {% endfor %}
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div id="chat_between_user" class="col-md-8">    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+</body>
+</html>
+<!-- -----java script------ -->
+{% endblock %}
+{% block script %}
+
+    <script>
+        const to_chat_user_id = $('#first-chat').val()
+        let message = $('#chat-message').val()
+        user_id = `{{request.user.id}}`
+        const room = $('#get-chat-room-first').val()
+        url = `ws://localhost/ws/web_chat/${room}/`
+        console.log(url, "=============================================")
+        let socket = new WebSocket(url);
+        $('#first-user-chat').addClass('active')
+        $.ajax({
+            type: 'POST',
+            url: '{% url "create_room_for_chat" %}',
+            data: {
+                "to_chat_user" : to_chat_user_id
+            },
+            success: (response) => {
+                document.getElementById('chat_between_user').innerHTML = response         
+                $(document).find('[data-send-chat-message]').data('send-chat-message', to_chat_user_id)
+                
+            },
+            error: (a,b,c) => {
+            }
+        })
+    </script>
+
+    <script>
+        $(document).on('click','[data-follow-user]', function() {
+            const user = $(this).data('follow-user')
+            $('.user-chat').removeClass('active')
+            $(this).addClass('active')
+            $.ajax({
+                type: 'POST',
+                url: '{% url "create_room_for_chat" %}',
+                data: {
+                    "to_chat_user" : user
+                },
+                success: (response) => {
+                    document.getElementById('chat_between_user').innerHTML = response
+                    $(document).find('[data-send-chat-message]').data('send-chat-message', user)         
+                },
+                error: (a,b,c) => {
+                }
+            });
+        }) 
+    </script>
+
+    <script>
+        $(document).on('click', '[data-send-chat-message]', function(){
+            const to_chat_user_id = $(this).data('send-chat-message')
+            console.log(to_chat_user_id, "==============================")
+            let message = $('#chat-message').val()
+            user_id = `{{request.user.id}}`
+            const room = $(this).data('chat-room-name')
+            url = `ws://localhost/ws/web_chat/${room}/`
+            let socket = new WebSocket(url);
+            socket.onopen = function (e) {
+                const text_data = { 'message': message, 'sender': user_id, 'receiver': to_chat_user_id }
+                socket.send(JSON.stringify(text_data));
+                $('#chat-message').val('');
+                $('[data-send-chat-message]').data('send-chat-message', to_chat_user_id)
+                $('.user-chat').removeClass('active')
+                $(this).addClass('active')
+                };
+         })
+    </script>
+
+    <script>
+        socket.onmessage = (event) => {
+            console.log(`[message] Data received from server: ${event.data}`, $.type(event.data));
+            data = JSON.parse(event.data)
+            const messages = data["message"]
+            var dt = new Date();
+            var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+            login_user = `{{request.user.id}}`
+            sender = data["sender"]
+            receiver = data["receiver"]
+            if (login_user == sender){
+                $('#chat-new-message').append(`<div class="right-chat">
+                                                <div class="left-chat-in">
+                                                    <figcaption>
+                                                        <p>${messages}</p>
+                                                    </figcaption>
+                                                    <span>${dt}</span>
+                                                </div>
+                                                </div>`)
+                                    
+            }
+            if (login_user == receiver){
+                $('#chat-new-message').append(`<div class="left-chat">
+                                                <div class="left-chat-in">
+                                                    <figcaption>
+                                                        <p>${messages}</p>
+                                                    </figcaption>
+                                                    <span>${dt}</span>
+                                                </div>
+                                                </div>`)
+            }
+        };
+        socket.onclose = function (event) {
+            if (event.wasClean) {
+                console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+            } else {
+                // e.g. server process killed or network down
+                // event.code is usually 1006 in this case
+                console.log('[close] Connection died');
+            }
+        };
+        socket.onerror = function (error) {
+        };
+    </script>
+{% endblock script %}

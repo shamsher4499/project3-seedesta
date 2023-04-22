@@ -1,0 +1,65 @@
+{% load static %}
+<div class="chat-infobox">
+    <div class="user-chats">
+        <figure>
+            {% if to_chat_user_data.profile_pic %}
+            <img src="{{ to_chat_user_data.profile_pic.url }}">
+        </figure>
+        {% else %}
+        <img src="{% static 'frontend/images/member-5.png' %}">
+        {% endif %}
+        <figcaption>
+            <h4>{{to_chat_user_data.first_name}} {{to_chat_user_data.last_name}}</h4>
+            <p>{{to_chat_user_data.bio}}</p>
+        </figcaption>
+        <a class="delete_btn" href="{% url 'delete_chat' to_chat_user_data.slug  %}">
+            <svg class="icon icon-tabler icon-tabler-trash" width="44" height="44" viewBox="0 0 24 24"
+                stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <line x1="4" y1="7" x2="20" y2="7" />
+                <line x1="10" y1="11" x2="10" y2="17" />
+                <line x1="14" y1="11" x2="14" y2="17" />
+                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+            </svg>
+        </a>
+    </div>
+    <div id="chat-new-message" class="user-chating-box longEnough" data-mcs-theme="dark">
+        {% for chat in chat_data %}
+        {% if not chat.sender_id == request.user.id %}
+        <div class="left-chat">
+            <div class="left-chat-in">
+                <figcaption>
+                    <p>{{chat.message}}</p>
+                </figcaption>
+                <span>{{chat.created}}</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="right-chat">
+            <div class="left-chat-in">
+                <figcaption>
+                    <p>{{chat.message }}</p>
+                </figcaption>
+                <span>{{chat.created}}</span>
+            </div>
+        </div>
+        {% endif %}
+        {% empty %}
+        <p>Start Chat</p>
+        {% endfor %}
+    </div>
+    <div class="chat-textarea">
+        <div class="form-group">
+            <textarea id="chat-message" class="form-control" placeholder="Write a message....."></textarea>
+            <button type="button" class="upload_btn_msg">
+                <div class="file_send_chat">
+                    <i class="ri-attachment-line"></i>
+                    <input type="file" id="customFile" />
+                </div>
+            </button>
+        </div>
+            <button data-send-chat-message="" data-chat-room-name={{chat_room.room}} class="btn btn-green waves-effect waves-light" href="javascript:;"><i
+                    class="fas fa-paper-plane"></i></button>
+    </div>
+</div>

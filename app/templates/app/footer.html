@@ -1,0 +1,56 @@
+{% exclude 'base.html' %}
+{% load static %}
+{% blockfooter %}
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="seedesta-footer">
+                    <a class="footer-logo" href="index.php">
+                        <img src="{% static 'frontend/images/logo-white.svg' %}">
+                    </a>
+                    <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered
+                        alteration in some form, by injected humour, or randomised </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="footer-content">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about-us.php">About us</a></li>
+                        <li><a href="contact-us.php">Contact Us</a></li>
+                        <li><a href="help.php">Help</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="footer-content">
+                    <h3>Important links</h3>
+                    <ul>
+                        <li><a href="trms-conditions.php">Terms & Conditions</a></li>
+                        <li><a href="privacy-policy.php">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="footer-content">
+                    <h3>Connect with us</h3>
+                    <ul class="footer-social">
+                        <li>
+                            <a href="javascript:;"><i class="ri-facebook-fill"></i></a>
+                        </li>
+                        <li>
+                            <a href="javascript:;"><i class="ri-twitter-fill"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="copyright-text">
+            <p>© Copyright 2022 | Seedesta | All Rights Reserved</p>
+        </div>
+    </div>
+</footer>
+{% endblock %}

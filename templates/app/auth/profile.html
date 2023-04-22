@@ -1,0 +1,174 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+<body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+    {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+
+            <section class="select-goals-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="row inner-dash-bord">
+                        <div class="col-md-3">
+                            {% include 'app/base/sidebar.html' %}
+                        </div>
+                        <div class="col-md-9">
+                            <form class="dashboard-right-body p-4" method="POST" action="{% url 'profile' %}" enctype='multipart/form-data'>
+                                {% csrf_token %}
+                                <div class="cover_photo_box">
+                                    <div class="cover_photo_in">
+                                        <figure><img src="{% static 'frontend/images/goal-detail-img1.png' %}"></figure>
+                                    </div>
+                                    <div class="row">
+                                        <div class="user_photo_in">
+                                            {% comment %} <figure><img src="{% static 'frontend/images/member-5.png' %}"></figure> {% endcomment %}
+                                            <figure><img src="{% if user1.profile_pic %}{{user1.profile_pic.url}}{% else %}{% static 'frontend/images/member-5.png' %}{% endif %}"></figure>
+                                            <div class="btn edit-btn">
+                                                <input type="file" name="image" id="file">    
+                                                <label for="file">
+                                                    <svg class="icon icon-tabler icon-tabler-pencil" width="24" height="24"
+                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="#fff" fill="none"
+                                                        stroke-linecap="round" stroke-linejoin="round">
+                                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                                        <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4">
+                                                        </path>
+                                                        <line x1="13.5" y1="6.5" x2="17.5" y2="10.5"></line>
+                                                    </svg>
+                                                </label>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="cover_form_in">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label>Name*</label>
+                                                <input type="text" value="{{user1.first_name}}" name="username"class="form-control" placeholder="Tammy D. Knight">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label>Mobile number*</label>
+                                                <input type="text" value="{{user1.mobile}}" class="form-control" placeholder="+91 2345 67788" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group mb-3">
+                                                <label>Email ID</label>
+                                                <input type="text" value="{{user1.email}}" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label>Bio</label>
+                                            <textarea value="" name="bio" class="form-control">{{user1.bio}}</textarea>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-12 pt-2 pb-2">
+                                            <div class="form-check pass_change">
+                                                <input class="form-check-input" onclick = "check()" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Change Password
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 password"  style="display:none">
+                                            <div class="form-group mb-3">
+                                                <label>Old password</label>
+                                                <input   type="password" value="{{user1.oldpassword}}" name = 'oldpassword' class="form-control"
+                                                    placeholder="Enter old password">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 password" style="display:none">
+                                            <div class="form-group mb-3">
+                                                <label>New password</label>
+                                                <input  type="password" value="{{user1.newpassword}}" name='newPassword' class="form-control"
+                                                placeholder="Enter new password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 password" style="display:none">
+                                            <div class="form-group mb-3">
+                                                <label>Confirm new password</label>
+                                                <input  type="password" value="{{user1.confirmpassword}}" class="form-control"
+                                                    name='confirmPassword' placeholder="Enter confirm new password">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 pt-2">
+                                            <button class="btn" type="submit">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+    <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script>
+        $(window).scroll(function () { var body = $('body'), scroll = $(window).scrollTop(); if (scroll >= 5) { body.addClass('fixed'); } else { body.removeClass('fixed'); } });
+    </script>
+    <script>
+        setTimeout(() => {
+            $('.alert').fadeOut('fast');
+        }, 2000);
+    </script>
+
+    <!-- -----side menu------ -->
+    <script>
+        $('#menu-button').click(function (e) {
+            e.stopPropagation();
+            $('#hide-menu').toggleClass('show-menu');
+        });
+        $('#hide-menu').click(function (e) {
+            e.stopPropagation();
+        });
+        $('body,html,.closebtn').click(function (e) {
+            $('#hide-menu').removeClass('show-menu');
+        });
+    </script>
+    <script>
+        function check(){ 
+            let i = $("#flexCheckDefault").is(':checked')
+            if (i){
+             $('.password').css("display","block")
+
+         }else{
+            $('.password').css("display","none")  
+         }
+        
+        }
+    </script>
+    <!-- -----side menu------ -->
+</body>
+{% endblock %}
+</html>

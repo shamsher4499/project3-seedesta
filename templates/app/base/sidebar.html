@@ -1,0 +1,179 @@
+{% load static %}
+<div class="dashboard-left-menu">
+    
+    <div class="profile_menu">
+        <figure><img src="{% if user.profile_pic %}{{user.profile_pic.url}}{% else %}{% static 'frontend/images/member-5.png' %}{% endif %}"></figure>
+        <figcaption>
+            <h3>{% if request.user.user_type == 'VENDOR' %}{{request.user.company_name}}{% else %}{{ request.user.first_name }} {% endif %}</h3>
+            {% if request.user.user_type == 'USER' %}
+            <span class="new-member">New</span>
+            <div class="member-reviews">
+                <ul>
+                    <!-- {{ request.user.avg_rating }} -->
+                    {% if request.user.avg_rating >= 0 %}
+                    {% endif %}
+                    <li class="{% if request.user.avg_rating > 0 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                    <li class="{% if request.user.avg_rating > 1 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                    <li class="{% if request.user.avg_rating > 2 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                    <li class="{% if request.user.avg_rating >= 4 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                    <li class="{% if request.user.avg_rating >= 5 %} active {% endif %}"><i class="ri-star-fill"></i></li>
+                </ul>
+                <span class="how-staring">
+                    <font>{{user.avg_rating}}</font>
+                    {% comment %} <a href="javascript:;">({{user_count}} Reviews)</a> {% endcomment %}
+                </span>
+            </div>
+            {% endif %}
+        </figcaption>
+    </div>
+    <ul class="navbar-nav-login">
+        {% if request.user.user_type == 'VENDOR' %}
+        {% url 'vendor_dashboard' as vendor_dashboard %}
+        <li class="nav-item {% if request.path == vendor_dashboard %} active {% endif %}">
+            <a class="nav-link" href="{{vendor_dashboard}}">Dashboard</a>
+        </li>
+        {% endif %}
+        {% url 'profile' as profile %}
+        <li class="nav-item {% if request.path == profile %} active {% endif %}">
+            <a class="nav-link" href="{{profile}}">My Profile</a>
+        </li>
+        {% if request.user.user_type == 'VENDOR' %}
+        {% url 'vendor_products' as vendor_products %}
+        <li class="nav-item {% if request.path == vendor_products %} active {% endif %}">
+            <a class="nav-link" href="{{vendor_products}}">Manage</a>
+        </li>
+        {% comment %} {% url 'payment' as payment %}
+        <li class="nav-item {% if request.path == payment %} active {% endif %}">
+            <a class="nav-link" href="javascript:;">Payment</a>
+        </li> {% endcomment %}
+        {% url 'vendor_subscription_plan' as vendor_subscription_plan %}
+        <li class="nav-item {% if request.path == subscription %} active {% endif %}">
+            <a class="nav-link" href="{{vendor_subscription_plan}}">Subscription Plan</a>
+        </li>
+        {% url 'vendor_invoice' as vendor_invoice %}
+        <li class="nav-item {% if request.path == vendor_invoice %} active {% endif %}">
+            <a class="nav-link" href="{{vendor_invoice}}">Invoice Management</a>
+        </li>
+        {% else %}
+        {% url 'follow_user' as follow_user %}
+        <li class="nav-item {% if request.path == follow_user %} active {% endif %}">
+            <a class="nav-link" href="{{follow_user}}">Followers</a>
+        </li>
+        {% url 'all_users' as all_users %}
+        <li class="nav-item {% if request.path == all_users %} active {% endif %}">
+            <a class="nav-link" href="{{all_users}}">All Users</a>
+        </li>
+        {% url 'following_user' as following_user %}
+        <li class="nav-item {% if request.path == following_user %} active {% endif %}">
+            <a class="nav-link" href="{{following_user}}">Following</a>
+        </li>
+        {% url 'favourite_user' as favourite_user %}
+        <li class="nav-item {% if request.path == favourite_user %} active {% endif %}">
+            <a class="nav-link" href="{{favourite_user}}">My Favorite</a>
+        </li>
+        {% url 'goal_lists' as goal_lists %}
+        {% url 'group_goal_list' as group_goal_list %}
+        <li class="nav-item {% if request.path == goal_lists %} active {% endif %}">
+            <a class="nav-link" href="{{goal_lists}}">Goals Management</a>
+        </li>
+        {% url 'group_goal_list' as group_goal_list %}
+        <li class="nav-item {% if request.path == group_goal_list %} active {% endif %}">
+            <a class="nav-link" href="{{group_goal_list}}">Group Management</a>
+        </li>
+        {% url 'product_list_view' as product_list_view %}
+        <li class="nav-item {% if request.path == product_list_view %} active {% endif %}">
+            <a class="nav-link" href="{{product_list_view}}">Product</a>
+        </li>
+        {% url 'post_lists' as post_lists %}
+        <li class="nav-item {% if request.path == post_lists %} active {% endif %}">
+            <a class="nav-link" href="{{post_lists}}">Post Management</a>
+        </li>
+        {% url 'user_payment' as user_payment %}
+        <li class="nav-item {% if request.path == user_payment %} active {% endif %}">
+            <a class="nav-link" href="{{user_payment}}">Payment Management</a>
+        </li>
+        
+        <li class="switch_item">
+            <form method="POST">
+               {% csrf_token %}
+               <a class="nav-link" href="javascript:;">
+                <div class="form-check form-switch">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">location</label>
+                   <input class="form-check-input" value="1" name="location" onchange="locations()" type="checkbox" id="flexSwitchCheckDefault" {% if request.user.location_settings %}Checked{% else %} {% endif %}>
+                </div>
+            </a>
+        </form>
+        </li>
+        {% endif %}
+        <li class="switch_item">
+            <form method="POST">
+                {% csrf_token %}
+                <a class="nav-link" href="javascript:;">
+                 <div class="form-check form-switch">
+                    <label class="form-check-label" for="flexSwitchCheckChecked">Notification</label>
+                    <input class="form-check-input" value="1" name="notification" onchange="notifications()" type="checkbox" id="flexSwitchCheckChecked1" {% if request.user.notification_settings %}checked{% else %}{% endif %}>
+                </div>
+            </a>
+        </form>
+        </li>
+        {% comment %} {% if request.user.user_type == 'USER' %}
+        {% url 'ticket' as ticket %}
+        <li class="nav-item {% if request.path == ticket %} active {% endif %}">
+            <a class="nav-link" href="javascript:;">Raise a Ticket</a>
+        </li>
+        {% endif %} {% endcomment %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
+    </ul>
+    
+</div>
+<script>
+
+
+function locations(){
+    let location_value = $('#flexSwitchCheckDefault').val()
+    let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    $.ajax({
+        type:"POST",
+        url:"{% url 'location_update' %}",
+        headers: { 'X-CSRFToken': csrftoken },
+        data:{
+            location_value:location_value
+        },success: function(res) {
+            toastr.success(res.message);
+            
+  
+       
+          },
+    })
+}
+   
+   
+</script>
+<script>
+
+
+function notifications(){
+    let notification_value = $('#flexSwitchCheckChecked1').val()
+    let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    $.ajax({
+        type:"POST",
+        url:"{% url 'notification_update' %}",
+        headers: { 'X-CSRFToken': csrftoken },
+        data:{
+            notification_value:notification_value
+        },
+        success: function(res) {
+            toastr.success(res.message);
+            
+    
+        
+            },
+    })
+}
+    
+    
+</script>

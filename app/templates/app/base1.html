@@ -1,0 +1,99 @@
+{% exclude 'base1.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<!----------------------------------------------------Header-------------------------------------------------->
+
+<head>
+    <meta charset="utf-8">
+    <title>:: seedesta ::</title>
+    <!--responsive-meta-here-->
+    <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!--responsive-meta-end-->
+    <link href="{% 'static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link href="{% 'static 'frontend/css/fontawesome-all.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% 'static 'frontend/css/owl.carousel.min.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% 'static 'frontend/fonts/remixicon.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% 'static 'frontend/css/fontawesome-all.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% 'static 'frontend/css/fontawesome.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% 'static 'frontend/css/style.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% 'static 'frontend/css/responsive.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    <!-------------------------------------Put content here----------------------->
+    {% block body %}{% endblock %}
+    <!---------------------------------Java Script-------------------------------------->
+<script type="text/javascript" src="{% 'static 'frontend/js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript" src="{% 'static 'frontend/js/popper.min.js' %}"></script>
+<script type="text/javascript" src="{% 'static 'frontend/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript" src="{% 'static 'frontend/js/owl.carousel.min.js' %}"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script type="text/javascript"
+    src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+    $(window).scroll(function () { var body = $('body'), scroll = $(window).scrollTop(); if (scroll >= 5) { body.addClass('fixed'); } else { body.removeClass('fixed'); } });
+</script>
+
+<!-- -----side menu------ -->
+<script>
+    $('#menu-button').click(function (e) {
+        e.stopPropagation();
+        $('#hide-menu').toggleClass('show-menu');
+    });
+    $('#hide-menu').click(function (e) {
+        e.stopPropagation();
+    });
+    $('body,html,.closebtn').click(function (e) {
+        $('#hide-menu').removeClass('show-menu');
+    });
+</script>
+<!-- -----side menu------ -->
+
+<script type="text/javascript">
+    $('.home-banners').owlCarousel({
+        loop: true,
+        margin: 0,
+        nav: false,
+        dots: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            }
+        }
+    })
+</script>
+
+<script type="text/javascript">
+    $('.people-say').owlCarousel({
+        loop: true,
+        margin: 30,
+        nav: true,
+        dots: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 2
+            },
+            1000: {
+                items: 3
+            }
+        }
+    })
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,229 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+<body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+
+            <section class="select-goals-sec">
+                <div class="container">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+
+                    <div class="row inner-dash-bord">
+                        <div class="col-md-3">
+                            {% include 'app/base/sidebar.html' %}
+                        </div>
+                        <div class="col-md-9">
+                            <div class="dashboard-right-body">
+                                <div class="heading_dash_rt">
+                                    <h3>My Favorite</h3>
+                                </div>
+
+                                
+                                <div class="dash-in-space">
+                                    <div class="my-favorite-tb">
+                                        <ul class="nav nav-pills equal_tabing" id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="pills-user-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#pills-user" type="button"
+                                                    role="tab" aria-controls="pills-user"
+                                                    aria-selected="true">User</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-goals-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-goals" type="button" role="tab"
+                                                    aria-controls="pills-goals" aria-selected="false">Goals</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-post-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-post" type="button" role="tab"
+                                                    aria-controls="pills-post" aria-selected="false">Posts</button>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="pills-tabContent">
+                                            <div class="tab-pane fade show active" id="pills-user" role="tabpanel"
+                                                aria-labelledby="pills-user-tab">
+                                                <div class="favorite-cont-lists">
+                                                    <div class="row form-group-lists favorite_user_by">
+                                                        {% if favourite_user %}
+                                                        {% for i in favourite_user %}
+                                                        <div class="col-sm-4">
+                                                            <a href="javascript:;">
+                                                                <div class="form-user-by">
+                                                                    {% comment %} <figure><img src="{{i.fav_user.profile_pic.url}}"></figure> {% endcomment %}
+                                                                    <figure><img src="{% if i.fav_user.profile_pic %}{{i.fav_user.profile_pic.url}}{% else %}{% static 'frontend/images/member-5.png' %}{% endif %}"></figure>
+                                                                    <figcaption>
+                                                                        <h3>{{i.fav_user.first_name}} {{i.fav_user.last_name}}</h3>
+                                                                        <h6>Verified</h6>
+                                                                    </figcaption>
+                                                                    <form action="{% url 'favourite_delete' i.id %}" method="POST">
+                                                                        {% csrf_token %}
+                                                                        <input hidden name="user_id" value="{{i.id}}"></input>
+                                                                        <button class="btn close-favorite"><i
+                                                                            class="ri-close-circle-fill"></i></button>
+                                                                        </form>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        {% endfor %}
+                                                        {% else %}
+                                                        <p>No user found.</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-goals" role="tabpanel"
+                                                aria-labelledby="pills-goals-tab">
+                                                <div class="favorite-cont-lists">
+                                                    <div class="row form-group-lists favorite_user_by">
+                                                        {% if favourite_goal %}
+                                                        {% for i in favourite_goal %}
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group-by">
+                                                                <a href="{% url 'goal_details' i.goal.slug %}">
+                                                                    <figure><img src="{% static 'frontend/images/posts-img5.png' %}"></figure>
+                                                                </a>
+                                                                <figcaption>
+                                                                    <h6>{{i.goal.goal_type}}</h6>
+                                                                    <a href="{% url 'goal_details' i.goal.slug %}">
+                                                                        <h5>{{i.goal.goal_name}}</h5>
+                                                                    </a>
+                                                                    <h4>Convert Amount: ${{i.goal.goal_amount.normalize}}</h4>
+                                                                    <span class="amount-right">${{i.goal.goal_amount.normalize}}</span>
+                                                                </figcaption>
+                                                                <form action="{% url 'favourite_delete' i.id %}" method="POST">
+                                                                    {% csrf_token %}
+                                                                    <input hidden name="goal_id" value="{{i.id}}"></input>
+                                                                    <button class="btn close-favorite"><i
+                                                                        class="ri-close-circle-fill"></i></button>
+                                                                </form>
+                                                                {% comment %} <button class="btn close-favorite"><i
+                                                                        class="ri-close-circle-fill"></i></button> {% endcomment %}
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                        {% else %}
+                                                        No Goal found
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="pills-post" role="tabpanel"
+                                                aria-labelledby="pills-post-tab">
+                                                <div class="favorite-cont-lists">
+                                                    <div class="row form-group-lists">
+                                                        {% if favourite_post %}
+                                                        {% for i in favourite_post %}
+                                                        <div class="col-sm-4">
+                                                            <div class="form-group-by goals_ct">
+                                                                {% if i.fav_post.image %}
+                                                                <a href="javascript;;">
+                                                                    {% comment %} <figure><img src="{{i.fav_post.image.url}}"></figure> {% endcomment %}
+                                                                    <figure><img src="{% if i.fav_post.image %}{{i.fav_post.image.url}}{% else %}{% static 'frontend/images/member-5.png' %}{% endif %}"></figure>
+                                                                </a>
+                                                                {% elif i.fav_post.video %}
+                                                                <a href="javascript;;">
+                                                                    <figure>
+                                                                        <source src="{{i.fav_post.video}}" type="video/ogg">
+                                                                    </figure>
+                                                                </a>
+                                                                <a class="play-btn" href="javascript:;"><i class="ri-play-fill"></i></a>
+                                                                {% elif i.fav_post.youtube_id %}
+                                                                <a href="javascript;;">
+                                                                    <figure>
+                                                                        <iframe width="420" height="315" src="https://www.youtube.com/embed/{{i.fav_post.youtube_id}}">
+                                                                        </iframe>
+                                                                    </figure>
+                                                                </a>
+                                                                {% endif %}
+                                                                <figcaption>
+                                                                    <a href="javascript:;">
+                                                                        <h3>{{i.fav_post.title}} </h3>
+                                                                    </a>
+                                                                    <p>{{i.fav_post.desc}}</p>
+                                                                </figcaption>
+                                                                <form action="{% url 'favourite_delete' i.id %}" method="POST">
+                                                                    {% csrf_token %}
+                                                                    <input hidden name='post_id' value={{i.id}}>
+                                                                    <button class="btn close-favorite"><i
+                                                                        class="ri-close-circle-fill"></i></button>
+                                                                </form>
+
+                                                                {% comment %} <a href`="{% url 'favourite_delete' i.id%}"><i
+                                                                        class="ri-close-circle-fill"></i></a> {% endcomment %}
+                                                            </div>
+
+                                                        </div>
+                                                        {% endfor %}
+                                                        {% else %}
+                                                        No Post found
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+    <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript"
+        src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+        $(window).scroll(function () { var body = $('body'), scroll = $(window).scrollTop(); if (scroll >= 5) { body.addClass('fixed'); } else { body.removeClass('fixed'); } });
+    </script>
+
+    <!-- -----side menu------ -->
+    <script>
+        $('#menu-button').click(function (e) {
+            e.stopPropagation();
+            $('#hide-menu').toggleClass('show-menu');
+        });
+        $('#hide-menu').click(function (e) {
+            e.stopPropagation();
+        });
+        $('body,html,.closebtn').click(function (e) {
+            $('#hide-menu').removeClass('show-menu');
+        });
+    </script>
+    <!-- -----side menu------ -->
+</body>
+{% endblock %}
+</html>

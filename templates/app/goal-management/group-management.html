@@ -1,0 +1,369 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+        
+            <section class="select-goals-sec">
+                <div class="container">
+                    {% if messages %}
+
+                    {% for message in messages %}
+                    {% if message.tags == 'success'%}
+                    <div class="alert alert-success">
+                        {{message}}
+                    </div>
+                    {% elif message.tags == 'error' %}
+                    <div class="alert alert-danger">
+                        {{message}}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    <div class="row inner-dash-bord">
+                        <div class="col-md-3">
+                            {% include 'app/base/sidebar.html' %}
+                        </div>
+                        <div class="col-md-9">
+                            <div class="dashboard-right-body">
+                                <div class="heading_dash_rt">
+                                    <h3>Group Management</h3>
+                                    <a class="btn" href="{% url 'create_goal' %}">Create Group</a>
+                                </div>
+                                <div class="dash-in-space">
+                                    <div class="my-favorite-tb">
+                                        <ul class="nav nav-pills equal_tabing" id="pills-tab" role="tablist">
+                                              <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="pills-goals-tab" data-bs-toggle="pill" data-bs-target="#pills-goals" type="button" role="tab" aria-controls="pills-goals" aria-selected="false">Participated</button>
+                                              </li>
+                                              <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-post-tab" data-bs-toggle="pill" data-bs-target="#pills-post" type="button" role="tab" aria-controls="pills-post" aria-selected="false">Posted</button>
+                                              </li>
+                                              <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-request-tab" data-bs-toggle="pill" data-bs-target="#pills-request" type="button" role="tab" aria-controls="pills-request" aria-selected="false">Requested</button>
+                                              </li>
+                                              <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-request-tab" data-bs-toggle="pill" data-bs-target="#pills-goal-request" type="button" role="tab" aria-controls="pills-goal-request" aria-selected="false">Goal Requested</button>
+                                              </li>
+                                        </ul>
+                                        <div class="tab-content" id="pills-tabContent">
+                                              <div class="tab-pane fade show active" id="pills-goals" role="tabpanel" aria-labelledby="pills-goals-tab">
+                                                  <div class="favorite-cont-lists">
+                                                        <div class="row form-group-lists favorite_user_by">
+                                                        {% if goal_member %}
+                                                            {% for i in goal_member %}
+                                                                {% if i.goal.goal_type == 'GROUP' %}
+                                                                    <div class="col-sm-4">
+                                                                        <div class="form-group-by">
+                                                                            <a href="{% url 'goal_details' i.goal.slug %}">
+                                                                                <figure><img src="{% static 'frontend/images/posts-img5.png' %}"></figure></a>
+                                                                            <figcaption>
+                                                                                <h6>{{i.goal.goal_type}}</h6>
+                                                                                
+                                                                                <a href="{% url 'goal_details' i.goal.slug %}"><h5>{{i.goal.goal_name}}</h5></a>
+                                                                                <!-- <h4>Convert Amount: ${{i.goal.goal_amount.normalize}}</h4> -->
+                                                                                <span class="amount-right">${{i.goal.goal_amount.normalize}}</span>
+                                                                            </figcaption>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                            
+                                                            <nav aria-label="..." class="pagination-nav" >
+                                                                <ul class="pagination">
+                                                                    <li class="page-item">
+                                                                        {% if goal_member.has_previous %} {# whether the previous page exists #}
+                                                                        <a class="page-link" href="?page={{goal_member.previous_page_number}}" tabindex="-1"><i class="ri-arrow-left-s-line"></i></a>
+                                                                        {% endif %}
+                                                                    </li>
+                                                                    <li class="page-item active">
+                                                                        <a class="page-link" href="#">{{goal_member.number}} <span class="sr-only">(current)</span></a>
+                                                                    </li> 
+                                                                    <li class="page-item">
+                                                                        {% if goal_member.has_next %} {# whether the next page exists #}
+                                                                        <a class="page-link" href="?page={{goal_member.next_page_number}}"><i class="ri-arrow-right-s-line"></i></a>
+                                                                        {% endif %}
+                                                                    </li>
+                                                                </ul>
+                                                            </nav>
+                                                        {% else %}  
+                                                        <p>No Request Found</p>
+                                                        {% endif %}
+                                                        </div>
+                                                        
+                                                  </div>
+                                                  
+                                              </div>
+                                              <div class="tab-pane fade" id="pills-post" role="tabpanel" aria-labelledby="pills-post-tab">
+                                                  <div class="favorite-cont-lists">
+                                                        <div class="row form-posted-lists">
+                                                            {% if goal_owner %}
+                                                                {% for i in goal_owner %}
+                                                                    {% if i.owner_id == request.user.id %}
+                                                                        {% if i.goal.goal_type == 'GROUP' %}
+                                                                            <div class="col-md-4">
+                                                                                <div class="form-group-by">
+                                                                                    <a href="{% url 'goal_details' i.goal.slug %}">
+                                                                                        <figure><img src="{% static 'frontend/images/posts-img5.png' %}"></figure></a>
+                                                                                    <figcaption>
+                                                                                        <h6>{{i.goal.goal_type}}</h6>
+                                                                                        <a href="{% url 'goal_details' i.goal.slug %}"><h5>{{i.goal.goal_name}}</h5></a>
+                                                                                        <span class="amount-right">${{i.goal.goal_amount.normalize}}</span>
+                                                                                    </figcaption>
+                                                                                </div>
+                                                                            </div>
+                                                                        {% endif %}
+                                                                    
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            
+                                                                <nav aria-label="..." class="pagination-nav">
+                                                                    <ul class="pagination">
+                                                                        <li class="page-item">
+                                                                            {% if goal_owner.has_previous %} {# whether the previous page exists #}
+                                                                            <a class="page-link" href="?page_goal_owner={{goal_owner.previous_page_number}}" tabindex="-1"><i class="ri-arrow-left-s-line"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                        <li class="page-item active">
+                                                                            <a class="page-link" href="#">{{goal_owner.number}} <span class="sr-only">(current)</span></a>
+                                                                        </li> 
+                                                                        <li class="page-item">
+                                                                            {% if goal_owner.has_next %} {# whether the next page exists #}
+                                                                            <a class="page-link" href="?page_goal_owner={{goal_owner.next_page_number}}"><i class="ri-arrow-right-s-line"></i></a>
+                                                                            {% endif %}
+                                                                        </li>
+                                                                    </ul>
+                                                                </nav>
+                                                            {% else %}  
+                                                            <p>No Request Found</p>    
+                                                            {% endif %}
+                                                        </div>
+                                                  </div>
+                                              </div>
+                                              <div class="tab-pane fade" id="pills-request" role="tabpanel" aria-labelledby="pills-request-tab">
+                                                <div class="followers-cont-lists">
+                                                  <ul>
+                                                      {% if goalm %}
+                                                        {% for i in goalm %}
+                                                            <li>
+                                                                <div class="lt_followers_bx">
+                                                                    <a href="{% url 'goal_details' i.goal.slug %}">
+                                                                    <figure><img src="{% static 'frontend/images/posts-img5.png' %}" class="mCS_img_loaded"></figure>
+                                                                    <figcaption>
+                                                                        {% comment %} <h6 style="color:black">{{i.goal.goal_type}}</h6> {% endcomment %}
+                                                                            <a href="{% url 'goal_details' i.goal.slug %}"><h5 style="color:black">{{i.goal.goal_name}}</h5></a>
+                                                                    </figcaption>
+                                                                </div>
+                                                                <div class="ry_followers_bx d-flex">
+                                                                    {% comment %} <form method="POST">
+                                                                        {% csrf_token %}
+                                                                        <input name="following_user_id"type="hidden" value="{{i.id}}">
+                                                                    </form> {% endcomment %}
+                                                                    <form method="POST" action="{% url 'goal_req_accept' %}">
+                                                                        {% csrf_token %}
+                                                                    <input type="hidden" name="req_accept"value="{{i.members_id}}">
+                                                                    <input type="hidden" name="r_accept"value="{{i.owner_id}}">
+                                                                    <input type="hidden" name="re_accept"value="{{i.goal_id}}">
+                                                                    <button class="btn" type="submit" >Accept</button>
+                                                                    <button class="btn reject-btn" onclick="delete_req({{i.members_id}}, {{i.goal_id}})" type="button" >Reject</button>
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
+                                                        <nav aria-label="..." class="pagination-nav">
+                                                            <ul class="pagination">
+                                                                <li class="page-item">
+                                                                    {% if goalm.has_previous %} {# whether the previous page exists #}
+                                                                    <a class="page-link" href="?page_goalm={{goalm.previous_page_number}}" tabindex="-1"><i class="ri-arrow-left-s-line"></i></a>
+                                                                    {% endif %}
+                                                                </li>
+                                                                <li class="page-item active">
+                                                                    <a class="page-link" href="#">{{goalm.number}} <span class="sr-only">(current)</span></a>
+                                                                </li> 
+                                                                <li class="page-item">
+                                                                    {% if goalm.has_next %} {# whether the next page exists #}
+                                                                    <a class="page-link" href="?page_goalm={{goalm.next_page_number}}"><i class="ri-arrow-right-s-line"></i></a>
+                                                                    {% endif %}
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                      {% else %}  
+                                                      <p>No Request Found</p>
+                                                      {% endif %}
+                                                  </ul>
+                                                </div>
+                                              </div>
+
+                                              <div class="tab-pane fade" id="pills-goal-request" role="tabpanel" aria-labelledby="pills-goal-request-tab">
+                                                <div class="followers-cont-lists">
+                                                  <ul>
+                                                      {% if goal_requests %}
+                                                        {% for i in goal_requests %}
+                                                        {% if i.owner_id == request.user.id %}
+                                                            <li>
+                                                                <div class="lt_followers_bx">
+                                                                    <a href="{% url 'goal_details' i.goal.slug %}">
+                                                                    <figure><img src="{% static 'frontend/images/posts-img5.png' %}" class="mCS_img_loaded"></figure>
+                                                                    <figcaption>
+                                                                        {% comment %} <h6 style="color:black">{{i.goal.goal_type}}</h6> {% endcomment %}
+                                                                            <a href="{% url 'goal_details' i.goal.slug %}"><h5 style="color:black">{{i.goal.goal_name}}</h5></a>
+                                                                    </figcaption>
+                                                                </div>
+                                                              
+                                                      
+                                                                <div class="ry_followers_bx d-flex">
+                                                                    {% comment %} <form method="POST">
+                                                                        {% csrf_token %}
+                                                                        <input name="following_user_id"type="hidden" value="{{i.id}}">
+                                                                    </form> {% endcomment %}
+                                                                    <form method="POST" action="{% url 'sent_goal_reqaccept' %}">
+                                                                        {% csrf_token %}
+                                                                    <input type="hidden" name="req_accept"value="{{i.members_id}}">
+                                                                    <input type="hidden" name="r_accept"value="{{i.owner_id}}">
+                                                                    <input type="hidden" name="re_accept"value="{{i.goal_id}}">
+
+                                                                    <button class="btn" type="submit" >Accept</button>
+                                                                    </form>
+                                                                    <button class="btn reject-btn" onclick="delete_req({{i.members_id}}, {{i.goal_id}})" type="button" >Reject</button>
+                                                                </div>                                                                
+                                                            </li>                                                            
+                                                          {% endif %}
+                                                        {% endfor %}
+                                                        <nav aria-label="..." class="pagination-nav" >
+                                                            <ul class="pagination">
+                                                                <li class="page-item">
+                                                                    {% if goal_requests.has_previous %} {# whether the previous page exists #}
+                                                                    <a class="page-link" href="?page_goal_requests={{goal_requests.previous_page_number}}" tabindex="-1"><i class="ri-arrow-left-s-line"></i></a>
+                                                                    {% endif %}
+                                                                </li>
+                                                                <li class="page-item active">
+                                                                    <a class="page-link" href="#">{{goal_requests.number}} <span class="sr-only">(current)</span></a>
+                                                                </li> 
+                                                                <li class="page-item">
+                                                                    {% if goal_requests.has_next %} {# whether the next page exists #}
+                                                                    <a class="page-link" href="?page_goal_requests={{goal_requests.next_page_number}}"><i class="ri-arrow-right-s-line"></i></a>
+                                                                    {% endif %}
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                      {% else %}  
+                                                      <p>No Request Found</p>
+                                                      {% endif %}
+                                                       
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    {% comment %} <div class="my-favorite-tb">
+                                        <div class="favorite-cont-lists">
+                                            <div class="row form-group-lists favorite_user_by">
+                                                {% for i in goal %}
+                                                <div class="col-sm-4">
+                                                    <div class="form-group-by">
+                                                        <a href="javascript:;"><figure><img src="{% static 'frontend/images/posts-img5.png' %}"></figure></a>
+                                                        <figcaption>
+                                                            <h6>{{i.goal_name}}</h6>
+                                                            {% for j in goal_member %}
+                                                            {% if i.id == j.goal_id %}
+                                                            <a href="javascript:;"><h5 class="add_members_icon"><img src="{% static  'frontend/images/users-list.svg' %}">{{j.goal_count}} Members</h5></a>
+                                                            {% endif %}
+                                                            {% endfor %}
+                                                            <!-- <h4>Convert Amount: ${{i.goal_amount.normalize}}</h4> -->
+                                                            <span class="amount-right">${{i.goal_amount.normalize}}</span>
+                                                        </figcaption>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+        <script>
+            function store(){ //stores items in the localStorage
+                var goal = document.getElementById('#pills-goals').value;
+                var post = document.getElementById('#pills-post').value;
+                var request = document.getElementById('#pills-request').value; //gets the key from the user
+                var goal_request = document.getElementById('#pills-goal-request').value;
+
+                const car = {
+                    goal: goal,
+                    post: post,
+                    request: request,
+                    goal_request: goal_request,
+                }
+            
+                window.localStorage.setItem(key,JSON.stringify(car));  
+                //converting object to string
+            }
+
+        </script>
+
+        
+        <script>
+            function  delete_req(members_id, goal_id){
+              let csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value; 
+              $.ajax({
+                  type: "POST",
+                  url: "{% url 'DeletegoalReq' %}",
+                  headers: { 'X-CSRFToken': csrftoken }, 
+                  data: 
+                  {
+                    members_id:members_id,
+                    goal_id:goal_id,
+                  },
+                  
+                  success: function(res) {
+                    toastr.success(res.message)
+                    window.location.href = "/group-goals/"
+    
+                  },error:function(res){
+                      toastr.success(res.message);
+                        
+                  } 
+              
+                });
+      
+            }
+          </script>
+    <!-- -----side menu------ -->
+    </body>
+    {% endblock %}
+</html>

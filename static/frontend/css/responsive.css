@@ -1,0 +1,318 @@
+@media (min-width:1200px){
+  .container{max-width:1170px}
+  }
+
+
+  @media (max-width:1280px){
+  .common-banner-in .common-texts-in{padding:35px 65px}
+  .common-texts-in h1{font-size:42px}
+  .common-texts-in h6{font-size:16px;margin-bottom:25px;line-height:22px}
+  .develop-text h2{font-size:38px}
+  .main-heading h2{font-size:36px}
+  .main-heading p{font-size:16px;line-height:24px}
+  .our-features-sec .develop-text h2{font-size:34px}
+  .develop-text p{font-size:16px;line-height:24px}
+  .devices-text-sec h2{font-size:34px}
+  .devices-text-sec p{font-size:16px;line-height:24px}
+  }
+
+
+  @media (min-width:992px){
+  button#menu-button{display:none}
+  a#close{display:none}
+  }
+
+
+
+  @media(max-width:1199px){
+  .best-creative-sec{padding:75px 0}
+  .row.who-we-are{padding-top:100px}
+  .our-features-sec .row{padding-bottom:60px}
+  .ab-devices-sec{padding:75px 0}
+  .qr-code-list li{padding-bottom:62px}
+  .device-right{padding-left:47px}
+  .contact-sec{padding:75px 0}
+  .footer-menu{padding:80px 0 40px 0}
+  .who-we-are .develop-text{padding:45px}
+  .develop-text h6{font-size:16px;margin-bottom:15px;line-height:24px}
+  .develop-team-img figure{min-width:394px;width:394px;height:394px}
+  .develop-team-img .shape-1{max-width:400px}
+  .common-texts-in h1{font-size:38px}
+  .home-carousel{padding:45px 0}
+  .home-item-text h1{font-size:40px}
+  .home-item-text p{font-size:18px}
+  .hm-about-sec{padding:60px 0}
+  .hm-about-in::before{right:-6px;top:-37px;width:100px;min-width:100px;height:100px}
+  .testimonials-sec{padding:55px 0 70px 0}
+  .slider-arrow.owl-carousel.testimonials .owl-nav{justify-content:center;right:0;position:static;left:0}
+  .testimonials .item{padding:65px 15px 30px}
+  .footer-social{flex-wrap:wrap}
+  footer .col-md-2{width:100%;margin-top:20px}
+  .footer-content h3{margin-bottom:15px}
+  footer .col-md-4{width:40%}
+  footer .col-md-3{width:30%}
+  footer{padding:50px 0 40px 0}
+  .inner-space-main{padding:55px 0}
+  .contact-us-info-content h4{font-size:30px}
+  .head-inner-text h2{font-size:26px}
+  .testimonials-flex .main-heading{flex:0 0 45%;max-width:45%;text-align:left;padding-right:10px}
+  .dash_shareing_bx article figure{width:90px;min-width:90px;height:90px}
+  .dash_shareing_bx article{padding:20px 10px}
+  .dash_shareing_bx figcaption{flex:1;margin-top:35px;text-align:right}
+  .dash_shareing_bx article figcaption h3{font-size:22px}
+  .dash_shareing_bx article figcaption h6{font-size:16px}
+  .payment_plan_box{margin-top:0!important;margin-bottom:20px!important}
+  }
+
+
+
+  @media(max-width:991px){
+  .container{max-width:100%}
+  .submenu-submenu{padding:15px 0}
+  a#close{position:absolute;top:0;right:25px;font-size:36px;color:#fff;text-decoration:none}
+  .hide-menu{background:#252527;position:fixed;top:0;left:-300px;z-index:1;width:300px;height:100%;transition:.3s;padding-top:60px}
+  .show-menu{transition:.5s;left:0}
+  button#menu-button{position:absolute;right:0;background:#1c6836;border:0;padding:0;border-radius:5px;width:40px;min-width:40px;height:36px;display:flex;align-items:center;justify-content:center}
+  button#menu-button:focus{outline:0;box-shadow:none}
+  ul.navbar-nav li a.nav-link{padding:0 0 10px 0!important}
+  ul.sub-menu{position:static}
+  ul.sub-menu li a{border-bottom:1px solid #dddddd17}
+  ul.navbar-nav li.nav-item.active .nav-link::before,ul.navbar-nav li.nav-item:hover .nav-link::before{display:none}
+  .navbar-toggler-icon{height:auto}
+  .navbar-toggler-icon i{font-size:24px;font-weight:300}
+  .login-section{padding-right:35px}
+  #menu-button .navbar-toggler-icon{width:auto;display:flex;align-items:center;justify-content:center}
+  .innre-banner-home{padding-top:70px}
+  .common-banner-in .common-texts-in{padding:20px 25px}
+  .common-texts-in h1{font-size:28px}
+  .common-texts-in h6{font-size:14px;margin-bottom:15px;line-height:18px}
+  .develop-team-img figure{min-width:344px;width:344px;height:344px}
+  .develop-team-img .shape-1{max-width:330px;top:50px;left:110px}
+  .develop-text h2{font-size:32px}
+  .develop-text .btn{margin-top:30px}
+  .row.who-we-are{padding-top:60px}
+  .who-we-are .develop-text{padding:25px}
+  .main-heading h2{font-size:32px}
+  .our-features-sec .develop-text h2{font-size:30px}
+  .devices-text-sec h2{font-size:32px}
+  .qr-code-list figure{width:135px;min-width:135px;height:135px;border-radius:10px;overflow:hidden;margin-bottom:15px}
+  .qr-code-list li{padding-bottom:60px}
+  .device-right{padding-left:20px}
+  .qr-code-list li h6{font-size:16px}
+  .footer-content h3{font-size:18px;margin-bottom:20px}
+  ul.navbar-nav li a{color:#fff}
+  .home-item-text h1{font-size:36px}
+  .home-item-text p{font-size:16px}
+  header{padding:10px 0}
+  .home-carousel{padding:0 0}
+  .home-carousel .container{padding-top:100px}
+  .hm-about-sec{padding:40px 0}
+  .home-banners .owl-dots{margin-top:12px;margin-bottom:10px}
+  .testimonials-flex{flex-direction:column}
+  .testimonials-flex .main-heading{flex:0 0 100%;max-width:100%;text-align:left;padding-right:0}
+  .testimonials-flex .testimonials-slides-lists{flex:0 0 100%;max-width:100%;margin-top:20px}
+  .testimonials-sec{padding:20px 0 70px 0}
+  .login-section.inner-login-sec .profile-dropdown .dropdown-item{font-size:13px}
+  .login-section.inner-login-sec .dropdown-item.active,.login-section.inner-login-sec .dropdown-item:active{color:#fff;background-color:#1c6836}
+  .btn{line-height:36px;height:36px}
+  .login-right-in{padding:20px}
+  .login-head h4,.login-right-in h2{font-size:26px}
+  .login-right-in p{font-size:14px}
+  .login-head p{font-size:14px}
+  .inner-space-main{padding:40px 0}
+  .contact-us-info-content h4{font-size:26px}
+  .contact-us-sec h2.heading-inner{font-size:30px}
+  .contact-us-sec .row.mb-5{margin-bottom:50px!important}
+  .help-us-sec ul li a h3{font-size:16px}
+  .help-us-sec{margin-bottom:45px}
+  .head-inner-bx.ht-342 .container-fluid{min-height:290px}
+  .notification-view{margin:0 3px}
+  .business-chat-sec{padding:0 0 45px}
+  .row.inner-dash-bord .col-md-3{width:270px}
+  .dash-in-space .row{flex-direction:column}
+  .dash-in-space .col-sm-6{width:100%;margin-bottom:15px}
+  .dash_shareing_bx article figure{width:120px;min-width:120px;height:120px}
+  .dash-in-space .plan-tab-content .row{flex-direction:row}
+  .plan-tab-content .row .col-sm-4{width:50%}
+  .plan-tab-content .row{padding-bottom:20px}
+
+  .heading_dash_rt h3 {font-size: 18px;}
+  .latest-goals-sec{padding: 50px 0px 60px 0px;}
+
+  .login-section.inner-login-sec .btn-group.profile-dropdown{    padding-right: 10px;}
+  }
+
+
+
+  @media(max-width:767px){
+  .develop-team-img .shape-1{max-width:330px;top:50px;left:auto;right:-70px}
+  .develop-team-img{position:relative;margin:auto;display:flex;justify-content:center;max-width:400px}
+  .best-creative-sec .row .col-md-6 .develop-text{padding-top:75px}
+  .our-features-sec .row.justify-content-between:nth-child(2n){flex-direction:column-reverse}
+  .row.justify-content-between .develop-team-bx{position:relative;display:flex;justify-content:center;max-width:400px;margin:auto}
+  .develop-team-bx .shape-3{position:absolute;top:5px;left:10px}
+  .develop-team-bx.right .shape-3{position:absolute;top:5px;left:auto;right:10px}
+  .our-features-sec .row .col-md-6{padding-bottom:50px}
+  .qr-code-list figure{width:145px;min-width:145px;height:145px;border-radius:10px;overflow:hidden;margin-bottom:15px}
+  .device-right{padding-left:40px;text-align:center}
+  .qr-row-sec{padding-bottom:40px}
+  .contact-sec{padding:55px 0}
+  .copyright-text ul{padding-top:20px}
+  .copyright-text ul li:first-child{padding-left:0}
+  .border-top10{height:10px}
+  .item .row{flex-direction:column}
+  .home-banners .item .col-md-5{width:100%;padding-right:0;order:2}
+  .home-banners .item .col-md-7{width:100%}
+  .home-item-text h1{font-size:28px}
+  .home-item-text{margin-top:20px}
+  .home-carousel .container{padding-top:75px}
+  .home-item-text figure{height:250px}
+  .login-two-pane>div{min-width:100%}
+  .login-two-pane .login-left{background:url(../images/bg-login.jpg) no-repeat;background-position:center;background-size:cover;display:flex;align-items:center;text-align:center}
+  .login-left-in{padding:30px;width:85%}
+  .form-check.mb-3{text-align:left}
+  .head-inner-text h2{font-size:25px}
+  .head-inner-bx .container-fluid{min-height:140px}
+  .hm-about-img .col-md-6{width:50%}
+  .inner-ab-sec .hm-about-img .row{padding-bottom:30px}
+  .hm-about-img p{margin-bottom:20px}
+  .inner-ab-sec .hm-about-img .hm-about-in{margin-bottom:30px}
+  .contact-us-info-content{margin:auto}
+  .contact-us-info-content img{width:75%;margin:auto;display:block}
+  .contact-us-info-content h4{font-size:24px}
+  .help-us-sec ul li{flex:0 0 50%;max-width:50%}
+  .help-us-sec ul{display:flex;flex-wrap:wrap;justify-content:center}
+  .help-us-sec ul li{margin-bottom:25px}
+  .help-us-sec{margin-bottom:20px}
+  .google-map iframe{height:300px}
+  .contact-us-sec h2.heading-inner{font-size:24px}
+  .head-search-bx form .form-group{width:100%}
+  .head-inner-bx.ht-342 .container-fluid{min-height:230px}
+  .query-row-line{flex-direction:column}
+  .query-row-line .nav.flex-column.nav-pills{background:#edf4ea;padding:0 0;display:flex;flex-direction:row!important;white-space:nowrap;flex-wrap:nowrap;overflow:auto;width:100%;min-width:100%}
+  .inner-queries-sec{padding-left:0;width:100%;margin-top:25px}
+  .inner-queries-sec h2{margin-bottom:15px}
+  .query-row-line .nav-pills .nav-link{height:48px;font-size:14px}
+  .inner-queries-sec p{margin-bottom:15px}
+  .head-search-bx{z-index:9}
+  .head-search-bx form .form-group .form-control{height:45px}
+  .head-search-bx form .form-group .btn{top:4px}
+  .head-search-bx form .form-group .icon-search{top:7px}
+  .head-inner-bx{padding:0 15px}
+  .home-carousel{background-image:linear-gradient(to left,#fff 0,#edf4ea 40%)}
+  .chat-more{height:400px}
+  .search-icons .form-control{height:45px}
+  .wraper-inner-main{padding-top:65px}
+  .row.inner-dash-bord{flex-direction:column}
+  .row.inner-dash-bord .col-md-9{width:100%;margin-top:15px}
+  .row.inner-dash-bord .col-md-3{width:100%}
+  ul.navbar-nav-login{display:flex;flex-wrap:nowrap;white-space:nowrap;overflow:auto;align-items:center}
+  .navbar-nav-login{padding:0}
+  .navbar-nav-login .nav-item .nav-link{padding:8px 12px;font-size:14px}
+  .switch_item .nav-link .form-check-label{font-size:14px;margin-bottom:0}
+  li.switch_item{position:relative}
+  .form-switch .form-check-input{top:0;bottom:0;margin:auto;position:absolute;right:0}
+  .switch_item .nav-link{padding-right:40px}
+
+  .user_photo_in{margin-left:10px}
+  .profile_menu figcaption{text-align:left;flex:1;padding-left:16px}
+  .profile_menu{padding:10px;display:flex;align-items:center}
+  .profile_menu figure{width:50px;height:50px;margin:initial;margin-bottom:0!important;width:50px;min-width:50px}
+  .profile_menu figcaption h3{margin-bottom:0;text-transform:capitalize}
+  .heading_dash_rt h3{font-size:18px}
+  .heading_dash_rt{padding:15px 15px}
+  .dash-in-space{padding:15px 15px}
+
+  .create-invoice-head{padding:15px}
+  .pass_change .form-check-label{font-size:14px}
+  .profile_menu figcaption .member-reviews{justify-content:flex-end;margin-left:10px}
+  .profile_menu figcaption .new-member{margin-bottom:0;margin-left:5px}
+  .profile_menu figcaption{display:flex;align-items:center}
+  .goals-item-text figure{height:300px}
+  .latest-goals-sec .main-heading{padding-bottom:10px}
+
+  .navbar-nav-login .nav-item.active .nav-link::after,.navbar-nav-login .nav-item:hover .nav-link::after{    margin: auto;
+    bottom: 0;top: 0;}
+    .dashboard-left-menu .navbar-nav-login .nav-item {
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+  .navbar-nav-login .nav-item.active .nav-link::after{    left: -10px;}
+  }
+
+
+
+  @media(max-width:576px){
+  .footer-content .footer-logo{margin-bottom:40px}
+  .row.footer-content .col-md-4{padding-top:30px}
+  .main-heading h2{font-size:28px}
+  .main-heading .green-text{font-size:18px}
+  footer .col-md-4{width:100%}
+  .seedesta-footer{max-width:100%;margin-bottom:30px}
+  footer .col-md-3{width:50%}
+  .footer-content h3{font-size:18px;margin-bottom:10px}
+  .footer-content ul li{padding:2px 0}
+  .testimonials-sec{padding:10px 0 40px 0}
+  .hm-about-sec{padding:40px 0 15px}
+  .hm-about-sec{padding:30px 0 15px}
+  .hm-about-in figure img{height:auto}
+  .hm-about-in::before{display:none}
+  .contact-us-info-content h4{font-size:24px;text-align:center;margin-top:15px}
+  .contact-us-info-content .btn-btm-group{text-align:center}
+  .trems-policy-info h3{font-size:20px}
+  .footer-social li a{width:30px;min-width:30px;height:30px}
+  .latest-goals-sec {padding: 30px 0px 40px 0px;}
+  .goals-slides-lists .text-center{padding-top: 25px;}
+
+  .login-section.inner-login-sec .btn-group.profile-dropdown {
+    padding-right: 5px;
+}
+  }
+
+
+
+  @media(max-width:479px){
+  .navbar-brand.header-view{min-width:117px;max-width:117px}
+  .develop-team-img figure{min-width:314px;width:314px;height:314px}
+  .develop-team-img .shape-1{max-width:270px;top:63px;left:auto;right:-90px}
+  .best-creative-sec .row .develop-text{padding-top:55px}
+  .develop-text h2{font-size:28px}
+  .develop-text h6{font-size:15px;margin-bottom:15px;line-height:22px}
+  .develop-text .btn{margin-top:15px}
+  .main-heading h2{font-size:24px}
+  .qr-code-list{max-width:100%;width:100%}
+  .qr-code-list li{padding-bottom:30px}
+  .qr-code-list figure{margin-bottom:15px!important;margin:auto;margin-bottom:auto}
+  .device-right{width:calc(100% - 0px);padding-left:0;padding-top:30px}
+  .qr-row-sec{display:flex;flex-wrap:wrap}
+  .home-carousel .container{padding-top:60px}
+  .home-item-text h1{font-size:26px}
+  .main-heading p{font-size:14px}
+  .home-item-text p{font-size:14px}
+  .main-heading .green-text{margin-bottom:5px}
+  .copyright-text p{font-size:12px}
+  .footer-content ul li a{font-size:14px}
+  .footer-content h3{font-size:16px}
+  .seedesta-footer{margin-bottom:20px}
+  .testimonials-flex .testimonials-slides-lists{margin-top:0}
+  .login-left-in{padding:0;width:85%}
+  .inner-space-main{padding:20px 0}
+  .head-inner-text h2{font-size:20px}
+  .head-inner-bx .container-fluid{min-height:115px}
+  .hm-about-in figure{height:auto}
+  .hm-about-img .col-md-6{width:100%;margin-bottom:20px}
+  .inner-ab-sec .hm-about-img .row .col-md-6 figure{height:auto}
+  .inner-ab-sec .hm-about-img .row{padding-bottom:10px}
+  .help-us-sec ul li{flex:0 0 100%;max-width:100%}
+  .head-inner-bx.ht-342 .container-fluid{min-height:190px}
+  .btn{line-height:32px;height:32px;min-width:90px}
+  .head-search-bx form .form-group .btn{top:7px}
+  button#menu-button{width:36px;min-width:36px;height:32px}
+  .contact-us-info-content h4{font-size:22px}
+  .contact-us-sec h2.heading-inner{font-size:22px}
+  .plan-tab-content .row .col-sm-4{width:100%}
+
+  .profile_menu figcaption .member-reviews ul li{font-size:14px}
+  .member-reviews .how-staring font{font-size:18px}
+  .goals-item-text figure{height:250px}
+  }

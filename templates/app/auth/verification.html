@@ -1,0 +1,84 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+{% block body %}
+<html>
+<body>
+<div class="wraper-main">
+<div class="login-form-container">
+    <div class="login-form-inner"> 
+        <div class="login-two-pane">
+            <div class="login-left">
+                <div class="login-left-in">
+                    <div class="login-head">
+                        <h4>Verification</h4>
+                        <p>Enter the verification code sent to your email.</p>
+                        {% if messages %}
+                        
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="login-form">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group mb-3">
+                                      <input type="text" maxlength="1" minlength="1" name="otp1" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group mb-3">
+                                      <input type="text" maxlength="1" minlength="1" name="otp2" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group mb-3">
+                                      <input type="text" maxlength="1" minlength="1" name="otp3" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group mb-3">
+                                      <input type="text" maxlength="1" minlength="1" name="otp4" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                            <div class="not-account">
+                                <p>Didn't receive the code? <a href="{% url 'resend_otp' slug %}">Resend</a></p>
+                            </div>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="login-right-in"> 
+                    <a href="javascript:;"><img src="{% static 'frontend/images/logo-2.svg' %}"></a>
+                    <h2>Welcome to Seedesta</h2>
+                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'app/base/footer.html' %}
+</div>
+
+  <script>
+        setTimeout(() => {
+            $('.alert').fadeOut('fast');
+        }, 2000);
+    </script>
+</body>
+</html>
+{% endblock %}

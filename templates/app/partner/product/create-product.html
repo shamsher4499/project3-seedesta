@@ -1,0 +1,150 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+            <section class="donate-detail-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+
+                    <div class="donate-form-in">
+                        <h3>Create Product</h3>
+                        <form class="row" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="form-group mb-3">
+                                <label>Select Category</label>
+                                <div class="form-group mb-3">
+                                     <select class="form-select" name="product_category" value="{{data.product_category}}" aria-label="Default select example"> 
+                                        <option disabled selected="">Select Goal Type</option>
+                                        <option value="SERVICE" >SERVICE</option>
+                                        <option value="PRODUCT">PRODUCT</option>
+                                     </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 add_image_upload">
+                                <h5>Add image</h5>
+                                <ul class="add_image_upload_list">
+                                    
+                                        {% comment %} <div class="mb_add_img">
+                                          <label for="formFileMultiple" class="form-label">
+                                              <img src="images/add-image.svg">
+                                              <span>Add Image</span>
+                                          </label>
+                                          <input class="form-control" accept="image/png, image/jpeg" name="image" value="{{data.image.url}}" type="file" id="formFileMultiple">
+                                        </div> {% endcomment %}
+                                    <div class="form-group">
+                                        <label>Image <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control"
+                                            accept="image/png, image/jpeg" name="product_image">
+                                    </div>
+                                </ul>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label>Product Name</label>
+                                    <input type="text" name="product_name" value="{{data.product_name}}" class="form-control" placeholder="Enter name">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label>Price</label>
+                                    <input type="number" name="product_price" value="{{data.product_price}}" class="form-control" placeholder="Enter price">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label>Description</label>
+                                    <textarea type="text" name="product_desc" value="{{data.product_desc|safe}}"class="form-control h-25" placeholder=""></textarea>
+                                </div>
+                            </div>
+                            <div class="return-detail-dec">
+                                <h5>Returnable</h5>
+                                <ul>
+                                    <li>
+                                        <div class="form-group mb-3">
+                                            <label>Return Period</label>
+                                            <input type="number" name="product_period" value="{{data.product_period}}" class="form-control" placeholder="Enter Return Period">
+                                            
+                                        </div>
+                                        <div class="form-group mb-3">
+                                            <label>Return Time From</label>
+                                            <input type="date" name="product_time_from" value="{{data.product_time_from}}" class="form-control" placeholder="Enter title">
+                                            <label>Return Time To</label>
+                                            <input type="date" name="product_time_to" value="{{data.product_time_to}}" class="form-control" placeholder="Enter title">
+                                        </div>
+                                        {% comment %} <h6>Return Period: {{products.return_period}} Days</h6>
+                                        <h6>Return Time: {{products.return_time_from}} {{products.return_time_to}}</h6> {% endcomment %}
+                                    </li>
+                                </ul>
+                            </div>
+
+
+
+                            <div class="col-md-12 text-center"><button type="submit" class="btn">Submit</button></div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+    <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript"
+        src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+        $(window).scroll(function () { var body = $('body'), scroll = $(window).scrollTop(); if (scroll >= 5) { body.addClass('fixed'); } else { body.removeClass('fixed'); } });
+    </script>
+
+    <!-- -----side menu------ -->
+    <script>
+        $('#menu-button').click(function (e) {
+            e.stopPropagation();
+            $('#hide-menu').toggleClass('show-menu');
+        });
+        $('#hide-menu').click(function (e) {
+            e.stopPropagation();
+        });
+        $('body,html,.closebtn').click(function (e) {
+            $('#hide-menu').removeClass('show-menu');
+        });
+    </script>
+    <!-- -----side menu------ -->
+</body>
+{% endblock %}
+</html>

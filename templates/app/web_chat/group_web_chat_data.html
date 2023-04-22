@@ -1,0 +1,26 @@
+
+{% for chat in chat_data %}
+{% if not user_id == chat.sender %}
+<div class="left-chat">
+    <div class="left-chat-in">
+      <figcaption>
+        <p>{{ chat.chat_massage }}</p>
+        
+   
+      </figcaption>
+      <span>{{ chat.sender_name }} At {{ chat.created }}</span>
+    </div>
+  </div>
+{% else %}
+  <div class="right-chat">
+    <div class="left-chat-in">
+      <figcaption>
+        <p>{{ chat.chat_massage }}</p>
+      </figcaption>
+      <span>{{chat.sender_name}} At {{ chat.created }}</span>
+    </div>
+  </div>
+{% endif %}
+{% empty %}
+<p>Start chat</p>
+{% endfor %}  

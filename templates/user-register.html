@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link src="{% static 'img/logo/logo.png' %}" rel="icon">
+    <title>Seedesta - User Register</title>
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/ruang-admin.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-login">
+    <!-- Register Content -->
+    <div class="container-login">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm my-5">
+                    <div class="card-body p-0">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6">
+                                <div class="login-form">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4">User Register</h1>
+                                        {% if messages %} 
+                                        {% for message in messages %}
+                                        {% if message.tags == 'success'%}
+                                        <div class="alert alert-success">
+                                            {{message}}
+                                        </div>
+                                        {% elif message.tags == 'error' %}
+                                        <div class="alert alert-danger">
+                                            {{message}}
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <label>Register As</label>
+                                                <select class="form-control" id="choices" name="user_type">
+                                                    <option value="">--Select--</option>
+                                                    {% for i in roll %}
+                                                    <option value="{{i.0}}" {% if i.0 == registerUser.roll %}selected {% endif %}>{{i.1}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" id="exampleInputFirstName"
+                                                name="first_name" placeholder="Enter First Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" id="exampleInputLastName"
+                                                name="last_name" placeholder="Enter Last Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Mobile</label>
+                                            <input type="number" class="form-control" id="exampleInputLastName"
+                                                name="mobile" placeholder="Enter Mobile Number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control" id="exampleInputEmail" name="email"
+                                                aria-describedby="emailHelp" placeholder="Enter Email Address">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword"
+                                                name="password" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Repeat Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPasswordRepeat"
+                                            placeholder="Repeat Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <a href="/admin/verify/{{user.slug}}/"><button type="submit" class="btn btn-primary btn-block">Register</button></a>
+                                        </div>
+                                        <!-- <hr>
+                    <a href="index.html" class="btn btn-google btn-block">
+                      <i class="fab fa-google fa-fw"></i> Register with Google
+                    </a>
+                    <a href="index.html" class="btn btn-facebook btn-block">
+                      <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                    </a> -->
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="font-weight-bold small" href="{% url 'login-user' %}">Already have an account?</a>
+                                    </div>
+                                    <div class="text-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Register Content -->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+    <script src="{% static 'js/ruang-admin.min.js' %}"></script>
+    <script>
+        setTimeout(() => {
+            $('.alert').fadeOut('fast');
+        }, 2000);
+    </script>
+</body>
+
+</html>

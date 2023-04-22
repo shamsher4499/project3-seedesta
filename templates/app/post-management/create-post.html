@@ -1,0 +1,135 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+            <section class="donate-detail-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+
+                    <div class="donate-form-in">
+                        <h3>Create Post</h3>
+                        <form class="row" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label>Post Title</label>
+                                    <input type="text" name="title" value="{{data.title}}" class="form-control" placeholder="Enter title">
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label>Description</label>
+                                    <textarea type="text" name="desc" value="{{data.desc|safe}}"class="form-control h-25" placeholder=""></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 add_image_upload">
+                                <h5>Add image</h5>
+                                <ul class="add_image_upload_list">
+                                    
+                                        {% comment %} <div class="mb_add_img">
+                                          <label for="formFileMultiple" class="form-label">
+                                              <img src="images/add-image.svg">
+                                              <span>Add Image</span>
+                                          </label>
+                                          <input class="form-control" accept="image/png, image/jpeg" name="image" value="{{data.image.url}}" type="file" id="formFileMultiple">
+                                        </div> {% endcomment %}
+                                    <div class="form-group">
+                                        <label>Image <sup style="color: red;">&#9733;</sup></label>
+                                        <input type="file" class="form-control"
+                                            accept="image/png, image/jpeg" name="image">
+                                    </div>
+                                    
+                                    {% comment %} <li>
+                                        <article>
+                                            <figure><img src="images/user-1.png"></figure>
+                                            <a class="img-close-btn" href=""><i class="ri-close-line"></i></a>
+                                        </article>
+                                    </li>
+                                    <li>
+                                        <article>
+                                            <figure><img src="images/user-2.png"></figure>
+                                            <a class="img-close-btn" href=""><i class="ri-close-line"></i></a>
+                                        </article>
+                                    </li> {% endcomment %}
+                                </ul>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group mb-3">
+                                    <label>YouTube URL</label>
+                                    <input type="text" name="youtube_id" value="{{data.youtube_id}}" class="form-control" placeholder="Enter YouTube URL">
+                                </div>
+                            </div>
+                            {% comment %} <div class="form-group mb-3">
+                                <label>Add video</label>
+                                <label class="file video_file">
+                                  <input type="file" id="file" name="video" value="{{data.video}}" aria-label="File browser example">
+                                  <span class="text_video">Add video</span>
+                                  <span class="file-custom"><i class="ri-download-2-line"></i></span>
+                                </label>
+                            </div> {% endcomment %}
+
+
+                            <div class="col-md-12 text-center"><button type="submit" class="btn">Submit</button></div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+    <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript"
+        src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+        $(window).scroll(function () { var body = $('body'), scroll = $(window).scrollTop(); if (scroll >= 5) { body.addClass('fixed'); } else { body.removeClass('fixed'); } });
+    </script>
+
+    <!-- -----side menu------ -->
+    <script>
+        $('#menu-button').click(function (e) {
+            e.stopPropagation();
+            $('#hide-menu').toggleClass('show-menu');
+        });
+        $('#hide-menu').click(function (e) {
+            e.stopPropagation();
+        });
+        $('body,html,.closebtn').click(function (e) {
+            $('#hide-menu').removeClass('show-menu');
+        });
+    </script>
+    <!-- -----side menu------ -->
+</body>
+{% endblock %}
+</html>

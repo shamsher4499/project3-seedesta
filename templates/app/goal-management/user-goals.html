@@ -1,0 +1,147 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+{% block body %}
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>:: seedesta ::</title>
+      <!--responsive-meta-here-->
+      <meta name="viewport" content="minimum-scale=1.0, maximum-scale=1.0,width=device-width, user-scalable=no">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!--responsive-meta-end-->
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
+      <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="css/fontawesome-all.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/owl.carousel.min.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="fonts/remixicon.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome-all.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/fontawesome.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/style.css" rel="stylesheet"/>
+      <link rel="stylesheet" href="css/responsive.css" rel="stylesheet"/>
+   </head>
+   <body>
+
+    <div class="wraper-inner-main">
+        
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %} 
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0">
+        
+            <section class="click-groups-sec">
+                <div class="container">
+                    {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'success'%}
+                        <div class="alert alert-success">
+                            {{message}}
+                        </div>
+                        {% elif message.tags == 'error' %}
+                        <div class="alert alert-danger">
+                            {{message}}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    <h3>Goals </h3>
+                    {% comment %} {% if user_id=user.id and goal_type='INDIVIDUAL' %}Goals{% else user_id=user.id and goal_type='GROUP'%}Group goal{% endif %} {% endcomment %}
+                    <div class="groups-click-box">
+                        <div class="row">
+                            
+                                {% if user_goal %}
+                                {% for i in user_goal %}
+                                
+                                    {% if i.goal_priority == 'PRIVATE' and i.user.members_id == request.user.id%}
+                                        <div class="col-md-4">
+                                            <div class="groups-click-cont">
+                                                <a href="{% url 'user_goal_detail' i.slug %}"> <figure><img src="{% static "frontend/images/posts-img6.png" %}"></figure> </a>
+                                                <a href="javascript:;"> <p>{{i.goal_name}}</p> </a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% if i.goal_priority == 'PUBLIC' %}
+                                        <div class="col-md-4">
+                                            <div class="groups-click-cont">
+                                                <a href="{% url 'user_goal_detail' i.slug %}"> <figure><img src="{% static "frontend/images/posts-img6.png" %}"></figure> </a>
+                                                <a href="javascript:;"> <p>{{i.goal_name}}</p> </a>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    
+                                {% endfor %}
+                                <div class="donate-form-in"> 
+                                    {% comment %} <h3>Donation</h3> {% endcomment %}
+                                    <div class="text-center">
+                                        <p>No Goal Found</p>
+                                    </div>
+                                </div>        
+                                <nav aria-label="..." class="pagination-nav">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            {% if user_goal.has_previous %} {# whether the previous page exists #}
+                                            <a class="page-link" href="?page={{user_goal.previous_page_number}}" tabindex="-1"><i class="ri-arrow-left-s-line"></i></a>
+                                            {% endif %}
+                                        </li>
+                                        <li class="page-item active">
+                                            <a class="page-link" href="#">{{user_goal.number}} <span class="sr-only">(current)</span></a>
+                                        </li> 
+                                        <li class="page-item">
+                                            {% if user_goal.has_next %} {# whether the next page exists #}
+                                            <a class="page-link" href="?page={{user_goal.next_page_number}}"><i class="ri-arrow-right-s-line"></i></a>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </nav>
+                                {% else %}
+                                    <div class="donate-form-in">
+                                    <h3>Donation</h3>
+                                    <div class="text-center">
+                                        <p>No Goal Found</p>
+                                    </div>
+                                    </div>
+                                {% endif %}
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    </body>
+{% endblock %}
+</html>

@@ -1,0 +1,168 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+{% block body %}
+<html>
+   <body>
+    <div class="wraper-inner-main">
+        <div class="inner-space-main p-0">
+            <section class="business-chat-sec">
+                <div class="container">
+                    <div class="business-chat">
+                        <div class="row">
+                          <div class="col-md-4">
+                                <div class="chat-list">
+                                    <div >
+                                         <h6 style="text-align: center; margin-top: 12px;" >Group Members</h6>
+                                    </div>
+                                    <hr>
+                                    <div class="chat-more longEnough mCustomScrollbar" data-mcs-theme="dark">
+                                     {% for user in chat_user %}
+                                      <div class="user-chat align-items-center">
+                                        <figure><img {% if user.profile_pic %} src="{{ user.profile_pic.url }}" {% else %} src="{% static 'frontend/images/member-5.png' %}" {% endif %}></figure>
+                                        <figcaption>
+                                          <h4>{{user.first_name}} {{user.last_name}}</h4>
+                                        </figcaption>
+                                      </div>
+                                      {% endfor %}
+                                    </div>
+                                </div>
+                          </div>
+                          <div class="col-md-8" >
+                                <div class="chat-infobox">
+                                    <div class="user-chats ">
+                                        <figure><img src="{% static 'frontend/images/member-5.png' %}"></figure>
+                                        <figcaption>
+                                          <h4  >{{web_chat_data.group_name}}</h4>
+                                        
+                                        </figcaption>
+                                        <a class="delete_btn" href="javascript:;">
+                                            <svg class="icon icon-tabler icon-tabler-trash" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                              <line x1="4" y1="7" x2="20" y2="7" />
+                                              <line x1="10" y1="11" x2="10" y2="17" />
+                                              <line x1="14" y1="11" x2="14" y2="17" />
+                                              <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                              <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div id="chat_among_group" class="user-chating-box longEnough" data-mcs-theme="dark">
+                                    </div>
+                                    <div class="chat-textarea">
+                                        <div class="form-group">
+                                           <textarea id="chat-message" class="form-control" placeholder="Write a message....."></textarea>
+                                           <button type="button" class="upload_btn_msg">
+                                               <div class="file_send_chat">
+                                                  <i class="ri-attachment-line"></i>
+                                                  <input type="file" id="customFile" />
+                                               </div>
+                                           </button>
+                                        </div>
+                                        <button data-send-chat-message="" class="btn btn-green waves-effect waves-light" href="javascript:;" ><i class="fas fa-paper-plane"></i></button>
+                                    </div>
+                                </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    </body>
+</html>
+{% endblock body %}
+{% block script %}
+<script>
+    const group_id = `{{web_chat_data.id}}`
+    let message = $('#chat-message').val()
+    const room_id = `{{web_chat_data.room_id}}`
+    url = `ws://localhost/ws/web_groupchat/${room_id}/`
+    let socket = new WebSocket(url);
+    $('#first-user-chat').addClass('active')
+    $.ajax({
+        type: 'POST',
+        url: '{% url "create_room_for_group_chat" %}',
+        data: {
+            "group_id" : group_id
+        },
+        success: (response) => {
+            document.getElementById('chat_among_group').innerHTML = response         
+            $(document).find('[data-send-chat-message]').data('send-chat-message', group_id)
+            
+        },
+        error: (a,b,c) => {
+        }
+    })
+
+    $(document).on('click', '[data-send-chat-message]', function(){
+        let message = $('#chat-message').val()
+        user_id = `{{request.user.id}}`
+        const room_id = `{{web_chat_data.room_id}}`
+        receiver_id = `{{receiver_id}}`
+        url = `ws://localhost/ws/web_groupchat/${room_id}/`
+        let socket = new WebSocket(url);
+        socket.onopen = function (e) {
+            console.log("CONNECTION OPEN")
+            const text_data = { 'message': message, 'sender': user_id, 'receiver_id': receiver_id }
+            socket.send(JSON.stringify(text_data));
+            $('#chat-message').val("")
+            };
+        })
+    
+    socket.onmessage = (event) => {
+        console.log(`[message] Data received from server: ${event.data}`, $.type(event.data));
+        data = JSON.parse(event.data)
+        const messages = data["chat_massage"]
+        login_user = `{{request.user.id}}`
+        sender = data["sender"]
+        $.ajax({
+        type: 'POST',
+        url: '{% url "get_name_of_sender" %}',
+        data: {
+            "sender_id" : sender
+        },
+        success: (response) => {
+      
+          sender_name = response.sender_name
+          dt = response.date
+          if (login_user == sender){
+              $('#chat_among_group').append(`<div class="right-chat">
+                                              <div class="left-chat-in">
+                                                  <figcaption>
+                                                      <p>${messages}</p>
+                                                  </figcaption>
+                                                  <span>${sender_name} At ${dt}</span>
+                                              </div>
+                                              </div>`)
+                                  
+          }
+          else{
+              $('#chat_among_group').append(`<div class="left-chat">
+                                              <div class="left-chat-in">
+                                                  <figcaption>
+                                                      <p>${messages}</p>
+                                                  </figcaption>
+                                                  <span>${sender_name} At ${dt}</span>
+                                              </div>
+                                              </div>`)
+          }
+        }
+        
+    })
+
+
+        };
+    socket.onclose = function (event) {
+        if (event.wasClean) {
+            console.log(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+        } else {
+            // e.g. server process killed or network down
+            // event.code is usually 1006 in this case
+            console.log('[close] Connection died');
+        }
+        };
+    socket.onerror = function (error) {
+      console.log(error)
+    };
+</script>
+{% endblock script %}

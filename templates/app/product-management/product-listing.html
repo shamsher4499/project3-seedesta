@@ -1,0 +1,163 @@
+{% extends 'app/base/base.html' %}
+{% load static %}
+<html>
+{% block body %}
+   <body>
+
+    <div class="wraper-inner-main">
+        <!-- ----------end header section----------- -->
+        {% include 'app/base/navbar.html' %}
+        <!-- ----------end header section----------- -->
+
+        <div class="inner-space-main p-0 gry_bg">
+        
+            <section class="select-goals-sec">
+                <div class="container">
+                    <div class="row inner-dash-bord">
+                        <div class="col-md-3">
+                            {% include 'app/base/sidebar.html' %}
+                        </div>
+                        <div class="col-md-9">
+                            <div class="dashboard-right-body">
+                                <div class="my-profile-partner">
+                                    
+                                    <div class="dash-in-space">
+                                        <div class="followers">
+                                        <ul class="nav nav-pills equal_tabing" id="pills-tab" role="tablist">
+                                              <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="pills-product-tab" data-bs-toggle="pill" data-bs-target="#pills-product" type="button" role="tab" aria-controls="pills-product" aria-selected="true">Product</button>
+                                              </li>
+                                              {% comment %} <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="pills-order-tab" data-bs-toggle="pill" data-bs-target="#pills-order" type="button" role="tab" aria-controls="pills-order" aria-selected="false">Orders</button>
+                                              </li> {% endcomment %}
+                                        </ul>
+                                        <div class="tab-content" id="pills-tabContent">
+                                              <div class="tab-pane fade show active" id="pills-product" role="tabpanel" aria-labelledby="pills-product-tab">
+                                                  <div class="product-cont-list">
+                                                    <div class="row">
+                                                        {% if products %}
+                                                        {% for i in products %}
+                                                        
+                                                        <div class="col-md-4">
+                                                            <div class="form-group-by">
+                                                                {% for j in product_images %}
+                                                                {% if i.id == j.product_id %}
+                                                                
+                                                                <a href="{% url 'product_view' i.id %}" data-product-id="{{i.id}}" class="product-detail">
+                                                                    <figure><img src="{{j.image.url}}"></figure></a>
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                                <figcaption>
+                                                                    <a href="{% url 'product_view' i.id %}"><h5>{{i.name}}</h5></a>
+                                                                    <h6>Category: <span> {{i.category}}</span></h6>
+                                                                    <span class="amount-right">${{i.price.normalize}}</span>
+                                                                </figcaption>
+                                                            </div>
+                                                        </div>
+                                                        {% endfor %}
+                                                        <nav aria-label="..." class="pagination-nav">
+                                                            <ul class="pagination">
+                                                                <li class="page-item">
+                                                                    {% if products.has_previous %} {# whether the previous page exists #}
+                                                                    <a class="page-link" href="?page={{products.previous_page_number}}" tabindex="-1"><i class="ri-arrow-left-s-line"></i></a>
+                                                                    {% endif %}
+                                                                </li>
+                                                                <li class="page-item active">
+                                                                    <a class="page-link" href="#">{{products.number}} <span class="sr-only">(current)</span></a>
+                                                                </li> 
+                                                                <li class="page-item">
+                                                                    {% if products.has_next %} {# whether the next page exists #}
+                                                                    <a class="page-link" href="?page={{products.next_page_number}}"><i class="ri-arrow-right-s-line"></i></a>
+                                                                    {% endif %}
+                                                                </li>
+                                                            </ul>
+                                                        </nav>
+                                                        {% else %}
+                                                        No Product found.
+                                                        {% endif %}
+                                                    </div>
+                                                  </div>
+                                                  {% comment %} <br> {% endcomment %}
+                                                  
+                                                </div>
+                                            {% comment %} <form method="POST" action="{% url 'vendor_product_view' %}" id="product-form">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="id" value="{{i.id}}">
+                                            </form>
+                                              <div class="tab-pane fade" id="pills-order" role="tabpanel" aria-labelledby="pills-order-tab">
+                                                  <div class="product-cont-list">
+                                                    <ul class="od_list_here">
+                                                        {% for i in product_order %}
+                                                        <li>
+                                                            <a href="javascript:;">
+                                                                <div class="lt_followers_bx">
+                                                                    <span class="od_nuber">#{{i.order_id}}</span>
+                                                                    <h5>{{i.product.name}} </h5>
+                                                                    <div class="d-flex">
+                                                                        <span class="od_times">{{i.created}}</span>
+                                                                        <h6>Payment Status: <span class="payment_done">{{i.status}}</span></h6>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="ry_followers_bx">
+                                                                    <h3 class="od_ammount">${{i.product.price.normalize}}</h3>
+                                                                </div>
+                                                            </a>
+                                                            
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                  </div>
+                                              </div> {% endcomment %}
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
+        <!-- ----------footer section----------- -->
+        {% include 'app/base/footer.html' %}
+        <!-- ----------footer section----------- -->
+    </div>
+
+    <!-- -----java script------ -->
+    <script type="text/javascript" src="{% static 'frontend/js/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script type="text/javascript" src="https://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script>
+       $(window).scroll(function(){var body=$('body'),scroll=$(window).scrollTop();if(scroll>=5){body.addClass('fixed');}else{body.removeClass('fixed');}});
+    </script>
+
+    <!-- -----side menu------ -->
+        <script>
+           $('#menu-button').click(function(e) {
+               e.stopPropagation();
+               $('#hide-menu').toggleClass('show-menu');
+           });
+           $('#hide-menu').click(function(e) {
+               e.stopPropagation();
+           });
+           $('body,html,.closebtn').click(function(e) {
+               $('#hide-menu').removeClass('show-menu');
+           });
+        </script>
+    <!-- -----side menu------ -->
+    <script>
+        $('.product-detail').click(function() {
+            let productId = $(this).data('product-id')
+            $('#product-form input[name=id]').val(productId)
+            $('#product-form').submit()
+        })
+    </script>
+    </body>
+{% endblock %}
+</html>
